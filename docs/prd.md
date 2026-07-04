@@ -6,6 +6,7 @@ Status: Draft
 
 ## 1. Background
 
+
 This project is a lightweight SEO tool site for the keyword cluster around **"steal a brainrot values"**.
 
 Research summary:
