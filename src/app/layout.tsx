@@ -3,15 +3,11 @@ import Script from "next/script";
 import "./globals.css";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
-import { JsonLd } from "@/components/JsonLd";
 import { absoluteUrl, siteDescription, siteName } from "@/lib/seo";
 
 export const metadata: Metadata = {
   metadataBase: new URL(absoluteUrl("/")),
-  title: {
-    default: "Steal a Brainrot Values - Value List, Demand & Trade Prices",
-    template: `%s | ${siteName}`,
-  },
+  title: "Steal a Brainrot Values - Value List, Demand & Trade Prices",
   description: siteDescription,
   openGraph: {
     title: "Steal a Brainrot Values",
@@ -23,9 +19,6 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
-  },
-  icons: {
-    icon: "/favicon.svg",
   },
 };
 
@@ -58,15 +51,6 @@ export default function RootLayout({
             })(window, document, "clarity", "script", "xh3k8gwkev");
           `}
         </Script>
-        <JsonLd
-          data={{
-            "@context": "https://schema.org",
-            "@type": "WebSite",
-            name: siteName,
-            url: absoluteUrl("/"),
-            description: siteDescription,
-          }}
-        />
         <div className="app-shell">
           <SiteHeader />
           <main>{children}</main>

@@ -12,6 +12,12 @@ export const metadata: Metadata = {
   alternates: {
     canonical: absoluteUrl("/calculator/"),
   },
+  openGraph: {
+    title: "Steal a Brainrot Calculator - Check Fair Trades",
+    description:
+      "Compare Steal a Brainrot trades with a simple value calculator for fair, win, and loss trades.",
+    url: absoluteUrl("/calculator/"),
+  },
 };
 
 export default function CalculatorPage() {

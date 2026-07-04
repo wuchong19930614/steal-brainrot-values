@@ -306,7 +306,7 @@ p {
 
 .toolbar {
   display: grid;
-  grid-template-columns: minmax(220px, 2fr) repeat(3, minmax(150px, 1fr));
+  grid-template-columns: minmax(220px, 1.6fr) repeat(5, minmax(140px, 1fr));
   gap: 12px;
   margin-bottom: 18px;
 }
@@ -650,6 +650,17 @@ details p {
   display: grid;
   gap: 0;
   overflow: hidden;
+}
+
+.tier-board-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.tier-board-toolbar label {
+  min-width: 200px;
 }
 
 .tier-row {

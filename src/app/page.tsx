@@ -9,7 +9,20 @@ import {
   officialSources,
   lastUpdated,
 } from "@/lib/data";
-import { absoluteUrl } from "@/lib/seo";
+import { absoluteUrl, siteDescription, siteName } from "@/lib/seo";
+
+const faqs = [
+  {
+    question: "Are these values official?",
+    answer:
+      "No official trade values were found in the public sources checked. Values are marked TBD until verified data is added.",
+  },
+  {
+    question: "Why do some values change quickly?",
+    answer:
+      "Roblox game demand can move fast after updates, limited events, and creator videos. The updates page records major changes.",
+  },
+];
 
 export const metadata: Metadata = {
   title: "Steal a Brainrot Values - Value List, Demand & Trade Prices",
@@ -17,6 +30,12 @@ export const metadata: Metadata = {
     "Check official-source Steal a Brainrot items and see which trade values are still unpublished or awaiting verification.",
   alternates: {
     canonical: absoluteUrl("/"),
+  },
+  openGraph: {
+    title: "Steal a Brainrot Values - Value List, Demand & Trade Prices",
+    description:
+      "Check official-source Steal a Brainrot items and see which trade values are still unpublished or awaiting verification.",
+    url: absoluteUrl("/"),
   },
 };
 
@@ -28,15 +47,42 @@ export default function HomePage() {
       <JsonLd
         data={{
           "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: siteName,
+          url: absoluteUrl("/"),
+          description: siteDescription,
+        }}
+      />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
           "@type": "ItemList",
           name: "Steal a Brainrot values",
           itemListElement: brainrots.slice(0, 12).map((item, index) => ({
             "@type": "ListItem",
             position: index + 1,
             name: item.name,
-            description: `${item.rarity} item with ${formatValue(
-              item.value,
-            )} official trade value.`,
+            url: absoluteUrl(`/#${item.slug}`),
+            description:
+              item.value > 0
+                ? `${item.rarity} item with an official trade value of ${formatValue(
+                    item.value,
+                  )}.`
+                : `${item.rarity} item. Official trade value not yet published.`,
+          })),
+        }}
+      />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faqs.map((faq) => ({
+            "@type": "Question",
+            name: faq.question,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: faq.answer,
+            },
           })),
         }}
       />
@@ -119,20 +165,12 @@ export default function HomePage() {
 
       <section className="faq-section">
         <h2>Steal a Brainrot values FAQ</h2>
-        <details>
-          <summary>Are these values official?</summary>
-          <p>
-            No official trade values were found in the public sources checked.
-            Values are marked TBD until verified data is added.
-          </p>
-        </details>
-        <details>
-          <summary>Why do some values change quickly?</summary>
-          <p>
-            Roblox game demand can move fast after updates, limited events, and
-            creator videos. The updates page records major changes.
-          </p>
-        </details>
+        {faqs.map((faq) => (
+          <details key={faq.question}>
+            <summary>{faq.question}</summary>
+            <p>{faq.answer}</p>
+          </details>
+        ))}
       </section>
     </>
   );

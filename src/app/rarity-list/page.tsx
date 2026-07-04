@@ -12,6 +12,12 @@ export const metadata: Metadata = {
   alternates: {
     canonical: absoluteUrl("/rarity-list/"),
   },
+  openGraph: {
+    title: "Steal a Brainrot Rarity List - All Brainrots by Rarity",
+    description:
+      "Browse officially sourced Steal a Brainrot items by rarity and see which trade values are still unpublished.",
+    url: absoluteUrl("/rarity-list/"),
+  },
 };
 
 export default function RarityListPage() {

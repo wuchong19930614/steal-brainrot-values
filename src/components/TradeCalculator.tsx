@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { formatValue } from "@/lib/data";
+import { formatCount, formatValue } from "@/lib/data";
 import type { BrainrotItem } from "@/lib/types";
 
 type TradeCalculatorProps = {
@@ -21,30 +21,55 @@ function getVerdict(myTotal: number, theirTotal: number) {
   }
 
   if (theirTotal === 0) {
-    return { label: "Big Win", tone: "win", detail: "Their offer has no value." };
+    return {
+      label: "Big Loss",
+      tone: "loss",
+      detail: "Your offer has no return.",
+    };
   }
 
   const difference = theirTotal - myTotal;
   const ratio = difference / theirTotal;
   const percentage = Math.abs(ratio * 100).toFixed(1);
+  const amount = formatCount(Math.abs(difference));
 
   if (Math.abs(ratio) <= 0.05) {
-    return { label: "Fair", tone: "fair", detail: `${percentage}% difference.` };
+    return {
+      label: "Fair",
+      tone: "fair",
+      detail: `${amount} difference (${percentage}%).`,
+    };
   }
 
   if (difference > 0 && ratio <= 0.2) {
-    return { label: "Small Win", tone: "win", detail: `${percentage}% ahead.` };
+    return {
+      label: "Small Win",
+      tone: "win",
+      detail: `${amount} ahead (${percentage}%).`,
+    };
   }
 
   if (difference > 0) {
-    return { label: "Big Win", tone: "win", detail: `${percentage}% ahead.` };
+    return {
+      label: "Big Win",
+      tone: "win",
+      detail: `${amount} ahead (${percentage}%).`,
+    };
   }
 
   if (Math.abs(ratio) <= 0.2) {
-    return { label: "Small Loss", tone: "loss", detail: `${percentage}% behind.` };
+    return {
+      label: "Small Loss",
+      tone: "loss",
+      detail: `${amount} behind (${percentage}%).`,
+    };
   }
 
-  return { label: "Big Loss", tone: "loss", detail: `${percentage}% behind.` };
+  return {
+    label: "Big Loss",
+    tone: "loss",
+    detail: `${amount} behind (${percentage}%).`,
+  };
 }
 
 function totalForOffer(offer: OfferItem[], itemsById: Map<string, BrainrotItem>) {
@@ -218,7 +243,7 @@ export function TradeCalculator({ items }: TradeCalculatorProps) {
           {renderOffer("mine", mine)}
           <div className="total-row">
             <span>Total</span>
-            <strong>{formatValue(myTotal)}</strong>
+            <strong>{formatCount(myTotal)}</strong>
           </div>
         </div>
 
@@ -243,7 +268,7 @@ export function TradeCalculator({ items }: TradeCalculatorProps) {
           {renderOffer("theirs", theirs)}
           <div className="total-row">
             <span>Total</span>
-            <strong>{formatValue(theirTotal)}</strong>
+            <strong>{formatCount(theirTotal)}</strong>
           </div>
         </div>
       </div>

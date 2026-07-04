@@ -102,6 +102,10 @@ export function formatValue(value: number) {
   return new Intl.NumberFormat("en-US").format(value);
 }
 
+export function formatCount(value: number) {
+  return new Intl.NumberFormat("en-US").format(value);
+}
+
 export function getDemandLabel(demand: BrainrotItem["demand"]) {
   const labels = {
     1: "Unknown",

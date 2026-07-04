@@ -12,6 +12,12 @@ export const metadata: Metadata = {
   alternates: {
     canonical: absoluteUrl("/updates/"),
   },
+  openGraph: {
+    title: "Steal a Brainrot Value Updates - Latest Changes",
+    description:
+      "Track the latest Steal a Brainrot value changes, added Brainrots, demand shifts, and trading updates.",
+    url: absoluteUrl("/updates/"),
+  },
 };
 
 export default function UpdatesPage() {

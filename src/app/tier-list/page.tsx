@@ -12,6 +12,12 @@ export const metadata: Metadata = {
   alternates: {
     canonical: absoluteUrl("/tier-list/"),
   },
+  openGraph: {
+    title: "Steal a Brainrot Tier List - Best Brainrots Ranked",
+    description:
+      "See the best Brainrots ranked by value, demand, rarity, and trading strength in a fan-made tier list.",
+    url: absoluteUrl("/tier-list/"),
+  },
 };
 
 export default function TierListPage() {

@@ -11,8 +11,8 @@ export function UpdateTimeline() {
             <p>{update.summary}</p>
           </div>
           <div className="change-list">
-            {update.changes.map((change) => (
-              <div className="change-row" key={`${update.id}-${change.item}`}>
+            {update.changes.map((change, index) => (
+              <div className="change-row" key={`${update.id}-${index}`}>
                 <span className="pill demand">{change.type}</span>
                 <strong>{change.item}</strong>
                 <span>

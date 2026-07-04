@@ -19,10 +19,17 @@ const trends: Array<Trend | "All"> = [
   "Unknown",
 ];
 
+const demandLevels: Array<BrainrotItem["demand"]> = [1, 2, 3, 4, 5];
+
+const obtainableOptions = ["All", "Obtainable", "Unobtainable"] as const;
+type ObtainableFilter = (typeof obtainableOptions)[number];
+
 export function ValueTable({ items }: ValueTableProps) {
   const [query, setQuery] = useState("");
   const [rarity, setRarity] = useState<Rarity | "All">("All");
   const [trend, setTrend] = useState<Trend | "All">("All");
+  const [demand, setDemand] = useState<BrainrotItem["demand"] | "All">("All");
+  const [obtainable, setObtainable] = useState<ObtainableFilter>("All");
   const [sort, setSort] = useState<SortKey>("value");
 
   const filteredItems = useMemo(() => {
@@ -39,8 +46,18 @@ export function ValueTable({ items }: ValueTableProps) {
 
         const matchesRarity = rarity === "All" || item.rarity === rarity;
         const matchesTrend = trend === "All" || item.trend === trend;
+        const matchesDemand = demand === "All" || item.demand === demand;
+        const matchesObtainable =
+          obtainable === "All" ||
+          (obtainable === "Obtainable" ? item.obtainable : !item.obtainable);
 
-        return matchesQuery && matchesRarity && matchesTrend;
+        return (
+          matchesQuery &&
+          matchesRarity &&
+          matchesTrend &&
+          matchesDemand &&
+          matchesObtainable
+        );
       })
       .sort((a, b) => {
         if (sort === "name") {
@@ -64,7 +81,7 @@ export function ValueTable({ items }: ValueTableProps) {
 
         return b.value - a.value;
       });
-  }, [items, query, rarity, sort, trend]);
+  }, [demand, items, obtainable, query, rarity, sort, trend]);
 
   return (
     <section className="tool-panel" aria-labelledby="values-table-title">
@@ -114,6 +131,41 @@ export function ValueTable({ items }: ValueTableProps) {
           </select>
         </label>
         <label>
+          <span>Demand</span>
+          <select
+            value={demand}
+            onChange={(event) =>
+              setDemand(
+                event.target.value === "All"
+                  ? "All"
+                  : (Number(event.target.value) as BrainrotItem["demand"]),
+              )
+            }
+          >
+            <option value="All">All demand</option>
+            {demandLevels.map((level) => (
+              <option key={level} value={level}>
+                {getDemandLabel(level)}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          <span>Obtainable</span>
+          <select
+            value={obtainable}
+            onChange={(event) =>
+              setObtainable(event.target.value as ObtainableFilter)
+            }
+          >
+            {obtainableOptions.map((option) => (
+              <option key={option} value={option}>
+                {option === "All" ? "All items" : option}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
           <span>Sort</span>
           <select
             value={sort}
@@ -130,7 +182,12 @@ export function ValueTable({ items }: ValueTableProps) {
 
       <div className="value-list" role="list">
         {filteredItems.map((item) => (
-          <article className="value-row" key={item.id} role="listitem">
+          <article
+            className="value-row"
+            key={item.id}
+            id={item.slug}
+            role="listitem"
+          >
             <div className="item-main">
               <div className="token-mark" aria-hidden="true">
                 {item.name.slice(0, 2).toUpperCase()}

@@ -9,7 +9,7 @@ export function SiteFooter() {
         <p>
           Fan-made resource. Not affiliated with Roblox, Steal a Brainrot, or
           their creators. Public official sources checked did not publish trade
-          values.
+          values. Values are estimates and may change at any time.
         </p>
       </div>
       <div className="footer-links">
