@@ -54,8 +54,22 @@ export default function UpdatesPage() {
           </p>
         </div>
         <div className="intro-link-stack">
-          <Link href="/">Value list</Link>
-          <Link href="/calculator/">Calculator</Link>
+          <Link
+            href="/"
+            data-analytics-event="related_tool_clicked"
+            data-analytics-label="values"
+            data-analytics-location="updates_intro"
+          >
+            Value list
+          </Link>
+          <Link
+            href="/calculator/"
+            data-analytics-event="related_tool_clicked"
+            data-analytics-label="calculator"
+            data-analytics-location="updates_intro"
+          >
+            Calculator
+          </Link>
         </div>
       </section>
 

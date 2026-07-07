@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
+import { trackEvent } from "@/lib/analytics";
 import { formatValue, getDemandLabel, rarityOrder } from "@/lib/data";
 import type { BrainrotItem, Rarity, Trend } from "@/lib/types";
 
@@ -31,6 +32,7 @@ export function ValueTable({ items }: ValueTableProps) {
   const [demand, setDemand] = useState<BrainrotItem["demand"] | "All">("All");
   const [obtainable, setObtainable] = useState<ObtainableFilter>("All");
   const [sort, setSort] = useState<SortKey>("value");
+  const hasTrackedSearch = useRef(false);
 
   const filteredItems = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
@@ -83,6 +85,32 @@ export function ValueTable({ items }: ValueTableProps) {
       });
   }, [demand, items, obtainable, query, rarity, sort, trend]);
 
+  function handleSearchChange(value: string) {
+    const normalizedValue = value.trim();
+
+    setQuery(value);
+
+    if (normalizedValue.length === 0) {
+      hasTrackedSearch.current = false;
+      return;
+    }
+
+    if (normalizedValue.length >= 2 && !hasTrackedSearch.current) {
+      hasTrackedSearch.current = true;
+      trackEvent("item_search_used", {
+        items_total: items.length,
+        search_length: normalizedValue.length,
+      });
+    }
+  }
+
+  function trackFilter(filterName: string, filterValue: string | number) {
+    trackEvent("filter_used", {
+      filter_name: filterName,
+      filter_value: String(filterValue),
+    });
+  }
+
   return (
     <section className="tool-panel" aria-labelledby="values-table-title">
       <div className="panel-heading">
@@ -99,7 +127,7 @@ export function ValueTable({ items }: ValueTableProps) {
           <input
             type="search"
             value={query}
-            onChange={(event) => setQuery(event.target.value)}
+            onChange={(event) => handleSearchChange(event.target.value)}
             placeholder="Brainrot name"
           />
         </label>
@@ -107,7 +135,10 @@ export function ValueTable({ items }: ValueTableProps) {
           <span>Rarity</span>
           <select
             value={rarity}
-            onChange={(event) => setRarity(event.target.value as Rarity | "All")}
+            onChange={(event) => {
+              setRarity(event.target.value as Rarity | "All");
+              trackFilter("rarity", event.target.value);
+            }}
           >
             <option value="All">All rarities</option>
             {rarityOrder.map((rarityOption) => (
@@ -121,7 +152,10 @@ export function ValueTable({ items }: ValueTableProps) {
           <span>Trend</span>
           <select
             value={trend}
-            onChange={(event) => setTrend(event.target.value as Trend | "All")}
+            onChange={(event) => {
+              setTrend(event.target.value as Trend | "All");
+              trackFilter("trend", event.target.value);
+            }}
           >
             {trends.map((trendOption) => (
               <option key={trendOption} value={trendOption}>
@@ -134,13 +168,14 @@ export function ValueTable({ items }: ValueTableProps) {
           <span>Demand</span>
           <select
             value={demand}
-            onChange={(event) =>
+            onChange={(event) => {
               setDemand(
                 event.target.value === "All"
                   ? "All"
                   : (Number(event.target.value) as BrainrotItem["demand"]),
-              )
-            }
+              );
+              trackFilter("demand", event.target.value);
+            }}
           >
             <option value="All">All demand</option>
             {demandLevels.map((level) => (
@@ -154,9 +189,10 @@ export function ValueTable({ items }: ValueTableProps) {
           <span>Obtainable</span>
           <select
             value={obtainable}
-            onChange={(event) =>
-              setObtainable(event.target.value as ObtainableFilter)
-            }
+            onChange={(event) => {
+              setObtainable(event.target.value as ObtainableFilter);
+              trackFilter("obtainable", event.target.value);
+            }}
           >
             {obtainableOptions.map((option) => (
               <option key={option} value={option}>
@@ -169,7 +205,10 @@ export function ValueTable({ items }: ValueTableProps) {
           <span>Sort</span>
           <select
             value={sort}
-            onChange={(event) => setSort(event.target.value as SortKey)}
+            onChange={(event) => {
+              setSort(event.target.value as SortKey);
+              trackFilter("sort", event.target.value);
+            }}
           >
             <option value="value">Highest value</option>
             <option value="demand">Highest demand</option>
@@ -195,7 +234,15 @@ export function ValueTable({ items }: ValueTableProps) {
               <div>
                 <h3>{item.name}</h3>
                 <p>{item.notes}</p>
-                <a className="source-link" href={item.sourceUrl} rel="noreferrer" target="_blank">
+                <a
+                  className="source-link"
+                  href={item.sourceUrl}
+                  rel="noreferrer"
+                  target="_blank"
+                  data-analytics-event="official_source_clicked"
+                  data-analytics-label={item.slug}
+                  data-analytics-location="value_table"
+                >
                   {item.sourceLabel}
                 </a>
               </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { trackEvent } from "@/lib/analytics";
 import { formatCount, formatValue } from "@/lib/data";
 import type { BrainrotItem } from "@/lib/types";
 
@@ -116,6 +117,12 @@ export function TradeCalculator({ items }: TradeCalculatorProps) {
   }
 
   function addItem(side: Side, itemId: string) {
+    trackEvent("calculator_used", {
+      action: "add_item",
+      item_id: itemId,
+      side,
+    });
+
     const updateOffer = (offer: OfferItem[]) => {
       const existing = offer.find((offerItem) => offerItem.itemId === itemId);
 

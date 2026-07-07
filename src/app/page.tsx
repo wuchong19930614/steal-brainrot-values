@@ -96,10 +96,22 @@ export default function HomePage() {
             still unpublished.
           </p>
           <div className="intro-actions">
-            <Link href="/calculator/" className="primary-link">
+            <Link
+              href="/calculator/"
+              className="primary-link"
+              data-analytics-event="related_tool_clicked"
+              data-analytics-label="calculator"
+              data-analytics-location="home_intro"
+            >
               Trade calculator
             </Link>
-            <Link href="/tier-list/" className="secondary-link">
+            <Link
+              href="/tier-list/"
+              className="secondary-link"
+              data-analytics-event="related_tool_clicked"
+              data-analytics-label="tier-list"
+              data-analytics-location="home_intro"
+            >
               Tier list
             </Link>
           </div>
@@ -143,10 +155,38 @@ export default function HomePage() {
         <div>
           <h2>Related tools</h2>
           <div className="link-grid">
-            <Link href="/calculator/">Steal a Brainrot calculator</Link>
-            <Link href="/tier-list/">Best Brainrots tier list</Link>
-            <Link href="/rarity-list/">Brainrot rarity list</Link>
-            <Link href="/updates/">Latest value updates</Link>
+            <Link
+              href="/calculator/"
+              data-analytics-event="related_tool_clicked"
+              data-analytics-label="calculator"
+              data-analytics-location="home_related_tools"
+            >
+              Steal a Brainrot calculator
+            </Link>
+            <Link
+              href="/tier-list/"
+              data-analytics-event="related_tool_clicked"
+              data-analytics-label="tier-list"
+              data-analytics-location="home_related_tools"
+            >
+              Best Brainrots tier list
+            </Link>
+            <Link
+              href="/rarity-list/"
+              data-analytics-event="related_tool_clicked"
+              data-analytics-label="rarity-list"
+              data-analytics-location="home_related_tools"
+            >
+              Brainrot rarity list
+            </Link>
+            <Link
+              href="/updates/"
+              data-analytics-event="related_tool_clicked"
+              data-analytics-label="updates"
+              data-analytics-location="home_related_tools"
+            >
+              Latest value updates
+            </Link>
           </div>
         </div>
       </section>
@@ -155,7 +195,15 @@ export default function HomePage() {
         <h2>Official sources checked</h2>
         <div className="source-grid">
           {officialSources.map((source) => (
-            <a key={source.url} href={source.url} target="_blank" rel="noreferrer">
+            <a
+              key={source.url}
+              href={source.url}
+              target="_blank"
+              rel="noreferrer"
+              data-analytics-event="official_source_clicked"
+              data-analytics-label={source.label}
+              data-analytics-location="official_sources"
+            >
               <strong>{source.label}</strong>
               <span>{source.note}</span>
             </a>

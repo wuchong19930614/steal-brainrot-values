@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
+import { AnalyticsClickTracker } from "@/components/AnalyticsClickTracker";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { absoluteUrl, siteDescription, siteName } from "@/lib/seo";
@@ -52,6 +53,7 @@ export default function RootLayout({
           `}
         </Script>
         <div className="app-shell">
+          <AnalyticsClickTracker />
           <SiteHeader />
           <main>{children}</main>
           <SiteFooter />
