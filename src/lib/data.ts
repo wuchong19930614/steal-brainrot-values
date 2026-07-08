@@ -1,12 +1,17 @@
 import type { BrainrotItem, Rarity, Tier, ValueUpdate } from "./types";
 
-export const lastUpdated = "2026-07-04";
+export const lastUpdated = "2026-07-07";
 
 export const officialSources = [
   {
     label: "Official Steal A Brainrot site",
     url: "https://playsab.com/",
     note: "Official merch and DLC site for Steal A Brainrot.",
+  },
+  {
+    label: "Official product feed",
+    url: "https://playsab.com/products.json?limit=250",
+    note: "Public product feed audited for official merch and emailed DLC items.",
   },
   {
     label: "Official Roblox experience",
@@ -56,8 +61,32 @@ export const brainrots: BrainrotItem[] = [
 
 export const updates: ValueUpdate[] = [
   {
+    id: "official-source-audit-2026-07-07",
+    date: "2026-07-07",
+    title: "Official source audit",
+    summary:
+      "Checked the official product feed and Roblox universe metadata. No additional official trade values were found, so tracked values remain TBD.",
+    changes: [
+      {
+        item: "Official product feed",
+        type: "Note",
+        note: "Only Festive 67 and Boppin Bunny were confirmed as Steal A Brainrot emailed DLC products; package protection was excluded.",
+      },
+      {
+        item: "Roblox universe metadata",
+        type: "Note",
+        note: "The official place maps to universe 7709344486; public badge data did not expose item-level value data.",
+      },
+      {
+        item: "Trade values",
+        type: "Note",
+        note: "No official public trade value list was found in the audited sources.",
+      },
+    ],
+  },
+  {
     id: "official-source-only-reset",
-    date: lastUpdated,
+    date: "2026-07-04",
     title: "Official-source-only reset",
     summary:
       "Removed unverified beta estimates. The official sources checked did not publish a public trade value list, so values are marked TBD.",
