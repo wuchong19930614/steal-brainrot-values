@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import { trackEvent } from "@/lib/analytics";
 import { formatCount, formatValue } from "@/lib/data";
@@ -107,10 +108,51 @@ export function TradeCalculator({ items }: TradeCalculatorProps) {
             <h2 id="calculator-title">Steal a Brainrot calculator</h2>
           </div>
         </div>
-        <div className="empty-state">
-          Official public sources do not currently publish Steal a Brainrot
-          trade values, so the calculator is disabled until verified values are
-          added.
+        <div className="calculator-empty">
+          <div className="empty-state">
+            Official public sources do not currently publish Steal a Brainrot
+            trade values, so the calculator stays disabled until verified values
+            are added.
+          </div>
+          <div className="status-list" aria-label="Calculator status">
+            <div>
+              <span>Verified trade values</span>
+              <strong>0</strong>
+            </div>
+            <div>
+              <span>Minimum to enable</span>
+              <strong>10</strong>
+            </div>
+            <div>
+              <span>Unverified math</span>
+              <strong>Blocked</strong>
+            </div>
+          </div>
+          <p className="calculator-note">
+            The calculator will not use guessed or unsourced values. Use the
+            value list while values are marked TBD, or check updates for the
+            next source audit.
+          </p>
+          <div className="intro-actions compact-actions">
+            <Link
+              href="/"
+              className="primary-link"
+              data-analytics-event="related_tool_clicked"
+              data-analytics-label="values"
+              data-analytics-location="calculator_disabled"
+            >
+              Value list
+            </Link>
+            <Link
+              href="/updates/"
+              className="secondary-link"
+              data-analytics-event="related_tool_clicked"
+              data-analytics-label="updates"
+              data-analytics-location="calculator_disabled"
+            >
+              Latest updates
+            </Link>
+          </div>
         </div>
       </section>
     );

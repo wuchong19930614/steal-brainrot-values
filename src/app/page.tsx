@@ -18,6 +18,11 @@ const faqs = [
       "No official trade values were found in the public sources checked. Values are marked TBD until verified data is added.",
   },
   {
+    question: "Are Steal a Brainrot trading values available?",
+    answer:
+      "Public official sources checked so far do not publish a complete trading value list. Current trade values stay TBD until official or manually verified data is available.",
+  },
+  {
     question: "Why do some values change quickly?",
     answer:
       "Roblox game demand can move fast after updates, limited events, and creator videos. The updates page records major changes.",

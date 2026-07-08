@@ -6,9 +6,10 @@
 
 当前触发信号：
 
-- GSC 已出现 `steal a brainrot trading values`，2026-07-05 至 2026-07-06 合计 3 impressions。
+- GSC 已出现 `steal a brainrot trading values`，2026-07-05 至 2026-07-07 合计 4 impressions。
+- GSC 已出现 `trading values steal a brainrot`、`steal a brainrot value trading`、`brainrot trader value` 等相邻 query。
 - GSC 已出现 calculator / tierlist / values calculator 相关 query。
-- 5 个核心页面已收录，但 impressions 尚未连续 7 天出现。
+- 5 个核心页面已收录，但 impressions 尚未连续 7 天出现；当前只增强现有页面承接，不发布本页。
 
 ## 页面定位
 

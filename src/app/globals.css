@@ -109,6 +109,7 @@ a {
 }
 
 .site-nav a,
+.current-nav-item,
 .footer-links a,
 .intro-link-stack a,
 .primary-link,
@@ -133,6 +134,13 @@ button {
 .secondary-link:hover,
 button:hover {
   border-color: var(--ink);
+}
+
+.current-nav-item {
+  border-color: var(--ink);
+  background: var(--surface-2);
+  color: var(--ink);
+  cursor: default;
 }
 
 .primary-link,
@@ -476,6 +484,48 @@ a:focus-visible {
 .empty-state.compact {
   padding: 12px;
   text-align: left;
+}
+
+.calculator-empty {
+  display: grid;
+  gap: 14px;
+}
+
+.status-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.status-list div {
+  display: grid;
+  gap: 4px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  background: #ffffff;
+}
+
+.status-list span,
+.calculator-note {
+  color: var(--muted);
+}
+
+.status-list span {
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.status-list strong {
+  font-size: 1.1rem;
+}
+
+.calculator-note {
+  margin: 0;
+}
+
+.compact-actions {
+  margin-top: 0;
 }
 
 .calculator-grid {
@@ -868,8 +918,21 @@ details p {
     min-width: 0;
   }
 
-  .site-nav a {
-    flex: 1 1 calc(50% - 8px);
+  .site-nav {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .site-nav > :last-child {
+    grid-column: 1 / -1;
+  }
+
+  .site-nav a,
+  .current-nav-item {
+    width: 100%;
+    min-width: 0;
+    padding: 0 10px;
   }
 
   .page-intro,
@@ -885,7 +948,8 @@ details p {
 
   .toolbar,
   .link-grid,
-  .change-row {
+  .change-row,
+  .status-list {
     grid-template-columns: 1fr;
   }
 

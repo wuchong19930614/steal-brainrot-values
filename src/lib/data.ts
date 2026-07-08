@@ -9,11 +9,6 @@ export const officialSources = [
     note: "Official merch and DLC site for Steal A Brainrot.",
   },
   {
-    label: "Official product feed",
-    url: "https://playsab.com/products.json?limit=250",
-    note: "Public product feed audited for official merch and emailed DLC items.",
-  },
-  {
     label: "Official Roblox experience",
     url: "https://www.roblox.com/games/109983668079237/Steal-a-Brainrot",
     note: "Official Roblox game page. It does not publish public trade values.",
