@@ -486,6 +486,28 @@ a:focus-visible {
   text-align: left;
 }
 
+.no-results {
+  display: grid;
+  gap: 10px;
+  justify-items: center;
+}
+
+.no-results strong {
+  color: var(--ink);
+}
+
+.no-results p {
+  max-width: 560px;
+  margin: 0;
+}
+
+.empty-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
 .calculator-empty {
   display: grid;
   gap: 14px;

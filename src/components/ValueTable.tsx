@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useRef, useState } from "react";
 import { trackEvent } from "@/lib/analytics";
 import { formatValue, getDemandLabel, rarityOrder } from "@/lib/data";
@@ -109,6 +110,17 @@ export function ValueTable({ items }: ValueTableProps) {
       filter_name: filterName,
       filter_value: String(filterValue),
     });
+  }
+
+  function resetFilters() {
+    setQuery("");
+    setRarity("All");
+    setTrend("All");
+    setDemand("All");
+    setObtainable("All");
+    setSort("value");
+    hasTrackedSearch.current = false;
+    trackFilter("all", "reset");
   }
 
   return (
@@ -267,7 +279,28 @@ export function ValueTable({ items }: ValueTableProps) {
       </div>
 
       {filteredItems.length === 0 ? (
-        <div className="empty-state">No matching Brainrots found.</div>
+        <div className="empty-state no-results">
+          <strong>No matching Brainrots found.</strong>
+          <p>
+            This tracker only lists official-source items right now. Searched
+            items that are not shown are still unverified, not hidden trade
+            values.
+          </p>
+          <div className="empty-actions">
+            <button type="button" onClick={resetFilters}>
+              Reset filters
+            </button>
+            <Link
+              href="/updates/"
+              className="secondary-link"
+              data-analytics-event="related_tool_clicked"
+              data-analytics-label="updates"
+              data-analytics-location="value_table_no_results"
+            >
+              Latest updates
+            </Link>
+          </div>
+        </div>
       ) : null}
     </section>
   );

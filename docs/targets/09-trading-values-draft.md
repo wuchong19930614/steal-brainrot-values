@@ -10,6 +10,16 @@
 - GSC 已出现 `trading values steal a brainrot`、`steal a brainrot value trading`、`brainrot trader value` 等相邻 query。
 - GSC 已出现 calculator / tierlist / values calculator 相关 query。
 - 5 个核心页面已收录，但 impressions 尚未连续 7 天出现；当前只增强现有页面承接，不发布本页。
+- 2026-07-08 已在首页增加 trading values FAQ 用于低风险承接；本页仍保持草稿状态。
+
+## 2026-07-08 轻量准备项
+
+今天只允许做草稿准备，不进入路由、sitemap 或内链：
+
+- 补充 `official value unavailable` 解释文案，避免用户误以为站点有完整价格表。
+- 准备 future calculator enable rules：至少 10 个 verified value 后才开启 trade math。
+- 准备 item detail 模板，但不生成真实详情页。
+- 等 GA4 custom definitions 回流后，再用 `calculator_disabled`、`Link text`、`Search length` 判断用户真实意图。
 
 ## 页面定位
 
