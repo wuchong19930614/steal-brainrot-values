@@ -5,7 +5,9 @@ import { ValueTable } from "@/components/ValueTable";
 import {
   brainrots,
   formatValue,
+  getVerifiedTradeValueItems,
   getTotalTrackedValue,
+  isVerifiedTradeValue,
   officialSources,
   lastUpdated,
 } from "@/lib/data";
@@ -45,7 +47,10 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
-  const topItems = [...brainrots].sort((a, b) => b.value - a.value).slice(0, 3);
+  const verifiedItems = getVerifiedTradeValueItems();
+  const topItems = [...verifiedItems]
+    .sort((a, b) => b.value - a.value)
+    .slice(0, 3);
 
   return (
     <>
@@ -69,7 +74,7 @@ export default function HomePage() {
             name: item.name,
             url: absoluteUrl(`/#${item.slug}`),
             description:
-              item.value > 0
+              isVerifiedTradeValue(item)
                 ? `${item.rarity} item with an official trade value of ${formatValue(
                     item.value,
                   )}.`
@@ -133,7 +138,7 @@ export default function HomePage() {
           </div>
           <div>
             <span>Source status</span>
-            <strong>{topItems[0]?.value ? "Verified" : "Values TBD"}</strong>
+            <strong>{verifiedItems.length ? "Verified" : "Values TBD"}</strong>
           </div>
           <div className="snapshot-bars" aria-hidden="true">
             {topItems.map((item, index) => (
@@ -191,6 +196,14 @@ export default function HomePage() {
               data-analytics-location="home_related_tools"
             >
               Latest value updates
+            </Link>
+            <Link
+              href="/trading-values/"
+              data-analytics-event="related_tool_clicked"
+              data-analytics-label="trading-values"
+              data-analytics-location="home_related_tools"
+            >
+              Trading value status
             </Link>
           </div>
         </div>

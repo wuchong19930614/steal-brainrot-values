@@ -16,6 +16,7 @@ export function SiteFooter() {
       <div className="footer-links">
         <Link href="/">Values</Link>
         <Link href="/calculator/">Calculator</Link>
+        <Link href="/trading-values/">Trading values</Link>
         <Link href="/updates/">Updates</Link>
         <span>Updated {lastUpdated}</span>
       </div>

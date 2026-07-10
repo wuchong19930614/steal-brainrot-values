@@ -3,7 +3,12 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { trackEvent } from "@/lib/analytics";
-import { formatCount, formatValue } from "@/lib/data";
+import {
+  formatCount,
+  formatValue,
+  isVerifiedTradeValue,
+  minimumVerifiedTradeValues,
+} from "@/lib/data";
 import type { BrainrotItem } from "@/lib/types";
 
 type TradeCalculatorProps = {
@@ -82,14 +87,22 @@ function totalForOffer(offer: OfferItem[], itemsById: Map<string, BrainrotItem>)
 }
 
 export function TradeCalculator({ items }: TradeCalculatorProps) {
+  const verifiedItems = useMemo(
+    () => items.filter(isVerifiedTradeValue),
+    [items],
+  );
   const [mine, setMine] = useState<OfferItem[]>([]);
   const [theirs, setTheirs] = useState<OfferItem[]>([]);
-  const [mineSelection, setMineSelection] = useState(items[0]?.id || "");
-  const [theirSelection, setTheirSelection] = useState(items[0]?.id || "");
+  const [mineSelection, setMineSelection] = useState(
+    verifiedItems[0]?.id || "",
+  );
+  const [theirSelection, setTheirSelection] = useState(
+    verifiedItems[0]?.id || "",
+  );
 
   const itemsById = useMemo(
-    () => new Map(items.map((item) => [item.id, item])),
-    [items],
+    () => new Map(verifiedItems.map((item) => [item.id, item])),
+    [verifiedItems],
   );
 
   const myTotal = useMemo(() => totalForOffer(mine, itemsById), [itemsById, mine]);
@@ -99,7 +112,7 @@ export function TradeCalculator({ items }: TradeCalculatorProps) {
   );
   const verdict = getVerdict(myTotal, theirTotal);
 
-  if (items.length === 0) {
+  if (verifiedItems.length < minimumVerifiedTradeValues) {
     return (
       <section className="tool-panel" aria-labelledby="calculator-title">
         <div className="panel-heading">
@@ -117,11 +130,11 @@ export function TradeCalculator({ items }: TradeCalculatorProps) {
           <div className="status-list" aria-label="Calculator status">
             <div>
               <span>Verified trade values</span>
-              <strong>0</strong>
+              <strong>{verifiedItems.length}</strong>
             </div>
             <div>
               <span>Minimum to enable</span>
-              <strong>10</strong>
+              <strong>{minimumVerifiedTradeValues}</strong>
             </div>
             <div>
               <span>Unverified math</span>
@@ -151,6 +164,15 @@ export function TradeCalculator({ items }: TradeCalculatorProps) {
               data-analytics-location="calculator_disabled"
             >
               Latest updates
+            </Link>
+            <Link
+              href="/trading-values/"
+              className="secondary-link"
+              data-analytics-event="related_tool_clicked"
+              data-analytics-label="trading-values"
+              data-analytics-location="calculator_disabled"
+            >
+              Trading value status
             </Link>
           </div>
         </div>
@@ -279,7 +301,7 @@ export function TradeCalculator({ items }: TradeCalculatorProps) {
               onChange={(event) => setMineSelection(event.target.value)}
               aria-label="Select item for your offer"
             >
-              {items.map((item) => (
+              {verifiedItems.map((item) => (
                 <option key={item.id} value={item.id}>
                   {item.name}
                 </option>
@@ -304,7 +326,7 @@ export function TradeCalculator({ items }: TradeCalculatorProps) {
               onChange={(event) => setTheirSelection(event.target.value)}
               aria-label="Select item for their offer"
             >
-              {items.map((item) => (
+              {verifiedItems.map((item) => (
                 <option key={item.id} value={item.id}>
                   {item.name}
                 </option>

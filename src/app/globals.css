@@ -443,6 +443,11 @@ a:focus-visible {
   color: var(--green);
 }
 
+.verified-value {
+  background: var(--green-soft);
+  color: var(--green);
+}
+
 .trend-falling {
   background: var(--red-soft);
   color: var(--red);
@@ -506,6 +511,59 @@ a:focus-visible {
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.status-table {
+  width: 100%;
+  min-width: 760px;
+  border-collapse: collapse;
+}
+
+.status-table th,
+.status-table td {
+  border-bottom: 1px solid var(--line);
+  padding: 14px 12px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.status-table thead th {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.status-table tbody th {
+  min-width: 150px;
+}
+
+.status-table tbody tr:last-child th,
+.status-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.status-table .source-link {
+  margin-top: 0;
+}
+
+.status-table p {
+  max-width: 340px;
+  margin: 6px 0 0;
+  font-size: 0.86rem;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
 }
 
 .calculator-empty {

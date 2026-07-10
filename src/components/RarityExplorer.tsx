@@ -1,4 +1,9 @@
-import { formatValue, getRarityGroups } from "@/lib/data";
+import {
+  formatTradeValue,
+  formatValue,
+  getRarityGroups,
+  isVerifiedTradeValue,
+} from "@/lib/data";
 
 export function RarityExplorer() {
   const groups = getRarityGroups();
@@ -7,8 +12,8 @@ export function RarityExplorer() {
     <section className="rarity-grid" aria-label="Steal a Brainrot rarity list">
       {groups.map((group) => {
         const values = group.items
+          .filter(isVerifiedTradeValue)
           .map((item) => item.value)
-          .filter((value) => value > 0);
         const min = values.length ? Math.min(...values) : 0;
         const max = values.length ? Math.max(...values) : 0;
 
@@ -26,7 +31,7 @@ export function RarityExplorer() {
               {group.items.map((item) => (
                 <li key={item.id}>
                   <span>{item.name}</span>
-                  <strong>{formatValue(item.value)}</strong>
+                  <strong>{formatTradeValue(item)}</strong>
                 </li>
               ))}
             </ul>

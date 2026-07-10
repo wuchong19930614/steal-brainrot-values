@@ -1,9 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { trackEvent } from "@/lib/analytics";
-import { formatValue, getDemandLabel, rarityOrder } from "@/lib/data";
+import {
+  formatTradeValue,
+  getDemandLabel,
+  isVerifiedTradeValue,
+  rarityOrder,
+} from "@/lib/data";
 import type { BrainrotItem, Rarity, Trend } from "@/lib/types";
 
 type ValueTableProps = {
@@ -26,6 +31,10 @@ const demandLevels: Array<BrainrotItem["demand"]> = [1, 2, 3, 4, 5];
 const obtainableOptions = ["All", "Obtainable", "Unobtainable"] as const;
 type ObtainableFilter = (typeof obtainableOptions)[number];
 
+function getComparableValue(item: BrainrotItem) {
+  return isVerifiedTradeValue(item) ? item.value : 0;
+}
+
 export function ValueTable({ items }: ValueTableProps) {
   const [query, setQuery] = useState("");
   const [rarity, setRarity] = useState<Rarity | "All">("All");
@@ -33,7 +42,17 @@ export function ValueTable({ items }: ValueTableProps) {
   const [demand, setDemand] = useState<BrainrotItem["demand"] | "All">("All");
   const [obtainable, setObtainable] = useState<ObtainableFilter>("All");
   const [sort, setSort] = useState<SortKey>("value");
-  const hasTrackedSearch = useRef(false);
+  const searchTrackingTimer = useRef<ReturnType<typeof setTimeout> | null>(
+    null,
+  );
+  const lastTrackedSearch = useRef("");
+  const pendingSearch = useRef("");
+
+  useEffect(() => {
+    return () => {
+      flushPendingSearch();
+    };
+  }, []);
 
   const filteredItems = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
@@ -68,13 +87,16 @@ export function ValueTable({ items }: ValueTableProps) {
         }
 
         if (sort === "demand") {
-          return b.demand - a.demand || b.value - a.value;
+          return (
+            b.demand - a.demand ||
+            getComparableValue(b) - getComparableValue(a)
+          );
         }
 
         if (sort === "rarity") {
           return (
             rarityOrder.indexOf(a.rarity) - rarityOrder.indexOf(b.rarity) ||
-            b.value - a.value
+            getComparableValue(b) - getComparableValue(a)
           );
         }
 
@@ -82,7 +104,7 @@ export function ValueTable({ items }: ValueTableProps) {
           return b.lastUpdated.localeCompare(a.lastUpdated);
         }
 
-        return b.value - a.value;
+        return getComparableValue(b) - getComparableValue(a);
       });
   }, [demand, items, obtainable, query, rarity, sort, trend]);
 
@@ -91,18 +113,59 @@ export function ValueTable({ items }: ValueTableProps) {
 
     setQuery(value);
 
+    clearSearchTrackingTimer();
+    pendingSearch.current = "";
+
     if (normalizedValue.length === 0) {
-      hasTrackedSearch.current = false;
+      lastTrackedSearch.current = "";
       return;
     }
 
-    if (normalizedValue.length >= 2 && !hasTrackedSearch.current) {
-      hasTrackedSearch.current = true;
-      trackEvent("item_search_used", {
-        items_total: items.length,
-        search_length: normalizedValue.length,
-      });
+    if (
+      normalizedValue.length < 2 ||
+      normalizedValue === lastTrackedSearch.current
+    ) {
+      return;
     }
+
+    pendingSearch.current = normalizedValue;
+    searchTrackingTimer.current = setTimeout(() => {
+      trackSearch(normalizedValue);
+      searchTrackingTimer.current = null;
+    }, 600);
+  }
+
+  function clearSearchTrackingTimer() {
+    if (!searchTrackingTimer.current) {
+      return;
+    }
+
+    clearTimeout(searchTrackingTimer.current);
+    searchTrackingTimer.current = null;
+  }
+
+  function trackSearch(value: string) {
+    const normalizedValue = value.trim();
+
+    if (
+      normalizedValue.length < 2 ||
+      normalizedValue === lastTrackedSearch.current
+    ) {
+      return;
+    }
+
+    // A settled search can reach this function through debounce, blur, reset, or unmount.
+    lastTrackedSearch.current = normalizedValue;
+    pendingSearch.current = "";
+    trackEvent("item_search_used", {
+      items_total: items.length,
+      search_length: normalizedValue.length,
+    });
+  }
+
+  function flushPendingSearch(value = pendingSearch.current) {
+    clearSearchTrackingTimer();
+    trackSearch(value);
   }
 
   function trackFilter(filterName: string, filterValue: string | number) {
@@ -113,13 +176,16 @@ export function ValueTable({ items }: ValueTableProps) {
   }
 
   function resetFilters() {
+    flushPendingSearch(query);
+
     setQuery("");
     setRarity("All");
     setTrend("All");
     setDemand("All");
     setObtainable("All");
     setSort("value");
-    hasTrackedSearch.current = false;
+    lastTrackedSearch.current = "";
+    pendingSearch.current = "";
     trackFilter("all", "reset");
   }
 
@@ -140,6 +206,12 @@ export function ValueTable({ items }: ValueTableProps) {
             type="search"
             value={query}
             onChange={(event) => handleSearchChange(event.target.value)}
+            onBlur={(event) => flushPendingSearch(event.currentTarget.value)}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") {
+                flushPendingSearch(event.currentTarget.value);
+              }
+            }}
             placeholder="Brainrot name"
           />
         </label>
@@ -271,7 +343,7 @@ export function ValueTable({ items }: ValueTableProps) {
               </span>
             </div>
             <div className="item-value">
-              <strong>{formatValue(item.value)}</strong>
+              <strong>{formatTradeValue(item)}</strong>
               <span>official value</span>
             </div>
           </article>

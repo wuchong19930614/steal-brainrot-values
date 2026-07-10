@@ -14,12 +14,22 @@ export type Tier = "S" | "A" | "B" | "C" | "D";
 
 export type Confidence = "High" | "Medium" | "Low";
 
+export type ValueSourceType =
+  | "official"
+  | "verified-manual"
+  | "community"
+  | "unknown";
+
 export type BrainrotItem = {
   id: string;
   name: string;
   slug: string;
   rarity: Rarity;
   value: number;
+  valueSourceType: ValueSourceType;
+  valueSourceLabel?: string;
+  valueSourceUrl?: string;
+  valueSourceCheckedAt?: string;
   demand: 1 | 2 | 3 | 4 | 5;
   trend: Trend;
   tier: Tier;

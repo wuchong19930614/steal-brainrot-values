@@ -6,6 +6,7 @@ import {
   formatValue,
   getDemandLabel,
   getTierGroups,
+  getVerifiedTradeValueItems,
   rarityOrder,
 } from "@/lib/data";
 
@@ -21,7 +22,7 @@ export function TierBoard() {
   const [sort, setSort] = useState<SortKey>("value");
 
   const rankedItems = useMemo(
-    () => brainrots.filter((item) => item.value > 0),
+    () => getVerifiedTradeValueItems(brainrots),
     [],
   );
 

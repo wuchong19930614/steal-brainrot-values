@@ -70,6 +70,14 @@ export default function UpdatesPage() {
           >
             Calculator
           </Link>
+          <Link
+            href="/trading-values/"
+            data-analytics-event="related_tool_clicked"
+            data-analytics-label="trading-values"
+            data-analytics-location="updates_intro"
+          >
+            Trading values
+          </Link>
         </div>
       </section>
 

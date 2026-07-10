@@ -2,24 +2,24 @@
 
 ## 状态
 
-不发布。只作为 `/trading-values/` 的准备稿，等 [08 的扩展决策门槛](./08-复盘节奏与决策规则.md#扩展决策)满足后再进入实现。
+2026-07-10 已获准作为第 1 批唯一测试页进入实现。发布后只观察该页的索引、impressions 和用户行为，不据此批量扩页面。
 
 当前触发信号：
 
-- GSC 已出现 `steal a brainrot trading values`，2026-07-05 至 2026-07-07 合计 4 impressions。
+- GSC 已连续出现 `steal a brainrot trading values`，2026-07-05 至 2026-07-09 合计 6 impressions，位置约 55-64。
 - GSC 已出现 `trading values steal a brainrot`、`steal a brainrot value trading`、`brainrot trader value` 等相邻 query。
 - GSC 已出现 calculator / tierlist / values calculator 相关 query。
-- 5 个核心页面已收录，但 impressions 尚未连续 7 天出现；当前只增强现有页面承接，不发布本页。
-- 2026-07-08 已在首页增加 trading values FAQ 用于低风险承接；本页仍保持草稿状态。
+- 5 个核心页面已收录，2026-07-04 至 2026-07-10 已连续 7 天出现 impressions。
+- 2026-07-08 已在首页增加 trading values FAQ 用于低风险承接；该页将与首页区分为「交易价值状态和核验规则」，不重复普通 value-list intent。
 
-## 2026-07-08 轻量准备项
+## 2026-07-10 生产范围
 
-今天只允许做草稿准备，不进入路由、sitemap 或内链：
+本次只发布这个页面，并进入路由、sitemap 和相关内链：
 
 - 补充 `official value unavailable` 解释文案，避免用户误以为站点有完整价格表。
-- 准备 future calculator enable rules：至少 10 个 verified value 后才开启 trade math。
-- 准备 item detail 模板，但不生成真实详情页。
-- 等 GA4 custom definitions 回流后，再用 `calculator_disabled`、`Link text`、`Search length` 判断用户真实意图。
+- 明确 calculator enable rule：至少 10 个 verified value 后才开启 trade math。
+- 输出独立 metadata、BreadcrumbList、ItemList、FAQPage、来源状态表和相关工具内链。
+- 复用 GA4 现有 `related_tool_clicked` 与 `official_source_clicked` 埋点；不注册新 custom definition。
 
 ## 页面定位
 
@@ -82,8 +82,8 @@ Primary links:
 
 数据规则：
 
-- `value <= 0` 显示 `TBD`。
-- 来源为官方商品页时标记 `Official item source`。
+- 只有 verified value 才显示数字；其他状态一律显示 `TBD`。
+- item 来源与 value 来源分开保存；来源为官方商品页时只标记 `Official item source`，不能自动变成 trade value source。
 - 来源不足时不进入生产数据。
 
 ### Why Values Are TBD
@@ -111,7 +111,7 @@ A: The public official sources checked so far do not publish a complete trade va
 
 Q: Why is the calculator disabled?
 
-A: The calculator only works when at least one verified item value exists. It does not use unverified values for trade math.
+A: The calculator only works when at least 10 verified item values have a source and check date. It does not use unverified values for trade math.
 
 Q: Can fan-made estimates be added?
 

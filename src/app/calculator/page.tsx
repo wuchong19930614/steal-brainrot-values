@@ -73,7 +73,7 @@ export default function CalculatorPage() {
         </div>
       </section>
 
-      <TradeCalculator items={brainrots.filter((item) => item.value > 0)} />
+      <TradeCalculator items={brainrots} />
     </>
   );
 }

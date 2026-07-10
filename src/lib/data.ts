@@ -22,6 +22,7 @@ export const brainrots: BrainrotItem[] = [
     slug: "festive-67",
     rarity: "Limited",
     value: 0,
+    valueSourceType: "unknown",
     demand: 1,
     trend: "Unknown",
     tier: "D",
@@ -40,6 +41,7 @@ export const brainrots: BrainrotItem[] = [
     slug: "boppin-bunny",
     rarity: "Limited",
     value: 0,
+    valueSourceType: "unknown",
     demand: 1,
     trend: "Unknown",
     tier: "D",
@@ -126,6 +128,31 @@ export function formatValue(value: number) {
   return new Intl.NumberFormat("en-US").format(value);
 }
 
+export const minimumVerifiedTradeValues = 10;
+
+export function isVerifiedTradeValue(item: BrainrotItem) {
+  return (
+    item.value > 0 &&
+    (item.valueSourceType === "official" ||
+      item.valueSourceType === "verified-manual") &&
+    Boolean(
+      item.valueSourceLabel &&
+        item.valueSourceUrl &&
+        item.valueSourceCheckedAt,
+    )
+  );
+}
+
+export function getVerifiedTradeValueItems(
+  sourceItems: BrainrotItem[] = brainrots,
+) {
+  return sourceItems.filter(isVerifiedTradeValue);
+}
+
+export function formatTradeValue(item: BrainrotItem) {
+  return isVerifiedTradeValue(item) ? formatValue(item.value) : "TBD";
+}
+
 export function formatCount(value: number) {
   return new Intl.NumberFormat("en-US").format(value);
 }
@@ -161,5 +188,5 @@ export function getTierGroups(sourceItems: BrainrotItem[] = brainrots) {
 }
 
 export function getTotalTrackedValue() {
-  return brainrots.reduce((sum, item) => sum + item.value, 0);
+  return getVerifiedTradeValueItems().reduce((sum, item) => sum + item.value, 0);
 }
