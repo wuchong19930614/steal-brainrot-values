@@ -30,6 +30,7 @@ const demandLevels: Array<BrainrotItem["demand"]> = [1, 2, 3, 4, 5];
 
 const obtainableOptions = ["All", "Obtainable", "Unobtainable"] as const;
 type ObtainableFilter = (typeof obtainableOptions)[number];
+const searchSettleDelayMs = 1000;
 
 function getComparableValue(item: BrainrotItem) {
   return isVerifiedTradeValue(item) ? item.value : 0;
@@ -45,7 +46,7 @@ export function ValueTable({ items }: ValueTableProps) {
   const searchTrackingTimer = useRef<ReturnType<typeof setTimeout> | null>(
     null,
   );
-  const lastTrackedSearch = useRef("");
+  const hasTrackedSearch = useRef(false);
   const pendingSearch = useRef("");
 
   useEffect(() => {
@@ -117,14 +118,11 @@ export function ValueTable({ items }: ValueTableProps) {
     pendingSearch.current = "";
 
     if (normalizedValue.length === 0) {
-      lastTrackedSearch.current = "";
+      hasTrackedSearch.current = false;
       return;
     }
 
-    if (
-      normalizedValue.length < 2 ||
-      normalizedValue === lastTrackedSearch.current
-    ) {
+    if (normalizedValue.length < 2 || hasTrackedSearch.current) {
       return;
     }
 
@@ -132,7 +130,7 @@ export function ValueTable({ items }: ValueTableProps) {
     searchTrackingTimer.current = setTimeout(() => {
       trackSearch(normalizedValue);
       searchTrackingTimer.current = null;
-    }, 600);
+    }, searchSettleDelayMs);
   }
 
   function clearSearchTrackingTimer() {
@@ -147,15 +145,13 @@ export function ValueTable({ items }: ValueTableProps) {
   function trackSearch(value: string) {
     const normalizedValue = value.trim();
 
-    if (
-      normalizedValue.length < 2 ||
-      normalizedValue === lastTrackedSearch.current
-    ) {
+    if (normalizedValue.length < 2 || hasTrackedSearch.current) {
       return;
     }
 
     // A settled search can reach this function through debounce, blur, reset, or unmount.
-    lastTrackedSearch.current = normalizedValue;
+    // Record only once until the field is cleared or reset into a new search session.
+    hasTrackedSearch.current = true;
     pendingSearch.current = "";
     trackEvent("item_search_used", {
       items_total: items.length,
@@ -184,7 +180,7 @@ export function ValueTable({ items }: ValueTableProps) {
     setDemand("All");
     setObtainable("All");
     setSort("value");
-    lastTrackedSearch.current = "";
+    hasTrackedSearch.current = false;
     pendingSearch.current = "";
     trackFilter("all", "reset");
   }
