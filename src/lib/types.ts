@@ -20,6 +20,12 @@ export type ValueSourceType =
   | "community"
   | "unknown";
 
+export type SourceReference = {
+  label: string;
+  url: string;
+  checkedAt: string;
+};
+
 export type BrainrotItem = {
   id: string;
   name: string;
@@ -39,6 +45,7 @@ export type BrainrotItem = {
   confidence: Confidence;
   sourceLabel: string;
   sourceUrl: string;
+  additionalSources?: SourceReference[];
   lastUpdated: string;
 };
 
@@ -54,4 +61,16 @@ export type ValueUpdate = {
     newValue?: number;
     note?: string;
   }>;
+};
+
+export type CommunityEstimateCandidate = {
+  itemId: string;
+  itemName: string;
+  referenceValue: number;
+  unitLabel: string;
+  sourceLabel: string;
+  sourceUrl: string;
+  sourcePublishedAt: string;
+  sourceCheckedAt: string;
+  status: "Needs second source";
 };

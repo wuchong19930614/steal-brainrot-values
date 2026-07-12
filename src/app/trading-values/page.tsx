@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { CommunityEstimateCandidates } from "@/components/CommunityEstimateCandidates";
 import { JsonLd } from "@/components/JsonLd";
 import {
   brainrots,
+  communityEstimateCandidates,
   formatValue,
   getVerifiedTradeValueItems,
   isVerifiedTradeValue,
@@ -27,6 +29,11 @@ const faqs = [
     question: "When will the trade calculator turn on?",
     answer:
       `The calculator stays blocked until the tracker has at least ${minimumVerifiedTradeValues} official or manually verified trade values with a source and check date. It does not use guessed values for trade math.`,
+  },
+  {
+    question: "Do community estimates turn on the calculator?",
+    answer:
+      "No. A single-source community estimate is displayed only as a research candidate. It needs a compatible second source and a fresh review before it can become a verified trade value.",
   },
 ];
 
@@ -84,7 +91,7 @@ export default function TradingValuesPage() {
             description:
               isVerifiedTradeValue(item)
                 ? `Verified trade value: ${formatValue(item.value)}.`
-                : "Official item source confirmed. Trade value is not publicly published.",
+                : "Item source is listed. Trade value is not publicly published.",
           })),
         }}
       />
@@ -109,7 +116,7 @@ export default function TradingValuesPage() {
           <h1>Steal a Brainrot trading values</h1>
           <p>
             Check which trade values have a reliable source, which items are
-            only officially identified, and why unverified values stay TBD.
+            source-labeled, and why unverified values stay TBD.
           </p>
         </div>
         <div className="intro-link-stack">
@@ -150,6 +157,8 @@ export default function TradingValuesPage() {
           </p>
         </div>
       </section>
+
+      <CommunityEstimateCandidates candidates={communityEstimateCandidates} />
 
       <section className="tool-panel" aria-labelledby="trading-status-title">
         <div className="panel-heading">

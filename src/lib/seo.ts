@@ -1,6 +1,6 @@
 export const siteName = "Steal a Brainrot Values";
 export const siteDescription =
-  "Track official-source Steal a Brainrot items and see which trade values are still unpublished or awaiting verification.";
+  "Track source-labeled Steal a Brainrot items and see which trade values are still unpublished or awaiting verification.";
 
 export function getSiteUrl() {
   return (

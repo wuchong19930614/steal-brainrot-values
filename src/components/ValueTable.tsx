@@ -189,7 +189,7 @@ export function ValueTable({ items }: ValueTableProps) {
     <section className="tool-panel" aria-labelledby="values-table-title">
       <div className="panel-heading">
         <div>
-          <p className="eyebrow">Official-source tracker</p>
+          <p className="eyebrow">Source-tracked catalog</p>
           <h2 id="values-table-title">Steal a Brainrot values</h2>
         </div>
         <span className="result-count">{filteredItems.length} items</span>
@@ -325,6 +325,20 @@ export function ValueTable({ items }: ValueTableProps) {
                 >
                   {item.sourceLabel}
                 </a>
+                {item.additionalSources?.map((source) => (
+                  <a
+                    className="source-link"
+                    href={source.url}
+                    key={source.url}
+                    rel="noreferrer"
+                    target="_blank"
+                    data-analytics-event="official_source_clicked"
+                    data-analytics-label={source.label}
+                    data-analytics-location="value_table_cross_check"
+                  >
+                    Cross-check: {source.label}
+                  </a>
+                ))}
               </div>
             </div>
             <div className="item-meta">
@@ -350,9 +364,9 @@ export function ValueTable({ items }: ValueTableProps) {
         <div className="empty-state no-results">
           <strong>No matching Brainrots found.</strong>
           <p>
-            This tracker only lists official-source items right now. Searched
-            items that are not shown are still unverified, not hidden trade
-            values.
+            This tracker lists official and clearly labeled community-catalog
+            items. Searched items that are not shown are still unverified, not
+            hidden trade values.
           </p>
           <div className="empty-actions">
             <button type="button" onClick={resetFilters}>

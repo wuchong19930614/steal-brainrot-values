@@ -50,7 +50,7 @@ export default function UpdatesPage() {
           <h1>Steal a Brainrot value updates</h1>
           <p>
             Follow value changes, new tracked items, and demand shifts from the
-            official-source tracker.
+            source-tracked catalog.
           </p>
         </div>
         <div className="intro-link-stack">

@@ -34,14 +34,14 @@ const faqs = [
 export const metadata: Metadata = {
   title: "Steal a Brainrot Values - Value List, Demand & Trade Prices",
   description:
-    "Check official-source Steal a Brainrot items and see which trade values are still unpublished or awaiting verification.",
+    "Check source-labeled Steal a Brainrot items and see which trade values are still unpublished or awaiting verification.",
   alternates: {
     canonical: absoluteUrl("/"),
   },
   openGraph: {
     title: "Steal a Brainrot Values - Value List, Demand & Trade Prices",
     description:
-      "Check official-source Steal a Brainrot items and see which trade values are still unpublished or awaiting verification.",
+      "Check source-labeled Steal a Brainrot items and see which trade values are still unpublished or awaiting verification.",
     url: absoluteUrl("/"),
   },
 };
@@ -102,7 +102,7 @@ export default function HomePage() {
           <p className="eyebrow">Updated {lastUpdated}</p>
           <h1>Steal a Brainrot values</h1>
           <p>
-            Track official-source Brainrot items and see which trade values are
+            Track source-labeled Brainrot items and see which trade values are
             still unpublished.
           </p>
           <div className="intro-actions">
