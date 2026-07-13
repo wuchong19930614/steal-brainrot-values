@@ -18,9 +18,10 @@ export function CommunityEstimateCandidates({
       </div>
       <p>
         These are single-source community reference values, not verified trade
-        values. Their source uses La Vacca Saturno Saturnita as its reference
-        unit and was published on March 1, 2026. They are not used by the
-        calculator or tier list.
+        values. In their source, 1.00 represents one La Vacca Saturno Saturnita;
+        each candidate is a fraction of that reference, not in-game cash or
+        Robux. The list was published on March 1, 2026. These candidates are not
+        used by the calculator or tier list.
       </p>
       <div className="table-wrap">
         <table className="status-table">
@@ -39,7 +40,9 @@ export function CommunityEstimateCandidates({
           <tbody>
             {candidates.map((candidate) => (
               <tr key={candidate.itemId}>
-                <th scope="row">{candidate.itemName}</th>
+                <th scope="row">
+                  <a href={`#${candidate.itemId}`}>{candidate.itemName}</a>
+                </th>
                 <td>{candidate.referenceValue}</td>
                 <td>{candidate.unitLabel}</td>
                 <td>
@@ -54,7 +57,9 @@ export function CommunityEstimateCandidates({
                   >
                     {candidate.sourceLabel}
                   </a>
-                  <p>Published {candidate.sourcePublishedAt}</p>
+                  <p>
+                    Published {candidate.sourcePublishedAt}; checked {candidate.sourceCheckedAt}
+                  </p>
                 </td>
                 <td>
                   <span className="pill trend-unknown">{candidate.status}</span>

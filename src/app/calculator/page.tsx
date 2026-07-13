@@ -1,24 +1,15 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { JsonLd } from "@/components/JsonLd";
 import { TradeCalculator } from "@/components/TradeCalculator";
 import { brainrots, lastUpdated } from "@/lib/data";
-import { absoluteUrl } from "@/lib/seo";
+import { absoluteUrl, createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Steal a Brainrot Calculator - Check Fair Trades",
+export const metadata = createPageMetadata({
+  title: "Steal a Brainrot Calculator - Verification Status",
   description:
-    "Compare Steal a Brainrot trades with a simple value calculator for fair, win, and loss trades.",
-  alternates: {
-    canonical: absoluteUrl("/calculator/"),
-  },
-  openGraph: {
-    title: "Steal a Brainrot Calculator - Check Fair Trades",
-    description:
-      "Compare Steal a Brainrot trades with a simple value calculator for fair, win, and loss trades.",
-    url: absoluteUrl("/calculator/"),
-  },
-};
+    "Check Steal a Brainrot calculator availability, review source-labeled value candidates, and see why trade results remain blocked until values are verified.",
+  path: "/calculator/",
+});
 
 export default function CalculatorPage() {
   return (

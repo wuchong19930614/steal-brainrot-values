@@ -5,6 +5,11 @@ import { usePathname } from "next/navigation";
 
 const navItems = [
   { href: "/", label: "Values", analyticsLabel: "values" },
+  {
+    href: "/trading-values/",
+    label: "Trading Values",
+    analyticsLabel: "trading-values",
+  },
   { href: "/calculator/", label: "Calculator", analyticsLabel: "calculator" },
   { href: "/tier-list/", label: "Tier List", analyticsLabel: "tier-list" },
   { href: "/rarity-list/", label: "Rarity", analyticsLabel: "rarity-list" },
@@ -32,21 +37,17 @@ export function SiteHeader() {
         {navItems.map((item) => {
           const isCurrent = normalizePath(item.href) === currentPath;
 
-          if (isCurrent) {
-            return (
-              <span key={item.href} aria-current="page" className="current-nav-item">
-                {item.label}
-              </span>
-            );
-          }
-
           return (
             <Link
               key={item.href}
               href={item.href}
-              data-analytics-event="related_tool_clicked"
-              data-analytics-label={item.analyticsLabel}
-              data-analytics-location="header_nav"
+              aria-current={isCurrent ? "page" : undefined}
+              className={isCurrent ? "current-nav-item" : undefined}
+              data-analytics-event={
+                isCurrent ? undefined : "related_tool_clicked"
+              }
+              data-analytics-label={isCurrent ? undefined : item.analyticsLabel}
+              data-analytics-location={isCurrent ? undefined : "header_nav"}
             >
               {item.label}
             </Link>

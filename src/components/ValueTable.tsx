@@ -354,7 +354,7 @@ export function ValueTable({ items }: ValueTableProps) {
             </div>
             <div className="item-value">
               <strong>{formatTradeValue(item)}</strong>
-              <span>official value</span>
+              <span>trade value status</span>
             </div>
           </article>
         ))}

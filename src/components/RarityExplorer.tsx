@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   formatTradeValue,
   formatValue,
@@ -30,7 +31,14 @@ export function RarityExplorer() {
             <ul>
               {group.items.map((item) => (
                 <li key={item.id}>
-                  <span>{item.name}</span>
+                  <Link
+                    href={`/trading-values/#${item.slug}`}
+                    data-analytics-event="related_tool_clicked"
+                    data-analytics-label={item.slug}
+                    data-analytics-location="rarity_item"
+                  >
+                    {item.name}
+                  </Link>
                   <strong>{formatTradeValue(item)}</strong>
                 </li>
               ))}

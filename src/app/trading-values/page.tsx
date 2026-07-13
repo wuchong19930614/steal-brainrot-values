@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { CommunityEstimateCandidates } from "@/components/CommunityEstimateCandidates";
 import { JsonLd } from "@/components/JsonLd";
@@ -12,7 +11,7 @@ import {
   minimumVerifiedTradeValues,
   officialSources,
 } from "@/lib/data";
-import { absoluteUrl } from "@/lib/seo";
+import { absoluteUrl, createPageMetadata } from "@/lib/seo";
 
 const faqs = [
   {
@@ -37,20 +36,12 @@ const faqs = [
   },
 ];
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: "Steal a Brainrot Trading Values - Trade Value Status",
   description:
-    "Check Steal a Brainrot trading value status, verified sources, and which Brainrot trade values are still unpublished or awaiting verification.",
-  alternates: {
-    canonical: absoluteUrl("/trading-values/"),
-  },
-  openGraph: {
-    title: "Steal a Brainrot Trading Values - Trade Value Status",
-    description:
-      "Check Steal a Brainrot trading value status, verified sources, and which Brainrot trade values are still unpublished or awaiting verification.",
-    url: absoluteUrl("/trading-values/"),
-  },
-};
+    "Review source-labeled Steal a Brainrot trading value candidates, verification status, source dates, and why unpublished values remain marked TBD.",
+  path: "/trading-values/",
+});
 
 export default function TradingValuesPage() {
   const verifiedValueItems = getVerifiedTradeValueItems();
@@ -95,21 +86,6 @@ export default function TradingValuesPage() {
           })),
         }}
       />
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          mainEntity: faqs.map((faq) => ({
-            "@type": "Question",
-            name: faq.question,
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: faq.answer,
-            },
-          })),
-        }}
-      />
-
       <section className="page-intro">
         <div>
           <p className="eyebrow">Last checked {lastUpdated}</p>
@@ -245,10 +221,20 @@ export default function TradingValuesPage() {
         <div>
           <h2>How a value becomes verified</h2>
           <p>
-            A verified value needs a published source, a clear item match, and
-            a check date. Fan-made estimates can only appear when their source,
-            confidence, and update date are labeled separately.
+            A verified value needs at least two independent, comparable
+            sources, a clear item match, normalized units, and a fresh review.
+            Conflicting or single-source estimates stay outside the calculator.
+            The full process explains how sources are accepted, rejected, and
+            rechecked.
           </p>
+          <Link
+            href="/methodology/"
+            data-analytics-event="related_tool_clicked"
+            data-analytics-label="methodology"
+            data-analytics-location="trading_values_methodology"
+          >
+            Read the verification methodology
+          </Link>
         </div>
         <div>
           <h2>Related trade tools</h2>

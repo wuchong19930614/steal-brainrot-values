@@ -75,28 +75,13 @@ export default function HomePage() {
             url: absoluteUrl(`/#${item.slug}`),
             description:
               isVerifiedTradeValue(item)
-                ? `${item.rarity} item with an official trade value of ${formatValue(
+                ? `${item.rarity} item with a verified trade value of ${formatValue(
                     item.value,
                   )}.`
                 : `${item.rarity} item. Official trade value not yet published.`,
           })),
         }}
       />
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          mainEntity: faqs.map((faq) => ({
-            "@type": "Question",
-            name: faq.question,
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: faq.answer,
-            },
-          })),
-        }}
-      />
-
       <section className="page-intro compact-intro">
         <div>
           <p className="eyebrow">Updated {lastUpdated}</p>
@@ -107,29 +92,29 @@ export default function HomePage() {
           </p>
           <div className="intro-actions">
             <Link
-              href="/calculator/"
+              href="/trading-values/"
               className="primary-link"
+              data-analytics-event="related_tool_clicked"
+              data-analytics-label="trading-values"
+              data-analytics-location="home_intro"
+            >
+              Review value candidates
+            </Link>
+            <Link
+              href="/calculator/"
+              className="secondary-link"
               data-analytics-event="related_tool_clicked"
               data-analytics-label="calculator"
               data-analytics-location="home_intro"
             >
-              Trade calculator
-            </Link>
-            <Link
-              href="/tier-list/"
-              className="secondary-link"
-              data-analytics-event="related_tool_clicked"
-              data-analytics-label="tier-list"
-              data-analytics-location="home_intro"
-            >
-              Tier list
+              Calculator status
             </Link>
           </div>
         </div>
 
         <aside className="snapshot" aria-label="Value snapshot">
           <div>
-            <span>Official values</span>
+            <span>Verified trade values</span>
             <strong>{formatValue(getTotalTrackedValue())}</strong>
           </div>
           <div>
@@ -204,6 +189,14 @@ export default function HomePage() {
               data-analytics-location="home_related_tools"
             >
               Trading value status
+            </Link>
+            <Link
+              href="/methodology/"
+              data-analytics-event="related_tool_clicked"
+              data-analytics-label="methodology"
+              data-analytics-location="home_related_tools"
+            >
+              Verification methodology
             </Link>
           </div>
         </div>

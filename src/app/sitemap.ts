@@ -1,23 +1,20 @@
 import type { MetadataRoute } from "next";
-import { lastUpdated } from "@/lib/data";
 import { absoluteUrl } from "@/lib/seo";
 
 const routes = [
-  "/",
-  "/calculator/",
-  "/tier-list/",
-  "/rarity-list/",
-  "/updates/",
-  "/trading-values/",
+  { path: "/", lastModified: "2026-07-13" },
+  { path: "/calculator/", lastModified: "2026-07-13" },
+  { path: "/tier-list/", lastModified: "2026-07-13" },
+  { path: "/rarity-list/", lastModified: "2026-07-13" },
+  { path: "/updates/", lastModified: "2026-07-13" },
+  { path: "/trading-values/", lastModified: "2026-07-13" },
+  { path: "/methodology/", lastModified: "2026-07-13" },
+  { path: "/privacy/", lastModified: "2026-07-13" },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return routes.map((route) => ({
-    url: absoluteUrl(route),
-    lastModified: new Date(
-      route === "/trading-values/" ? "2026-07-10" : lastUpdated,
-    ),
-    changeFrequency: route === "/" ? "daily" : "weekly",
-    priority: route === "/" ? 1 : 0.8,
+    url: absoluteUrl(route.path),
+    lastModified: new Date(route.lastModified),
   }));
 }

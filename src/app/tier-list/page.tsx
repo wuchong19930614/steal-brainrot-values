@@ -1,24 +1,15 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { JsonLd } from "@/components/JsonLd";
 import { TierBoard } from "@/components/TierBoard";
 import { lastUpdated } from "@/lib/data";
-import { absoluteUrl } from "@/lib/seo";
+import { absoluteUrl, createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Steal a Brainrot Tier List - Best Brainrots Ranked",
+export const metadata = createPageMetadata({
+  title: "Steal a Brainrot Tier List - Ranking Status & Method",
   description:
-    "See the best Brainrots ranked by value, demand, rarity, and trading strength in a fan-made tier list.",
-  alternates: {
-    canonical: absoluteUrl("/tier-list/"),
-  },
-  openGraph: {
-    title: "Steal a Brainrot Tier List - Best Brainrots Ranked",
-    description:
-      "See the best Brainrots ranked by value, demand, rarity, and trading strength in a fan-made tier list.",
-    url: absoluteUrl("/tier-list/"),
-  },
-};
+    "Review the Steal a Brainrot tier-list method, current ranking status, and the verified-value requirement used before any Brainrot receives a tier.",
+  path: "/tier-list/",
+});
 
 export default function TierListPage() {
   return (
@@ -63,12 +54,12 @@ export default function TierListPage() {
             Value list
           </Link>
           <Link
-            href="/calculator/"
+            href="/trading-values/"
             data-analytics-event="related_tool_clicked"
-            data-analytics-label="calculator"
+            data-analytics-label="trading-values"
             data-analytics-location="tier_intro"
           >
-            Calculator
+            Trading values
           </Link>
         </div>
       </section>
@@ -77,11 +68,12 @@ export default function TierListPage() {
 
       <section className="content-band single">
         <div>
-          <h2>Tier methodology</h2>
+          <h2>Ranking method</h2>
           <p>
-            S tier items combine high value and high demand. A tier items are
-            strong trades with less heat. Lower tiers are still useful for
-            balancing offers, but they are easier to replace.
+            The tier list only ranks items with verified trade values. When it
+            is enabled, tiers combine comparable value and demand evidence;
+            items with missing or conflicting evidence remain unranked rather
+            than receiving a guessed tier.
           </p>
         </div>
       </section>

@@ -1,24 +1,15 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { JsonLd } from "@/components/JsonLd";
 import { UpdateTimeline } from "@/components/UpdateTimeline";
 import { lastUpdated } from "@/lib/data";
-import { absoluteUrl } from "@/lib/seo";
+import { absoluteUrl, createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Steal a Brainrot Value Updates - Latest Changes",
+export const metadata = createPageMetadata({
+  title: "Steal a Brainrot Value Updates - Source Check Log",
   description:
-    "Track the latest Steal a Brainrot value changes, added Brainrots, demand shifts, and trading updates.",
-  alternates: {
-    canonical: absoluteUrl("/updates/"),
-  },
-  openGraph: {
-    title: "Steal a Brainrot Value Updates - Latest Changes",
-    description:
-      "Track the latest Steal a Brainrot value changes, added Brainrots, demand shifts, and trading updates.",
-    url: absoluteUrl("/updates/"),
-  },
-};
+    "Review the Steal a Brainrot source-check log, catalog additions, value verification decisions, and dated changes to the fan-made tracker.",
+  path: "/updates/",
+});
 
 export default function UpdatesPage() {
   return (
@@ -49,8 +40,8 @@ export default function UpdatesPage() {
           <p className="eyebrow">Updated {lastUpdated}</p>
           <h1>Steal a Brainrot value updates</h1>
           <p>
-            Follow value changes, new tracked items, and demand shifts from the
-            source-tracked catalog.
+            Follow source checks, catalog additions, and value verification
+            decisions from the source-tracked catalog.
           </p>
         </div>
         <div className="intro-link-stack">

@@ -18,6 +18,15 @@ export function SiteFooter() {
         <Link href="/calculator/">Calculator</Link>
         <Link href="/trading-values/">Trading values</Link>
         <Link href="/updates/">Updates</Link>
+        <Link href="/methodology/">Methodology</Link>
+        <Link href="/privacy/">Privacy</Link>
+        <a
+          href="https://github.com/wuchong19930614/steal-brainrot-values/issues/new"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Report a correction
+        </a>
         <span>Updated {lastUpdated}</span>
       </div>
     </footer>

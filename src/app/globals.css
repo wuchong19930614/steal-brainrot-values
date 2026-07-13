@@ -5,13 +5,13 @@
   --ink: #172026;
   --muted: #5f6d75;
   --line: #dce4e8;
-  --green: #0f8a5f;
+  --green: #0b6b4a;
   --green-soft: #dff5ec;
-  --red: #c94b4b;
+  --red: #963434;
   --red-soft: #fde8e8;
   --blue: #2c68c9;
   --blue-soft: #e4edff;
-  --yellow: #a56a00;
+  --yellow: #744700;
   --yellow-soft: #fff0c7;
   --violet: #7057c9;
   --violet-soft: #eeeafd;
@@ -377,6 +377,8 @@ a:focus-visible {
 
 .source-link {
   display: inline-flex;
+  align-items: center;
+  min-height: 40px;
   margin-top: 8px;
   color: var(--blue);
   font-size: 0.82rem;
@@ -742,7 +744,8 @@ a:focus-visible {
   gap: 10px;
 }
 
-.source-grid a {
+.source-grid a,
+.source-grid article {
   display: grid;
   gap: 6px;
   min-height: 96px;
@@ -890,6 +893,12 @@ details p {
   padding-top: 8px;
 }
 
+.rarity-card li a,
+.status-table tbody th a {
+  color: var(--blue);
+  font-weight: 800;
+}
+
 .update-timeline {
   display: grid;
   gap: 14px;
@@ -1004,15 +1013,28 @@ details p {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .site-nav > :last-child {
-    grid-column: 1 / -1;
-  }
-
   .site-nav a,
   .current-nav-item {
     width: 100%;
     min-width: 0;
+    min-height: 44px;
     padding: 0 10px;
+  }
+
+  .footer-links a,
+  .intro-link-stack a,
+  .primary-link,
+  .secondary-link,
+  .source-link,
+  button,
+  .rarity-card li a,
+  .status-table tbody th a {
+    min-height: 44px;
+  }
+
+  input,
+  select {
+    min-height: 44px;
   }
 
   .page-intro,

@@ -1,24 +1,15 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { JsonLd } from "@/components/JsonLd";
 import { RarityExplorer } from "@/components/RarityExplorer";
 import { lastUpdated } from "@/lib/data";
-import { absoluteUrl } from "@/lib/seo";
+import { absoluteUrl, createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Steal a Brainrot Rarity List - All Brainrots by Rarity",
+export const metadata = createPageMetadata({
+  title: "Steal a Brainrot Rarity List - Tracked Brainrots",
   description:
-    "Browse officially sourced Steal a Brainrot items by rarity and see which trade values are still unpublished.",
-  alternates: {
-    canonical: absoluteUrl("/rarity-list/"),
-  },
-  openGraph: {
-    title: "Steal a Brainrot Rarity List - All Brainrots by Rarity",
-    description:
-      "Browse officially sourced Steal a Brainrot items by rarity and see which trade values are still unpublished.",
-    url: absoluteUrl("/rarity-list/"),
-  },
-};
+    "Browse source-labeled Steal a Brainrot items by rarity, open each tracked item, and see which trade values are verified, unpublished, or still under review.",
+  path: "/rarity-list/",
+});
 
 export default function RarityListPage() {
   return (
@@ -49,8 +40,8 @@ export default function RarityListPage() {
           <p className="eyebrow">Updated {lastUpdated}</p>
           <h1>Steal a Brainrot rarity list</h1>
           <p>
-            Compare Brainrots by rarity group and value range before checking a
-            trade.
+            Browse tracked Brainrots by rarity group, then open each item to
+            review its source and trade value status.
           </p>
         </div>
         <div className="intro-link-stack">
@@ -63,12 +54,12 @@ export default function RarityListPage() {
             Value list
           </Link>
           <Link
-            href="/calculator/"
+            href="/trading-values/"
             data-analytics-event="related_tool_clicked"
-            data-analytics-label="calculator"
+            data-analytics-label="trading-values"
             data-analytics-location="rarity_intro"
           >
-            Calculator
+            Trading values
           </Link>
         </div>
       </section>
