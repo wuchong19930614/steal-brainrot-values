@@ -143,13 +143,22 @@ export function TradeCalculator({ items }: TradeCalculatorProps) {
           </div>
           <p className="calculator-note">
             The calculator will not use guessed or unsourced values. Use the
-            value list while values are marked TBD, or check updates for the
-            next source audit.
+            source-labeled candidate list to review the current evidence, or
+            check updates for the next source audit.
           </p>
           <div className="intro-actions compact-actions">
             <Link
-              href="/"
+              href="/trading-values/"
               className="primary-link"
+              data-analytics-event="related_tool_clicked"
+              data-analytics-label="trading-values"
+              data-analytics-location="calculator_disabled"
+            >
+              Review value candidates
+            </Link>
+            <Link
+              href="/"
+              className="secondary-link"
               data-analytics-event="related_tool_clicked"
               data-analytics-label="values"
               data-analytics-location="calculator_disabled"
@@ -164,15 +173,6 @@ export function TradeCalculator({ items }: TradeCalculatorProps) {
               data-analytics-location="calculator_disabled"
             >
               Latest updates
-            </Link>
-            <Link
-              href="/trading-values/"
-              className="secondary-link"
-              data-analytics-event="related_tool_clicked"
-              data-analytics-label="trading-values"
-              data-analytics-location="calculator_disabled"
-            >
-              Trading value status
             </Link>
           </div>
         </div>

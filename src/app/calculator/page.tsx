@@ -55,20 +55,20 @@ export default function CalculatorPage() {
         </div>
         <div className="intro-link-stack">
           <Link
+            href="/trading-values/"
+            data-analytics-event="related_tool_clicked"
+            data-analytics-label="trading-values"
+            data-analytics-location="calculator_intro"
+          >
+            Review value candidates
+          </Link>
+          <Link
             href="/"
             data-analytics-event="related_tool_clicked"
             data-analytics-label="values"
             data-analytics-location="calculator_intro"
           >
             Value list
-          </Link>
-          <Link
-            href="/tier-list/"
-            data-analytics-event="related_tool_clicked"
-            data-analytics-label="tier-list"
-            data-analytics-location="calculator_intro"
-          >
-            Tier list
           </Link>
         </div>
       </section>

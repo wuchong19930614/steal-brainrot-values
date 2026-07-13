@@ -47,7 +47,10 @@ export function CommunityEstimateCandidates({
                     className="source-link"
                     href={candidate.sourceUrl}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
+                    data-analytics-event="community_source_clicked"
+                    data-analytics-label={candidate.itemId}
+                    data-analytics-location="community_estimate_candidate"
                   >
                     {candidate.sourceLabel}
                   </a>

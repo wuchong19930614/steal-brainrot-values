@@ -2,6 +2,7 @@ export type AnalyticsEventName =
   | "calculator_used"
   | "filter_used"
   | "item_search_used"
+  | "community_source_clicked"
   | "official_source_clicked"
   | "related_tool_clicked";
 

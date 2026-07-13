@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { trackEvent, type AnalyticsEventName } from "@/lib/analytics";
 
 const supportedEvents: AnalyticsEventName[] = [
+  "community_source_clicked",
   "official_source_clicked",
   "related_tool_clicked",
 ];
