@@ -7,7 +7,7 @@ import { absoluteUrl, createPageMetadata } from "@/lib/seo";
 export const metadata = createPageMetadata({
   title: "Steal a Brainrot Rarity List - Tracked Brainrots",
   description:
-    "Browse source-labeled Steal a Brainrot items by rarity, open each tracked item, and see which trade values are verified, unpublished, or still under review.",
+    "Browse source-labeled Steal a Brainrot items by rarity and compare verified Default marketplace asking prices in USD.",
   path: "/rarity-list/",
 });
 
@@ -41,7 +41,7 @@ export default function RarityListPage() {
           <h1>Steal a Brainrot rarity list</h1>
           <p>
             Browse tracked Brainrots by rarity group, then open each item to
-            review its source and trade value status.
+            review its source and marketplace asking-price status.
           </p>
         </div>
         <div className="intro-link-stack">

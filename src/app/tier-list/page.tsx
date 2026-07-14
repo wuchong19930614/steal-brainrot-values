@@ -5,9 +5,9 @@ import { lastUpdated } from "@/lib/data";
 import { absoluteUrl, createPageMetadata } from "@/lib/seo";
 
 export const metadata = createPageMetadata({
-  title: "Steal a Brainrot Tier List - Ranking Status & Method",
+  title: "Steal a Brainrot Tier List - Default Market Price Tiers",
   description:
-    "Review the Steal a Brainrot tier-list method, current ranking status, and the verified-value requirement used before any Brainrot receives a tier.",
+    "Compare ten Default Steal a Brainrot items by independently verified USD marketplace asking-price tiers.",
   path: "/tier-list/",
 });
 
@@ -40,8 +40,9 @@ export default function TierListPage() {
           <p className="eyebrow">Updated {lastUpdated}</p>
           <h1>Steal a Brainrot tier list</h1>
           <p>
-            This page only ranks items when official or manually verified values
-            exist. Current official sources do not publish a full value list.
+            This list ranks verified Default variants by source-balanced USD
+            marketplace asking price. It does not claim an official or
+            player-to-player trade value.
           </p>
         </div>
         <div className="intro-link-stack">
@@ -70,10 +71,10 @@ export default function TierListPage() {
         <div>
           <h2>Ranking method</h2>
           <p>
-            The tier list only ranks items with verified trade values. When it
-            is enabled, tiers combine comparable value and demand evidence;
-            items with missing or conflicting evidence remain unranked rather
-            than receiving a guessed tier.
+            S is $8+, A is $4–$7.99, B is $1–$3.99, C is $0.50–$0.99, and D is
+            below $0.50. Only Default items that pass the two-source listing,
+            seller-count, M/s-match, and 15% median-spread checks enter the
+            board. Demand stays Unknown and does not affect tiers yet.
           </p>
         </div>
       </section>

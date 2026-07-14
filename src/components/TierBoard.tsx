@@ -28,23 +28,25 @@ export function TierBoard() {
 
   const groups = useMemo(
     () =>
-      getTierGroups(rankedItems).map((group) => ({
-        tier: group.tier,
-        items: [...group.items].sort((a, b) => {
-          if (sort === "demand") {
-            return b.demand - a.demand || b.value - a.value;
-          }
+      getTierGroups(rankedItems)
+        .map((group) => ({
+          tier: group.tier,
+          items: [...group.items].sort((a, b) => {
+            if (sort === "demand") {
+              return b.demand - a.demand || b.value - a.value;
+            }
 
-          if (sort === "rarity") {
-            return (
-              rarityOrder.indexOf(a.rarity) - rarityOrder.indexOf(b.rarity) ||
-              b.value - a.value
-            );
-          }
+            if (sort === "rarity") {
+              return (
+                rarityOrder.indexOf(a.rarity) - rarityOrder.indexOf(b.rarity) ||
+                b.value - a.value
+              );
+            }
 
-          return b.value - a.value;
-        }),
-      })),
+            return b.value - a.value;
+          }),
+        }))
+        .filter((group) => group.items.length > 0),
     [rankedItems, sort],
   );
 
@@ -52,9 +54,8 @@ export function TierBoard() {
     return (
       <section className="tier-board empty-tier-board" aria-label="Steal a Brainrot tier list">
         <div className="empty-state">
-          Official public sources do not currently publish Steal a Brainrot
-          trade values, so the tier list is disabled until verified values are
-          added.
+          The tier list needs independently cross-checked, unit-compatible
+          marketplace prices before items can be ranked.
         </div>
       </section>
     );
@@ -63,6 +64,10 @@ export function TierBoard() {
   return (
     <section className="tier-board" aria-label="Steal a Brainrot tier list">
       <div className="tier-board-toolbar">
+        <p>
+          Relative tiers use the current Default marketplace asking price in
+          USD. Demand remains unscored until separate demand evidence exists.
+        </p>
         <label>
           <span>Sort within tier</span>
           <select

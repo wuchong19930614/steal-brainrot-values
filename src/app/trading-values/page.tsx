@@ -17,29 +17,29 @@ const faqs = [
   {
     question: "Are Steal a Brainrot trading values official?",
     answer:
-      "The public official sources checked do not publish a complete trade value list. Each value stays TBD until an official or manually verified source is available.",
+      "No. Official sources checked do not publish a complete trade value list. This page separately labels cross-checked USD marketplace asking prices so they are not mistaken for official values.",
   },
   {
     question: "Why are the trade values marked TBD?",
     answer:
-      "The current sources confirm some game-related DLC items, but they do not state a trade price or a complete trading value. An official item source alone is not enough to assign a value.",
+      "TBD means an item does not yet have either an official value or a marketplace price that passed the two-source Default/M/s verification rule.",
   },
   {
     question: "When will the trade calculator turn on?",
     answer:
-      `The calculator stays blocked until the tracker has at least ${minimumVerifiedTradeValues} official or manually verified trade values with a source and check date. It does not use guessed values for trade math.`,
+      `The calculator turns on when at least ${minimumVerifiedTradeValues} unit-compatible prices pass the two-source rule. The current ten-item Default snapshot meets that threshold.`,
   },
   {
     question: "Do community estimates turn on the calculator?",
     answer:
-      "No. A single-source community estimate is displayed only as a research candidate. It needs a compatible second source and a fresh review before it can become a verified trade value.",
+      "No. A single-source community estimate remains a research candidate. It cannot enter calculator totals or price tiers without a compatible second source and fresh review.",
   },
 ];
 
 export const metadata = createPageMetadata({
-  title: "Steal a Brainrot Trading Values - Trade Value Status",
+  title: "Steal a Brainrot Trading Values & USD Market Prices",
   description:
-    "Review source-labeled Steal a Brainrot trading value candidates, verification status, source dates, and why unpublished values remain marked TBD.",
+    "Review Steal a Brainrot trading-value status and ten independently cross-checked Default marketplace asking prices in USD.",
   path: "/trading-values/",
 });
 
@@ -81,7 +81,7 @@ export default function TradingValuesPage() {
             url: absoluteUrl(`/trading-values/#${item.slug}`),
             description:
               isVerifiedTradeValue(item)
-                ? `Verified trade value: ${formatValue(item.value)}.`
+                ? `Verified Default marketplace asking price: ${formatValue(item.value)}.`
                 : "Item source is listed. Trade value is not publicly published.",
           })),
         }}
@@ -91,8 +91,8 @@ export default function TradingValuesPage() {
           <p className="eyebrow">Last checked {lastUpdated}</p>
           <h1>Steal a Brainrot trading values</h1>
           <p>
-            Check which trade values have a reliable source, which items are
-            source-labeled, and why unverified values stay TBD.
+            Check independently cross-checked Default marketplace prices,
+            source dates, and which unverified trade estimates remain TBD.
           </p>
         </div>
         <div className="intro-link-stack">
@@ -119,17 +119,17 @@ export default function TradingValuesPage() {
         <div>
           <h2>Current trading value status</h2>
           <p>
-            Public official sources confirm the game and some DLC items, but
-            they do not publish a complete trading value list. This page tracks
-            that distinction instead of turning item names into guessed prices.
+            Official sources still do not publish a complete trade value list.
+            Ten Default items now have separately labeled USD marketplace
+            asking prices verified across StarPets and Eldorado.
           </p>
         </div>
         <div>
           <h2>Calculator rule</h2>
           <p>
-            Trade math remains disabled until at least {minimumVerifiedTradeValues} values have an
-            official or manually verified source. The current verified-value
-            count is {verifiedValueItems.length}.
+            Price comparison requires at least {minimumVerifiedTradeValues}
+            independently verified, unit-compatible records. The current
+            verified-price count is {verifiedValueItems.length}.
           </p>
         </div>
       </section>
@@ -153,7 +153,7 @@ export default function TradingValuesPage() {
               <tr>
                 <th scope="col">Item</th>
                 <th scope="col">Rarity</th>
-                <th scope="col">Trade value</th>
+                <th scope="col">Value / asking price</th>
                 <th scope="col">Source status</th>
                 <th scope="col">Last checked</th>
               </tr>
@@ -204,7 +204,7 @@ export default function TradingValuesPage() {
                       </a>
                       <p>
                         {hasVerifiedValue
-                          ? "Verified trade value source."
+                          ? "Cross-checked Default marketplace asking price."
                           : "Item confirmed; public trade value not published."}
                       </p>
                     </td>
@@ -221,11 +221,11 @@ export default function TradingValuesPage() {
         <div>
           <h2>How a value becomes verified</h2>
           <p>
-            A verified value needs at least two independent, comparable
-            sources, a clear item match, normalized units, and a fresh review.
-            Conflicting or single-source estimates stay outside the calculator.
-            The full process explains how sources are accepted, rejected, and
-            rechecked.
+            A calculator-ready price needs two independent sources, a Default
+            variant and exact M/s match, at least three listings per source,
+            three distinct Eldorado sellers, no more than 15% median spread,
+            and a fresh review. It remains labeled as an asking price—not a
+            completed sale or official trade value.
           </p>
           <Link
             href="/methodology/"

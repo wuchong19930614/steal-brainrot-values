@@ -5,9 +5,9 @@ import { brainrots, lastUpdated } from "@/lib/data";
 import { absoluteUrl, createPageMetadata } from "@/lib/seo";
 
 export const metadata = createPageMetadata({
-  title: "Steal a Brainrot Calculator - Verification Status",
+  title: "Steal a Brainrot Calculator - Compare USD Market Prices",
   description:
-    "Check Steal a Brainrot calculator availability, review source-labeled value candidates, and see why trade results remain blocked until values are verified.",
+    "Compare source-verified Default Steal a Brainrot marketplace asking prices in USD across two offers.",
   path: "/calculator/",
 });
 
@@ -40,8 +40,9 @@ export default function CalculatorPage() {
           <p className="eyebrow">Updated {lastUpdated}</p>
           <h1>Steal a Brainrot calculator</h1>
           <p>
-            The calculator will turn on after official or manually verified
-            trade values are added to the data source.
+            Compare two groups of Default Brainrots using source-balanced USD
+            asking prices from StarPets and Eldorado. Results are market-price
+            comparisons, not official trade-value guarantees.
           </p>
         </div>
         <div className="intro-link-stack">
@@ -51,7 +52,7 @@ export default function CalculatorPage() {
             data-analytics-label="trading-values"
             data-analytics-location="calculator_intro"
           >
-            Review value candidates
+            Review price evidence
           </Link>
           <Link
             href="/"

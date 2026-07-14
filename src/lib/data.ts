@@ -6,7 +6,7 @@ import type {
   ValueUpdate,
 } from "./types";
 
-export const lastUpdated = "2026-07-12";
+export const lastUpdated = "2026-07-14";
 
 export const officialSources = [
   {
@@ -27,7 +27,214 @@ const communityCatalogCrossCheck = {
   checkedAt: lastUpdated,
 };
 
+const starPetsMarketplaceUrl = "https://starpets.gg/steal-brainrot";
+
+function eldoradoOfferSearchUrl(itemName: string) {
+  const query = new URLSearchParams({
+    gameId: "259",
+    category: "CustomItem",
+    pageIndex: "1",
+    pageSize: "20",
+    searchQuery: itemName,
+    useOfferAttributeSearch: "true",
+    offerSortingCriterion: "Price",
+    isAscending: "true",
+  });
+
+  return `https://www.eldorado.gg/api/v1/item-management/offers?${query.toString()}`;
+}
+
+function tierForMarketplacePrice(value: number): Tier {
+  if (value >= 8) return "S";
+  if (value >= 4) return "A";
+  if (value >= 1) return "B";
+  if (value >= 0.5) return "C";
+  return "D";
+}
+
+const marketplaceSnapshotRows = [
+  {
+    name: "Esok Sekolah",
+    baseIncomeMps: 30,
+    starPetsCount: 11,
+    starPetsMedianUsd: 0.49,
+    eldoradoCount: 15,
+    eldoradoSellers: 14,
+    eldoradoMedianUsd: 0.5,
+    spreadPercent: 2,
+    consensusUsd: 0.5,
+  },
+  {
+    name: "Tictac Sahur",
+    baseIncomeMps: 37.5,
+    starPetsCount: 8,
+    starPetsMedianUsd: 1.325,
+    eldoradoCount: 5,
+    eldoradoSellers: 5,
+    eldoradoMedianUsd: 1.2,
+    spreadPercent: 10.4,
+    consensusUsd: 1.26,
+  },
+  {
+    name: "Chicleteira Bicicleteira",
+    baseIncomeMps: 3.5,
+    starPetsCount: 10,
+    starPetsMedianUsd: 0.51,
+    eldoradoCount: 8,
+    eldoradoSellers: 8,
+    eldoradoMedianUsd: 0.5,
+    spreadPercent: 2,
+    consensusUsd: 0.51,
+  },
+  {
+    name: "Pot Hotspot",
+    baseIncomeMps: 2.5,
+    starPetsCount: 8,
+    starPetsMedianUsd: 0.545,
+    eldoradoCount: 9,
+    eldoradoSellers: 9,
+    eldoradoMedianUsd: 0.5,
+    spreadPercent: 9,
+    consensusUsd: 0.52,
+  },
+  {
+    name: "Fragrama and Chocrama",
+    baseIncomeMps: 100,
+    starPetsCount: 11,
+    starPetsMedianUsd: 4.54,
+    eldoradoCount: 12,
+    eldoradoSellers: 12,
+    eldoradoMedianUsd: 3.995,
+    spreadPercent: 13.6,
+    consensusUsd: 4.27,
+  },
+  {
+    name: "Chicleteira Noelteira",
+    baseIncomeMps: 15,
+    starPetsCount: 9,
+    starPetsMedianUsd: 0.53,
+    eldoradoCount: 10,
+    eldoradoSellers: 10,
+    eldoradoMedianUsd: 0.5,
+    spreadPercent: 6,
+    consensusUsd: 0.52,
+  },
+  {
+    name: "Bearito Cabinito",
+    baseIncomeMps: 72.5,
+    starPetsCount: 8,
+    starPetsMedianUsd: 4.4,
+    eldoradoCount: 15,
+    eldoradoSellers: 15,
+    eldoradoMedianUsd: 4.4,
+    spreadPercent: 0,
+    consensusUsd: 4.4,
+  },
+  {
+    name: "Los Puggies",
+    baseIncomeMps: 30,
+    starPetsCount: 6,
+    starPetsMedianUsd: 1.605,
+    eldoradoCount: 12,
+    eldoradoSellers: 12,
+    eldoradoMedianUsd: 1.44,
+    spreadPercent: 11.5,
+    consensusUsd: 1.52,
+  },
+  {
+    name: "Globa Steppa",
+    baseIncomeMps: 27.5,
+    starPetsCount: 4,
+    starPetsMedianUsd: 9.33,
+    eldoradoCount: 12,
+    eldoradoSellers: 12,
+    eldoradoMedianUsd: 8.89,
+    spreadPercent: 4.9,
+    consensusUsd: 9.11,
+  },
+  {
+    name: "W or L",
+    baseIncomeMps: 30,
+    starPetsCount: 6,
+    starPetsMedianUsd: 1.4,
+    eldoradoCount: 8,
+    eldoradoSellers: 8,
+    eldoradoMedianUsd: 1.4,
+    spreadPercent: 0,
+    consensusUsd: 1.4,
+  },
+] as const;
+
+const marketplaceValueItems: BrainrotItem[] = marketplaceSnapshotRows.map(
+  (row) => {
+    const slug = row.name.toLowerCase().replaceAll(" ", "-");
+    const eldoradoUrl = eldoradoOfferSearchUrl(row.name);
+
+    return {
+      id: slug,
+      name: row.name,
+      slug,
+      rarity: "Secret",
+      value: row.consensusUsd,
+      valueSourceType: "verified-marketplace",
+      valueSourceLabel: "StarPets + Eldorado Default listing medians",
+      valueSourceUrl: starPetsMarketplaceUrl,
+      valueSourceCheckedAt: lastUpdated,
+      demand: 1,
+      trend: "Unknown",
+      tier: tierForMarketplacePrice(row.consensusUsd),
+      obtainable: true,
+      aliases: [row.name.toLowerCase()],
+      notes: `Default variant with ${row.baseIncomeMps}M/s base income. The ${formatMarketplacePrice(row.consensusUsd)} figure is a source-balanced active marketplace asking price, not an official or player-to-player trade value.`,
+      confidence: "Medium",
+      sourceLabel: "StarPets Steal a Brainrot marketplace",
+      sourceUrl: starPetsMarketplaceUrl,
+      additionalSources: [
+        {
+          label: "Eldorado exact-item offer search",
+          url: eldoradoUrl,
+          checkedAt: lastUpdated,
+        },
+      ],
+      marketplaceEvidence: {
+        metric: "marketplace-asking-price",
+        currency: "USD",
+        variant: "Default",
+        baseIncomeMps: row.baseIncomeMps,
+        consensusUsd: row.consensusUsd,
+        sourceMedianSpreadPercent: row.spreadPercent,
+        sources: [
+          {
+            label: "StarPets",
+            url: starPetsMarketplaceUrl,
+            listingCount: row.starPetsCount,
+            medianUsd: row.starPetsMedianUsd,
+          },
+          {
+            label: "Eldorado",
+            url: eldoradoUrl,
+            listingCount: row.eldoradoCount,
+            medianUsd: row.eldoradoMedianUsd,
+            distinctSellers: row.eldoradoSellers,
+          },
+        ],
+      },
+      lastUpdated,
+    };
+  },
+);
+
+export function formatMarketplacePrice(value: number) {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(value);
+}
+
 export const brainrots: BrainrotItem[] = [
+  ...marketplaceValueItems,
   {
     id: "festive-67",
     name: "Festive 67",
@@ -396,6 +603,25 @@ export const communityEstimateCandidates: CommunityEstimateCandidate[] = [
 
 export const updates: ValueUpdate[] = [
   {
+    id: "verified-marketplace-snapshot-2026-07-14",
+    date: "2026-07-14",
+    title: "Ten Default marketplace prices verified",
+    summary:
+      "Enabled the calculator and asking-price tier list with ten Default items cross-checked across independent StarPets and Eldorado listings.",
+    changes: [
+      {
+        item: "USD marketplace asking prices",
+        type: "Added",
+        note: "Added ten source-balanced USD asking prices. Each item has at least three listings per source, at least three distinct Eldorado sellers, an exact Default/M/s match, and no more than 15% median spread.",
+      },
+      {
+        item: "Calculator and tier list",
+        type: "Note",
+        note: "Calculations and tiers are explicitly labeled as marketplace asking-price comparisons, not official or player-to-player trade values.",
+      },
+    ],
+  },
+  {
     id: "community-catalog-baseline-2026-07-12",
     date: "2026-07-12",
     title: "Community catalog baseline added",
@@ -482,21 +708,44 @@ export function formatValue(value: number) {
     return "TBD";
   }
 
-  return new Intl.NumberFormat("en-US").format(value);
+  return formatMarketplacePrice(value);
 }
 
 export const minimumVerifiedTradeValues = 10;
 
 export function isVerifiedTradeValue(item: BrainrotItem) {
+  const hasRequiredSourceFields = Boolean(
+    item.valueSourceLabel &&
+      item.valueSourceUrl &&
+      item.valueSourceCheckedAt,
+  );
+
+  if (item.valueSourceType === "verified-marketplace") {
+    const evidence = item.marketplaceEvidence;
+
+    return Boolean(
+      item.value > 0 &&
+        hasRequiredSourceFields &&
+        evidence &&
+        evidence.metric === "marketplace-asking-price" &&
+        evidence.currency === "USD" &&
+        evidence.variant === "Default" &&
+        evidence.consensusUsd === item.value &&
+        evidence.sourceMedianSpreadPercent <= 15 &&
+        evidence.sources.length >= 2 &&
+        evidence.sources.every((source) => source.listingCount >= 3) &&
+        evidence.sources.every(
+          (source) =>
+            source.distinctSellers === undefined || source.distinctSellers >= 3,
+        ),
+    );
+  }
+
   return (
     item.value > 0 &&
     (item.valueSourceType === "official" ||
       item.valueSourceType === "verified-manual") &&
-    Boolean(
-      item.valueSourceLabel &&
-        item.valueSourceUrl &&
-        item.valueSourceCheckedAt,
-    )
+    hasRequiredSourceFields
   );
 }
 

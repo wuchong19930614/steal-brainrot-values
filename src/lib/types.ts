@@ -17,6 +17,7 @@ export type Confidence = "High" | "Medium" | "Low";
 export type ValueSourceType =
   | "official"
   | "verified-manual"
+  | "verified-marketplace"
   | "community"
   | "unknown";
 
@@ -24,6 +25,24 @@ export type SourceReference = {
   label: string;
   url: string;
   checkedAt: string;
+};
+
+export type MarketplaceEvidenceSource = {
+  label: string;
+  url: string;
+  listingCount: number;
+  medianUsd: number;
+  distinctSellers?: number;
+};
+
+export type MarketplaceValueEvidence = {
+  metric: "marketplace-asking-price";
+  currency: "USD";
+  variant: "Default";
+  baseIncomeMps: number;
+  consensusUsd: number;
+  sourceMedianSpreadPercent: number;
+  sources: MarketplaceEvidenceSource[];
 };
 
 export type BrainrotItem = {
@@ -46,6 +65,7 @@ export type BrainrotItem = {
   sourceLabel: string;
   sourceUrl: string;
   additionalSources?: SourceReference[];
+  marketplaceEvidence?: MarketplaceValueEvidence;
   lastUpdated: string;
 };
 

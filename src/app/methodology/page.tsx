@@ -6,7 +6,7 @@ import { absoluteUrl, createPageMetadata, siteName } from "@/lib/seo";
 export const metadata = createPageMetadata({
   title: "How Steal a Brainrot Values Are Verified - Methodology",
   description:
-    "Read how Steal a Brainrot item facts, community estimates, and verified trade values are sourced, compared, rejected, corrected, and kept current.",
+    "Read how Steal a Brainrot item facts, community estimates, and USD marketplace asking prices are sourced, verified, rejected, and refreshed.",
   path: "/methodology/",
 });
 
@@ -20,7 +20,7 @@ export default function MethodologyPage() {
           name: "Steal a Brainrot value verification methodology",
           url: absoluteUrl("/methodology/"),
           description: metadata.description,
-          dateModified: "2026-07-13",
+          dateModified: lastUpdated,
           isPartOf: {
             "@type": "WebSite",
             name: siteName,
@@ -55,8 +55,8 @@ export default function MethodologyPage() {
           <h1>How Steal a Brainrot values are verified</h1>
           <p>
             This fan-made tracker separates confirmed item facts, community
-            estimates, and verified trade values so that a source label never
-            implies more certainty than the source actually provides.
+            estimates, official values, and verified marketplace asking prices
+            so a source label never implies more certainty than its evidence.
           </p>
         </div>
         <div className="intro-link-stack">
@@ -73,18 +73,19 @@ export default function MethodologyPage() {
             availability, in-game cost, or income from a labeled source. A
             <strong> community estimate</strong> is a published trade opinion
             that has not passed this site&apos;s verification rule. A
-            <strong> verified trade value</strong> is a comparable value that
-            has passed source matching, unit normalization, and a fresh manual
-            review. Catalog facts and community estimates do not power trade
-            math by themselves.
+            <strong> verified marketplace asking price</strong> is a Default,
+            USD value that passed exact item/M/s matching, two-source sampling,
+            seller-count, spread, and freshness checks. It is not presented as
+            an official value or completed-sale price.
           </p>
         </div>
         <div>
           <h2>Why TBD is intentional</h2>
           <p>
             TBD means the tracker does not have enough comparable evidence to
-            publish a trade value. It does not mean the item has no value. The
-            calculator and tier list remain blocked until at least
+            publish either an official value or a verified market-price proxy.
+            It does not mean the item has no value. The calculator and tier
+            list remain blocked until at least
             {` ${minimumVerifiedTradeValues} `}
             items have verified values, because partial or mixed-unit data can
             produce confident-looking but misleading results.
@@ -107,7 +108,9 @@ export default function MethodologyPage() {
             <p>
               A value needs at least two independently maintained sources that
               describe the same item and the same type of value. Copies of one
-              original list do not count as independent confirmation.
+              original list do not count as independent confirmation. Current
+              marketplace records require at least three qualifying listings
+              per source and three distinct Eldorado sellers.
             </p>
           </article>
           <article>
@@ -121,9 +124,9 @@ export default function MethodologyPage() {
           <article>
             <strong>4. Resolve conflicts</strong>
             <p>
-              If sources disagree materially, omit the value or keep it as a
-              candidate. The tracker records the conflict instead of averaging
-              incompatible figures into a false consensus.
+              Marketplace medians may differ by no more than 15% relative to
+              the lower median. Larger conflicts stay outside calculations
+              instead of being averaged into a false consensus.
             </p>
           </article>
           <article>
@@ -137,9 +140,9 @@ export default function MethodologyPage() {
           <article>
             <strong>6. Keep calculations gated</strong>
             <p>
-              Only verified trade values enter the calculator and tier model.
-              Single-source candidates remain visible for research but are
-              excluded from totals, rankings, and win/fair/loss results.
+              Only official values or marketplace asking prices that pass all
+              evidence checks enter the calculator and tier model. Single-source
+              candidates remain excluded from totals and rankings.
             </p>
           </article>
         </div>

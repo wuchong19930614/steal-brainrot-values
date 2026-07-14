@@ -354,7 +354,11 @@ export function ValueTable({ items }: ValueTableProps) {
             </div>
             <div className="item-value">
               <strong>{formatTradeValue(item)}</strong>
-              <span>trade value status</span>
+              <span>
+                {item.valueSourceType === "verified-marketplace"
+                  ? "Default marketplace asking price"
+                  : "trade value status"}
+              </span>
             </div>
           </article>
         ))}

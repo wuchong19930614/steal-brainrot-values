@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const siteName = "Steal a Brainrot Values";
 export const siteDescription =
-  "Track source-labeled Steal a Brainrot items and see which trade values are still unpublished or awaiting verification.";
+  "Track source-verified Default Steal a Brainrot marketplace asking prices in USD, compare offers, and review value evidence.";
 
 export function getSiteUrl() {
   return (

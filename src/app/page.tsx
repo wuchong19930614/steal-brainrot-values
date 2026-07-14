@@ -17,12 +17,12 @@ const faqs = [
   {
     question: "Are these values official?",
     answer:
-      "No official trade values were found in the public sources checked. Values are marked TBD until verified data is added.",
+      "No. Official trade values were not found. Positive USD figures are clearly labeled marketplace asking prices cross-checked across StarPets and Eldorado; other values remain TBD.",
   },
   {
     question: "Are Steal a Brainrot trading values available?",
     answer:
-      "Public official sources checked so far do not publish a complete trading value list. Current trade values stay TBD until official or manually verified data is available.",
+      "Official sources do not publish a complete list. This tracker currently has ten verified Default marketplace asking-price records and keeps unsupported trade estimates at TBD.",
   },
   {
     question: "Why do some values change quickly?",
@@ -32,16 +32,16 @@ const faqs = [
 ];
 
 export const metadata: Metadata = {
-  title: "Steal a Brainrot Values - Value List, Demand & Trade Prices",
+  title: "Steal a Brainrot Values - USD Market Prices & Calculator",
   description:
-    "Check source-labeled Steal a Brainrot items and see which trade values are still unpublished or awaiting verification.",
+    "Check ten source-verified Default Steal a Brainrot marketplace asking prices in USD, compare offers, and review value evidence.",
   alternates: {
     canonical: absoluteUrl("/"),
   },
   openGraph: {
-    title: "Steal a Brainrot Values - Value List, Demand & Trade Prices",
+    title: "Steal a Brainrot Values - USD Market Prices & Calculator",
     description:
-      "Check source-labeled Steal a Brainrot items and see which trade values are still unpublished or awaiting verification.",
+      "Check ten source-verified Default Steal a Brainrot marketplace asking prices in USD, compare offers, and review value evidence.",
     url: absoluteUrl("/"),
   },
 };
@@ -75,7 +75,7 @@ export default function HomePage() {
             url: absoluteUrl(`/#${item.slug}`),
             description:
               isVerifiedTradeValue(item)
-                ? `${item.rarity} item with a verified trade value of ${formatValue(
+                ? `${item.rarity} item with a verified Default marketplace asking price of ${formatValue(
                     item.value,
                   )}.`
                 : `${item.rarity} item. Official trade value not yet published.`,
@@ -87,8 +87,8 @@ export default function HomePage() {
           <p className="eyebrow">Updated {lastUpdated}</p>
           <h1>Steal a Brainrot values</h1>
           <p>
-            Track source-labeled Brainrot items and see which trade values are
-            still unpublished.
+            Track source-verified Default marketplace asking prices in USD and
+            see which unsupported trade estimates remain TBD.
           </p>
           <div className="intro-actions">
             <Link
@@ -98,7 +98,7 @@ export default function HomePage() {
               data-analytics-label="trading-values"
               data-analytics-location="home_intro"
             >
-              Review value candidates
+              Review price evidence
             </Link>
             <Link
               href="/calculator/"
@@ -107,14 +107,14 @@ export default function HomePage() {
               data-analytics-label="calculator"
               data-analytics-location="home_intro"
             >
-              Calculator status
+              Compare offers
             </Link>
           </div>
         </div>
 
         <aside className="snapshot" aria-label="Value snapshot">
           <div>
-            <span>Verified trade values</span>
+            <span>Tracked market total</span>
             <strong>{formatValue(getTotalTrackedValue())}</strong>
           </div>
           <div>
@@ -122,8 +122,8 @@ export default function HomePage() {
             <strong>{brainrots.length}</strong>
           </div>
           <div>
-            <span>Source status</span>
-            <strong>{verifiedItems.length ? "Verified" : "Values TBD"}</strong>
+            <span>Verified market prices</span>
+            <strong>{verifiedItems.length}</strong>
           </div>
           <div className="snapshot-bars" aria-hidden="true">
             {topItems.map((item, index) => (
@@ -140,11 +140,12 @@ export default function HomePage() {
 
       <section className="content-band">
         <div>
-          <h2>Official value status</h2>
+          <h2>Value source status</h2>
           <p>
-            I checked the official Roblox experience and the official Steal A
-            Brainrot site. They confirm the game and some merch/DLC items, but
-            they do not publish a public trade value list.
+            Official Roblox and Steal A Brainrot sources do not publish a
+            public trade value list. The ten positive figures here are
+            independently cross-checked marketplace asking prices and are
+            labeled accordingly.
           </p>
         </div>
         <div>

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { trackEvent } from "@/lib/analytics";
 import {
-  formatCount,
+  formatMarketplacePrice,
   formatValue,
   isVerifiedTradeValue,
   minimumVerifiedTradeValues,
@@ -24,25 +24,37 @@ type Side = "mine" | "theirs";
 
 function getVerdict(myTotal: number, theirTotal: number) {
   if (myTotal === 0 && theirTotal === 0) {
-    return { label: "No trade", tone: "neutral", detail: "Add items to compare." };
+    return {
+      label: "No comparison",
+      tone: "neutral",
+      detail: "Add items to compare.",
+    };
   }
 
   if (theirTotal === 0) {
     return {
-      label: "Big Loss",
+      label: "Your side only",
       tone: "loss",
-      detail: "Your offer has no return.",
+      detail: "Add an item to their side.",
+    };
+  }
+
+  if (myTotal === 0) {
+    return {
+      label: "Their side only",
+      tone: "win",
+      detail: "Add an item to your side.",
     };
   }
 
   const difference = theirTotal - myTotal;
-  const ratio = difference / theirTotal;
+  const ratio = difference / Math.min(myTotal, theirTotal);
   const percentage = Math.abs(ratio * 100).toFixed(1);
-  const amount = formatCount(Math.abs(difference));
+  const amount = formatValue(Math.abs(difference));
 
   if (Math.abs(ratio) <= 0.05) {
     return {
-      label: "Fair",
+      label: "Near equal",
       tone: "fair",
       detail: `${amount} difference (${percentage}%).`,
     };
@@ -50,32 +62,32 @@ function getVerdict(myTotal: number, theirTotal: number) {
 
   if (difference > 0 && ratio <= 0.2) {
     return {
-      label: "Small Win",
+      label: "Their side higher",
       tone: "win",
-      detail: `${amount} ahead (${percentage}%).`,
+      detail: `${amount} higher (${percentage}%).`,
     };
   }
 
   if (difference > 0) {
     return {
-      label: "Big Win",
+      label: "Their side much higher",
       tone: "win",
-      detail: `${amount} ahead (${percentage}%).`,
+      detail: `${amount} higher (${percentage}%).`,
     };
   }
 
   if (Math.abs(ratio) <= 0.2) {
     return {
-      label: "Small Loss",
+      label: "Your side higher",
       tone: "loss",
-      detail: `${amount} behind (${percentage}%).`,
+      detail: `${amount} higher (${percentage}%).`,
     };
   }
 
   return {
-    label: "Big Loss",
+    label: "Your side much higher",
     tone: "loss",
-    detail: `${amount} behind (${percentage}%).`,
+    detail: `${amount} higher (${percentage}%).`,
   };
 }
 
@@ -117,19 +129,18 @@ export function TradeCalculator({ items }: TradeCalculatorProps) {
       <section className="tool-panel" aria-labelledby="calculator-title">
         <div className="panel-heading">
           <div>
-            <p className="eyebrow">Official value unavailable</p>
+            <p className="eyebrow">Not enough comparable prices</p>
             <h2 id="calculator-title">Steal a Brainrot calculator</h2>
           </div>
         </div>
         <div className="calculator-empty">
           <div className="empty-state">
-            Official public sources do not currently publish Steal a Brainrot
-            trade values, so the calculator stays disabled until verified values
-            are added.
+            The calculator stays disabled until at least ten independently
+            cross-checked, unit-compatible prices are available.
           </div>
           <div className="status-list" aria-label="Calculator status">
             <div>
-              <span>Verified trade values</span>
+              <span>Verified comparable prices</span>
               <strong>{verifiedItems.length}</strong>
             </div>
             <div>
@@ -137,14 +148,14 @@ export function TradeCalculator({ items }: TradeCalculatorProps) {
               <strong>{minimumVerifiedTradeValues}</strong>
             </div>
             <div>
-              <span>Unverified math</span>
+              <span>Unverified price math</span>
               <strong>Blocked</strong>
             </div>
           </div>
           <p className="calculator-note">
-            The calculator will not use guessed or unsourced values. Use the
-            source-labeled candidate list to review the current evidence, or
-            check updates for the next source audit.
+            The calculator will not use guessed or unsourced figures. Accepted
+            marketplace prices must match the Default variant and base M/s
+            across two independent sources.
           </p>
           <div className="intro-actions compact-actions">
             <Link
@@ -283,7 +294,7 @@ export function TradeCalculator({ items }: TradeCalculatorProps) {
     <section className="tool-panel" aria-labelledby="calculator-title">
       <div className="panel-heading">
         <div>
-          <p className="eyebrow">Trade check</p>
+          <p className="eyebrow">USD asking-price comparison</p>
           <h2 id="calculator-title">Steal a Brainrot calculator</h2>
         </div>
         <div className={`verdict verdict-${verdict.tone}`}>
@@ -314,7 +325,7 @@ export function TradeCalculator({ items }: TradeCalculatorProps) {
           {renderOffer("mine", mine)}
           <div className="total-row">
             <span>Total</span>
-            <strong>{formatCount(myTotal)}</strong>
+            <strong>{formatMarketplacePrice(myTotal)}</strong>
           </div>
         </div>
 
@@ -339,10 +350,15 @@ export function TradeCalculator({ items }: TradeCalculatorProps) {
           {renderOffer("theirs", theirs)}
           <div className="total-row">
             <span>Total</span>
-            <strong>{formatCount(theirTotal)}</strong>
+            <strong>{formatMarketplacePrice(theirTotal)}</strong>
           </div>
         </div>
       </div>
+      <p className="calculator-note">
+        Results compare active Default marketplace asking prices in USD. They
+        are not official values, completed-sale prices, or a guarantee that a
+        player-to-player trade is fair.
+      </p>
     </section>
   );
 }
