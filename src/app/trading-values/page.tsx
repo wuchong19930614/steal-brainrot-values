@@ -127,7 +127,7 @@ export default function TradingValuesPage() {
         <div>
           <h2>Calculator rule</h2>
           <p>
-            Price comparison requires at least {minimumVerifiedTradeValues}
+            Price comparison requires at least {minimumVerifiedTradeValues}{" "}
             independently verified, unit-compatible records. The current
             verified-price count is {verifiedValueItems.length}.
           </p>

@@ -284,7 +284,9 @@ export function TradeCalculator({ items }: TradeCalculatorProps) {
           );
         })}
         {offer.length === 0 ? (
-          <div className="empty-state compact">No items added.</div>
+          <div className="empty-state compact">
+            Select an item above, then press Add.
+          </div>
         ) : null}
       </div>
     );
