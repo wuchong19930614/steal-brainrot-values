@@ -493,6 +493,31 @@ a:focus-visible {
   text-align: left;
 }
 
+.empty-state-action {
+  width: 100%;
+  min-height: 54px;
+  justify-content: space-between;
+  gap: 12px;
+  border-color: var(--line);
+  border-style: dashed;
+  background: var(--surface-2);
+  color: var(--ink);
+}
+
+.empty-state-action:hover {
+  border-color: var(--ink);
+  background: var(--blue-soft);
+}
+
+.empty-state-action span {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.empty-state-action strong {
+  text-align: right;
+}
+
 .no-results {
   display: grid;
   gap: 10px;

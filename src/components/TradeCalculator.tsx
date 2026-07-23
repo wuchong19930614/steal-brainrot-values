@@ -247,6 +247,9 @@ export function TradeCalculator({ items }: TradeCalculatorProps) {
   }
 
   function renderOffer(side: Side, offer: OfferItem[]) {
+    const selectedItemId = side === "mine" ? mineSelection : theirSelection;
+    const selectedItem = itemsById.get(selectedItemId);
+
     return (
       <div className="offer-list">
         {offer.map((offerItem) => {
@@ -283,10 +286,18 @@ export function TradeCalculator({ items }: TradeCalculatorProps) {
             </div>
           );
         })}
-        {offer.length === 0 ? (
-          <div className="empty-state compact">
-            Select an item above, then press Add.
-          </div>
+        {offer.length === 0 && selectedItem ? (
+          <button
+            type="button"
+            className="empty-state compact empty-state-action"
+            aria-label={`Add ${selectedItem.name} to ${
+              side === "mine" ? "your" : "their"
+            } offer`}
+            onClick={() => addItem(side, selectedItem.id)}
+          >
+            <span>Add selected item</span>
+            <strong>{selectedItem.name}</strong>
+          </button>
         ) : null}
       </div>
     );
