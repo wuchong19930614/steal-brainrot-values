@@ -73,7 +73,7 @@ export default function TierListPage() {
           <p>
             S is $8+, A is $4–$7.99, B is $1–$3.99, C is $0.50–$0.99, and D is
             below $0.50. Only Default items that pass the two-source listing,
-            seller-count, M/s-match, and 15% median-spread checks enter the
+            seller-count, M/s-match, and 15% source-price-spread checks enter the
             board. Demand stays Unknown and does not affect tiers yet.
           </p>
         </div>

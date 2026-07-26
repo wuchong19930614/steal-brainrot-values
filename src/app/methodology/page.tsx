@@ -109,8 +109,9 @@ export default function MethodologyPage() {
               A value needs at least two independently maintained sources that
               describe the same item and the same type of value. Copies of one
               original list do not count as independent confirmation. Current
-              marketplace records require at least three qualifying listings
-              per source and three distinct Eldorado sellers.
+              marketplace records require at least three available or
+              qualifying records per source and three distinct Eldorado
+              sellers.
             </p>
           </article>
           <article>
@@ -124,9 +125,10 @@ export default function MethodologyPage() {
           <article>
             <strong>4. Resolve conflicts</strong>
             <p>
-              Marketplace medians may differ by no more than 15% relative to
-              the lower median. Larger conflicts stay outside calculations
-              instead of being averaged into a false consensus.
+              The current StarPets catalog asking price and the eligible
+              Eldorado listing median may differ by no more than 15% relative
+              to the lower source price. Larger conflicts stay outside
+              calculations instead of being averaged into a false consensus.
             </p>
           </article>
           <article>

@@ -6,7 +6,8 @@ import type {
   ValueUpdate,
 } from "./types";
 
-export const lastUpdated = "2026-07-19";
+export const lastUpdated = "2026-07-26";
+const catalogLastUpdated = "2026-07-19";
 
 export const officialSources = [
   {
@@ -24,7 +25,7 @@ export const officialSources = [
 const communityCatalogCrossCheck = {
   label: "Driffle all-Brainrots guide (community reference)",
   url: "https://driffle.com/blog/steal-a-brainrot-all-brainrots-list/",
-  checkedAt: lastUpdated,
+  checkedAt: catalogLastUpdated,
 };
 
 const starPetsMarketplaceUrl = "https://starpets.gg/steal-brainrot";
@@ -56,112 +57,112 @@ const marketplaceSnapshotRows = [
   {
     name: "Globa Steppa",
     baseIncomeMps: 27.5,
-    starPetsCount: 14,
-    starPetsMedianUsd: 7.1,
+    starPetsCount: 37,
+    starPetsPriceUsd: 7.58,
     eldoradoCount: 15,
-    eldoradoSellers: 15,
-    eldoradoMedianUsd: 6.99,
-    spreadPercent: 1.6,
-    consensusUsd: 7.04,
-  },
-  {
-    name: "Berryno",
-    baseIncomeMps: 1.5,
-    starPetsCount: 6,
-    starPetsMedianUsd: 0.835,
-    eldoradoCount: 9,
-    eldoradoSellers: 9,
-    eldoradoMedianUsd: 0.82,
-    spreadPercent: 1.8,
-    consensusUsd: 0.83,
+    eldoradoSellers: 14,
+    eldoradoMedianUsd: 7.5,
+    spreadPercent: 1.1,
+    consensusUsd: 7.54,
   },
   {
     name: "La Extinct Grande",
     baseIncomeMps: 23.5,
     starPetsCount: 4,
-    starPetsMedianUsd: 1.53,
-    eldoradoCount: 11,
-    eldoradoSellers: 11,
-    eldoradoMedianUsd: 1.5,
-    spreadPercent: 2,
-    consensusUsd: 1.52,
-  },
-  {
-    name: "Los Puggies",
-    baseIncomeMps: 30,
-    starPetsCount: 7,
-    starPetsMedianUsd: 1.33,
-    eldoradoCount: 11,
-    eldoradoSellers: 11,
-    eldoradoMedianUsd: 1.3,
-    spreadPercent: 2.3,
-    consensusUsd: 1.31,
+    starPetsPriceUsd: 0.9,
+    eldoradoCount: 8,
+    eldoradoSellers: 8,
+    eldoradoMedianUsd: 0.825,
+    spreadPercent: 9.1,
+    consensusUsd: 0.86,
   },
   {
     name: "La Supreme Combinasion",
     baseIncomeMps: 200,
-    starPetsCount: 5,
-    starPetsMedianUsd: 59.06,
-    eldoradoCount: 15,
-    eldoradoSellers: 13,
-    eldoradoMedianUsd: 56.9,
-    spreadPercent: 3.8,
-    consensusUsd: 57.98,
+    starPetsCount: 289,
+    starPetsPriceUsd: 57.99,
+    eldoradoCount: 16,
+    eldoradoSellers: 15,
+    eldoradoMedianUsd: 52.85,
+    spreadPercent: 9.7,
+    consensusUsd: 55.42,
   },
   {
     name: "Rico Dinero",
     baseIncomeMps: 42.5,
-    starPetsCount: 4,
-    starPetsMedianUsd: 19.035,
-    eldoradoCount: 14,
-    eldoradoSellers: 13,
-    eldoradoMedianUsd: 19.995,
-    spreadPercent: 5,
-    consensusUsd: 19.52,
-  },
-  {
-    name: "La Grande Combinasion",
-    baseIncomeMps: 10,
-    starPetsCount: 16,
-    starPetsMedianUsd: 0.54,
-    eldoradoCount: 8,
-    eldoradoSellers: 7,
-    eldoradoMedianUsd: 0.5,
-    spreadPercent: 8,
-    consensusUsd: 0.52,
-  },
-  {
-    name: "Ketupat Bros",
-    baseIncomeMps: 145,
-    starPetsCount: 5,
-    starPetsMedianUsd: 20,
-    eldoradoCount: 9,
-    eldoradoSellers: 9,
+    starPetsCount: 86,
+    starPetsPriceUsd: 17.32,
+    eldoradoCount: 15,
+    eldoradoSellers: 14,
     eldoradoMedianUsd: 18,
-    spreadPercent: 11.1,
-    consensusUsd: 19,
+    spreadPercent: 3.9,
+    consensusUsd: 17.66,
   },
   {
-    name: "Reinito Sleighito",
-    baseIncomeMps: 140,
-    starPetsCount: 10,
-    starPetsMedianUsd: 5.31,
-    eldoradoCount: 10,
-    eldoradoSellers: 10,
-    eldoradoMedianUsd: 4.725,
-    spreadPercent: 12.4,
-    consensusUsd: 5.02,
+    name: "Celestial Pegasus",
+    baseIncomeMps: 175,
+    starPetsCount: 20,
+    starPetsPriceUsd: 4,
+    eldoradoCount: 14,
+    eldoradoSellers: 14,
+    eldoradoMedianUsd: 3.495,
+    spreadPercent: 14.4,
+    consensusUsd: 3.75,
   },
   {
-    name: "Chicleteira Noelteira",
-    baseIncomeMps: 15,
-    starPetsCount: 6,
-    starPetsMedianUsd: 0.565,
+    name: "Los Burritos",
+    baseIncomeMps: 8.5,
+    starPetsCount: 3,
+    starPetsPriceUsd: 0.79,
+    eldoradoCount: 12,
+    eldoradoSellers: 11,
+    eldoradoMedianUsd: 0.82,
+    spreadPercent: 3.8,
+    consensusUsd: 0.81,
+  },
+  {
+    name: "Cooki and Milki",
+    baseIncomeMps: 155,
+    starPetsCount: 19,
+    starPetsPriceUsd: 3.99,
+    eldoradoCount: 11,
+    eldoradoSellers: 11,
+    eldoradoMedianUsd: 4.49,
+    spreadPercent: 12.5,
+    consensusUsd: 4.24,
+  },
+  {
+    name: "Eviledon",
+    baseIncomeMps: 31.5,
+    starPetsCount: 4,
+    starPetsPriceUsd: 0.94,
     eldoradoCount: 10,
-    eldoradoSellers: 10,
-    eldoradoMedianUsd: 0.5,
-    spreadPercent: 13,
-    consensusUsd: 0.53,
+    eldoradoSellers: 9,
+    eldoradoMedianUsd: 0.94,
+    spreadPercent: 0,
+    consensusUsd: 0.94,
+  },
+  {
+    name: "Los Fruits",
+    baseIncomeMps: 23,
+    starPetsCount: 4,
+    starPetsPriceUsd: 0.95,
+    eldoradoCount: 9,
+    eldoradoSellers: 8,
+    eldoradoMedianUsd: 1.09,
+    spreadPercent: 14.7,
+    consensusUsd: 1.02,
+  },
+  {
+    name: "Cerberus",
+    baseIncomeMps: 175,
+    starPetsCount: 17,
+    starPetsPriceUsd: 3.55,
+    eldoradoCount: 7,
+    eldoradoSellers: 7,
+    eldoradoMedianUsd: 3.39,
+    spreadPercent: 4.7,
+    consensusUsd: 3.47,
   },
 ] as const;
 
@@ -177,7 +178,8 @@ const marketplaceValueItems: BrainrotItem[] = marketplaceSnapshotRows.map(
       rarity: "Secret",
       value: row.consensusUsd,
       valueSourceType: "verified-marketplace",
-      valueSourceLabel: "StarPets + Eldorado Default listing medians",
+      valueSourceLabel:
+        "StarPets current catalog price + Eldorado Default listing median",
       valueSourceUrl: starPetsMarketplaceUrl,
       valueSourceCheckedAt: lastUpdated,
       demand: 1,
@@ -202,19 +204,21 @@ const marketplaceValueItems: BrainrotItem[] = marketplaceSnapshotRows.map(
         variant: "Default",
         baseIncomeMps: row.baseIncomeMps,
         consensusUsd: row.consensusUsd,
-        sourceMedianSpreadPercent: row.spreadPercent,
+        sourcePriceSpreadPercent: row.spreadPercent,
         sources: [
           {
             label: "StarPets",
             url: starPetsMarketplaceUrl,
             listingCount: row.starPetsCount,
-            medianUsd: row.starPetsMedianUsd,
+            askingPriceUsd: row.starPetsPriceUsd,
+            pricingMethod: "current-catalog-price",
           },
           {
             label: "Eldorado",
             url: eldoradoUrl,
             listingCount: row.eldoradoCount,
-            medianUsd: row.eldoradoMedianUsd,
+            askingPriceUsd: row.eldoradoMedianUsd,
+            pricingMethod: "median-listing-price",
             distinctSellers: row.eldoradoSellers,
           },
         ],
@@ -252,7 +256,7 @@ export const brainrots: BrainrotItem[] = [
     confidence: "High",
     sourceLabel: "Official Steal A Brainrot product data",
     sourceUrl: "https://playsab.com/products/festive-67-plush-emailed-dlc-preorder",
-    lastUpdated,
+    lastUpdated: catalogLastUpdated,
   },
   {
     id: "boppin-bunny",
@@ -271,7 +275,7 @@ export const brainrots: BrainrotItem[] = [
     confidence: "High",
     sourceLabel: "Official Steal A Brainrot product data",
     sourceUrl: "https://playsab.com/products/mp9301-emailed-dlc",
-    lastUpdated,
+    lastUpdated: catalogLastUpdated,
   },
   {
     id: "noobini-pizzanini",
@@ -291,7 +295,7 @@ export const brainrots: BrainrotItem[] = [
     sourceLabel: "Steal a Brainrot Wiki (community-maintained catalog)",
     sourceUrl: "https://stealabrainrot.fandom.com/wiki/Noobini_Pizzanini",
     additionalSources: [communityCatalogCrossCheck],
-    lastUpdated,
+    lastUpdated: catalogLastUpdated,
   },
   {
     id: "lirili-larila",
@@ -311,7 +315,7 @@ export const brainrots: BrainrotItem[] = [
     sourceLabel: "Steal a Brainrot Wiki (community-maintained catalog)",
     sourceUrl: "https://stealabrainrot.fandom.com/wiki/Liril%C3%AC_Laril%C3%A0",
     additionalSources: [communityCatalogCrossCheck],
-    lastUpdated,
+    lastUpdated: catalogLastUpdated,
   },
   {
     id: "tim-cheese",
@@ -331,7 +335,7 @@ export const brainrots: BrainrotItem[] = [
     sourceLabel: "Steal a Brainrot Wiki (community-maintained catalog)",
     sourceUrl: "https://stealabrainrot.fandom.com/wiki/Tim_Cheese",
     additionalSources: [communityCatalogCrossCheck],
-    lastUpdated,
+    lastUpdated: catalogLastUpdated,
   },
   {
     id: "talpa-di-fero",
@@ -351,7 +355,7 @@ export const brainrots: BrainrotItem[] = [
     sourceLabel: "Steal a Brainrot Wiki (community-maintained catalog)",
     sourceUrl: "https://stealabrainrot.fandom.com/wiki/Talpa_Di_Fero",
     additionalSources: [communityCatalogCrossCheck],
-    lastUpdated,
+    lastUpdated: catalogLastUpdated,
   },
   {
     id: "svinina-bombardino",
@@ -371,7 +375,7 @@ export const brainrots: BrainrotItem[] = [
     sourceLabel: "Steal a Brainrot Wiki (community-maintained catalog)",
     sourceUrl: "https://stealabrainrot.fandom.com/wiki/Svinina_Bombardino",
     additionalSources: [communityCatalogCrossCheck],
-    lastUpdated,
+    lastUpdated: catalogLastUpdated,
   },
   {
     id: "pipi-kiwi",
@@ -391,7 +395,7 @@ export const brainrots: BrainrotItem[] = [
     sourceLabel: "Steal a Brainrot Wiki (community-maintained catalog)",
     sourceUrl: "https://stealabrainrot.fandom.com/wiki/Pipi_Kiwi",
     additionalSources: [communityCatalogCrossCheck],
-    lastUpdated,
+    lastUpdated: catalogLastUpdated,
   },
   {
     id: "trippi-troppi",
@@ -411,7 +415,7 @@ export const brainrots: BrainrotItem[] = [
     sourceLabel: "Steal a Brainrot Wiki (community-maintained catalog)",
     sourceUrl: "https://stealabrainrot.fandom.com/wiki/Trippi_Troppi",
     additionalSources: [communityCatalogCrossCheck],
-    lastUpdated,
+    lastUpdated: catalogLastUpdated,
   },
   {
     id: "gangster-footera",
@@ -431,7 +435,7 @@ export const brainrots: BrainrotItem[] = [
     sourceLabel: "Steal a Brainrot Wiki (community-maintained catalog)",
     sourceUrl: "https://stealabrainrot.fandom.com/wiki/Gangster_Footera",
     additionalSources: [communityCatalogCrossCheck],
-    lastUpdated,
+    lastUpdated: catalogLastUpdated,
   },
   {
     id: "boneca-ambalabu",
@@ -451,7 +455,7 @@ export const brainrots: BrainrotItem[] = [
     sourceLabel: "Steal a Brainrot Wiki (community-maintained catalog)",
     sourceUrl: "https://stealabrainrot.fandom.com/wiki/Boneca_Ambalabu",
     additionalSources: [communityCatalogCrossCheck],
-    lastUpdated,
+    lastUpdated: catalogLastUpdated,
   },
   {
     id: "cacto-hipopotamo",
@@ -471,7 +475,7 @@ export const brainrots: BrainrotItem[] = [
     sourceLabel: "Steal a Brainrot Wiki (community-maintained catalog)",
     sourceUrl: "https://stealabrainrot.fandom.com/wiki/Cacto_Hipopotamo",
     additionalSources: [communityCatalogCrossCheck],
-    lastUpdated,
+    lastUpdated: catalogLastUpdated,
   },
 ];
 
@@ -488,7 +492,7 @@ export const communityEstimateCandidates: CommunityEstimateCandidate[] = [
     sourceUrl:
       "https://progameguides.com/roblox/steal-a-brainrot-trading-value-list-roblox/",
     sourcePublishedAt: "2026-03-01",
-    sourceCheckedAt: lastUpdated,
+    sourceCheckedAt: catalogLastUpdated,
     status: "Needs second source",
   },
   {
@@ -500,7 +504,7 @@ export const communityEstimateCandidates: CommunityEstimateCandidate[] = [
     sourceUrl:
       "https://progameguides.com/roblox/steal-a-brainrot-trading-value-list-roblox/",
     sourcePublishedAt: "2026-03-01",
-    sourceCheckedAt: lastUpdated,
+    sourceCheckedAt: catalogLastUpdated,
     status: "Needs second source",
   },
   {
@@ -512,7 +516,7 @@ export const communityEstimateCandidates: CommunityEstimateCandidate[] = [
     sourceUrl:
       "https://progameguides.com/roblox/steal-a-brainrot-trading-value-list-roblox/",
     sourcePublishedAt: "2026-03-01",
-    sourceCheckedAt: lastUpdated,
+    sourceCheckedAt: catalogLastUpdated,
     status: "Needs second source",
   },
   {
@@ -524,7 +528,7 @@ export const communityEstimateCandidates: CommunityEstimateCandidate[] = [
     sourceUrl:
       "https://progameguides.com/roblox/steal-a-brainrot-trading-value-list-roblox/",
     sourcePublishedAt: "2026-03-01",
-    sourceCheckedAt: lastUpdated,
+    sourceCheckedAt: catalogLastUpdated,
     status: "Needs second source",
   },
   {
@@ -536,7 +540,7 @@ export const communityEstimateCandidates: CommunityEstimateCandidate[] = [
     sourceUrl:
       "https://progameguides.com/roblox/steal-a-brainrot-trading-value-list-roblox/",
     sourcePublishedAt: "2026-03-01",
-    sourceCheckedAt: lastUpdated,
+    sourceCheckedAt: catalogLastUpdated,
     status: "Needs second source",
   },
   {
@@ -548,7 +552,7 @@ export const communityEstimateCandidates: CommunityEstimateCandidate[] = [
     sourceUrl:
       "https://progameguides.com/roblox/steal-a-brainrot-trading-value-list-roblox/",
     sourcePublishedAt: "2026-03-01",
-    sourceCheckedAt: lastUpdated,
+    sourceCheckedAt: catalogLastUpdated,
     status: "Needs second source",
   },
   {
@@ -560,7 +564,7 @@ export const communityEstimateCandidates: CommunityEstimateCandidate[] = [
     sourceUrl:
       "https://progameguides.com/roblox/steal-a-brainrot-trading-value-list-roblox/",
     sourcePublishedAt: "2026-03-01",
-    sourceCheckedAt: lastUpdated,
+    sourceCheckedAt: catalogLastUpdated,
     status: "Needs second source",
   },
   {
@@ -572,7 +576,7 @@ export const communityEstimateCandidates: CommunityEstimateCandidate[] = [
     sourceUrl:
       "https://progameguides.com/roblox/steal-a-brainrot-trading-value-list-roblox/",
     sourcePublishedAt: "2026-03-01",
-    sourceCheckedAt: lastUpdated,
+    sourceCheckedAt: catalogLastUpdated,
     status: "Needs second source",
   },
   {
@@ -584,7 +588,7 @@ export const communityEstimateCandidates: CommunityEstimateCandidate[] = [
     sourceUrl:
       "https://progameguides.com/roblox/steal-a-brainrot-trading-value-list-roblox/",
     sourcePublishedAt: "2026-03-01",
-    sourceCheckedAt: lastUpdated,
+    sourceCheckedAt: catalogLastUpdated,
     status: "Needs second source",
   },
   {
@@ -596,12 +600,59 @@ export const communityEstimateCandidates: CommunityEstimateCandidate[] = [
     sourceUrl:
       "https://progameguides.com/roblox/steal-a-brainrot-trading-value-list-roblox/",
     sourcePublishedAt: "2026-03-01",
-    sourceCheckedAt: lastUpdated,
+    sourceCheckedAt: catalogLastUpdated,
     status: "Needs second source",
   },
 ];
 
 export const updates: ValueUpdate[] = [
+  {
+    id: "verified-marketplace-snapshot-2026-07-26",
+    date: "2026-07-26",
+    title: "Default marketplace prices refreshed",
+    summary:
+      "Rechecked the calculator set against current StarPets catalog inventory and eligible Eldorado listings. Four items still qualified and six were replaced after failing the current evidence rules.",
+    changes: [
+      {
+        item: "Globa Steppa",
+        type: "Increased",
+        previousValue: 7.04,
+        newValue: 7.54,
+        note: "Current StarPets catalog price and the eligible Eldorado listing median remain within 1.1%.",
+      },
+      {
+        item: "La Extinct Grande",
+        type: "Decreased",
+        previousValue: 1.52,
+        newValue: 0.86,
+        note: "Retained after an exact Default/23.5M/s check with 9.1% source spread.",
+      },
+      {
+        item: "La Supreme Combinasion",
+        type: "Decreased",
+        previousValue: 57.98,
+        newValue: 55.42,
+        note: "Retained after an exact Default/200M/s check with 9.7% source spread.",
+      },
+      {
+        item: "Rico Dinero",
+        type: "Decreased",
+        previousValue: 19.52,
+        newValue: 17.66,
+        note: "Retained after an exact Default/42.5M/s check with 3.9% source spread.",
+      },
+      {
+        item: "Calculator set",
+        type: "Note",
+        note: "Added Celestial Pegasus, Los Burritos, Cooki and Milki, Eviledon, Los Fruits, and Cerberus. Removed Berryno, Los Puggies, La Grande Combinasion, Ketupat Bros, Reinito Sleighito, and Chicleteira Noelteira because current inventory or source-spread rules failed.",
+      },
+      {
+        item: "Evidence method",
+        type: "Note",
+        note: "The source comparison now labels StarPets as a current catalog asking price and Eldorado as the median of eligible price-sorted listings. Extra-payment offers and titles that contradict the Default mutation are excluded.",
+      },
+    ],
+  },
   {
     id: "verified-marketplace-snapshot-2026-07-19",
     date: "2026-07-19",
@@ -755,7 +806,7 @@ export function isVerifiedTradeValue(item: BrainrotItem) {
         evidence.currency === "USD" &&
         evidence.variant === "Default" &&
         evidence.consensusUsd === item.value &&
-        evidence.sourceMedianSpreadPercent <= 15 &&
+        evidence.sourcePriceSpreadPercent <= 15 &&
         evidence.sources.length >= 2 &&
         evidence.sources.every((source) => source.listingCount >= 3) &&
         evidence.sources.every(

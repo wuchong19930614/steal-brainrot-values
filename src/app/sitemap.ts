@@ -1,14 +1,15 @@
 import type { MetadataRoute } from "next";
+import { lastUpdated } from "@/lib/data";
 import { absoluteUrl } from "@/lib/seo";
 
 const routes = [
-  { path: "/", lastModified: "2026-07-13" },
-  { path: "/calculator/", lastModified: "2026-07-13" },
-  { path: "/tier-list/", lastModified: "2026-07-13" },
-  { path: "/rarity-list/", lastModified: "2026-07-13" },
-  { path: "/updates/", lastModified: "2026-07-13" },
-  { path: "/trading-values/", lastModified: "2026-07-13" },
-  { path: "/methodology/", lastModified: "2026-07-13" },
+  { path: "/", lastModified: lastUpdated },
+  { path: "/calculator/", lastModified: lastUpdated },
+  { path: "/tier-list/", lastModified: lastUpdated },
+  { path: "/rarity-list/", lastModified: lastUpdated },
+  { path: "/updates/", lastModified: lastUpdated },
+  { path: "/trading-values/", lastModified: lastUpdated },
+  { path: "/methodology/", lastModified: lastUpdated },
   { path: "/privacy/", lastModified: "2026-07-13" },
 ];
 

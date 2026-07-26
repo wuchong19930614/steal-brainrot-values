@@ -222,10 +222,10 @@ export default function TradingValuesPage() {
           <h2>How a value becomes verified</h2>
           <p>
             A calculator-ready price needs two independent sources, a Default
-            variant and exact M/s match, at least three listings per source,
-            three distinct Eldorado sellers, no more than 15% median spread,
-            and a fresh review. It remains labeled as an asking price—not a
-            completed sale or official trade value.
+            variant and exact M/s match, at least three available or qualifying
+            records per source, three distinct Eldorado sellers, no more than
+            15% source-price spread, and a fresh review. It remains labeled as
+            an asking price—not a completed sale or official trade value.
           </p>
           <Link
             href="/methodology/"

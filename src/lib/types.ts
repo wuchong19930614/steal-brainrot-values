@@ -31,7 +31,8 @@ export type MarketplaceEvidenceSource = {
   label: string;
   url: string;
   listingCount: number;
-  medianUsd: number;
+  askingPriceUsd: number;
+  pricingMethod: "current-catalog-price" | "median-listing-price";
   distinctSellers?: number;
 };
 
@@ -41,7 +42,7 @@ export type MarketplaceValueEvidence = {
   variant: "Default";
   baseIncomeMps: number;
   consensusUsd: number;
-  sourceMedianSpreadPercent: number;
+  sourcePriceSpreadPercent: number;
   sources: MarketplaceEvidenceSource[];
 };
 
