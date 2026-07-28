@@ -1,5 +1,7 @@
 export type AnalyticsEventName =
-  | "calculator_used"
+  | "calculator_add_item"
+  | "calculator_remove_item"
+  | "calculator_add_selected_item"
   | "filter_used"
   | "item_search_used"
   | "community_source_clicked"

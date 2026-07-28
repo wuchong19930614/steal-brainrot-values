@@ -21,6 +21,7 @@ type OfferItem = {
 };
 
 type Side = "mine" | "theirs";
+type AddSource = "add_button" | "empty_state";
 
 function getVerdict(myTotal: number, theirTotal: number) {
   if (myTotal === 0 && theirTotal === 0) {
@@ -191,12 +192,28 @@ export function TradeCalculator({ items }: TradeCalculatorProps) {
     );
   }
 
-  function addItem(side: Side, itemId: string) {
-    trackEvent("calculator_used", {
-      action: "add_item",
-      item_id: itemId,
-      side,
-    });
+  function addItem(
+    side: Side,
+    itemId: string,
+    source: AddSource = "add_button",
+  ) {
+    const item = itemsById.get(itemId);
+
+    if (!item) {
+      return;
+    }
+
+    trackEvent(
+      source === "empty_state"
+        ? "calculator_add_selected_item"
+        : "calculator_add_item",
+      {
+        item_id: itemId,
+        item_name: item.name,
+        offer_side: side,
+        interaction_source: source,
+      },
+    );
 
     const updateOffer = (offer: OfferItem[]) => {
       const existing = offer.find((offerItem) => offerItem.itemId === itemId);
@@ -236,6 +253,23 @@ export function TradeCalculator({ items }: TradeCalculatorProps) {
   }
 
   function removeItem(side: Side, itemId: string) {
+    const offer = side === "mine" ? mine : theirs;
+    const removedOfferItem = offer.find(
+      (offerItem) => offerItem.itemId === itemId,
+    );
+    const item = itemsById.get(itemId);
+
+    if (!removedOfferItem || !item) {
+      return;
+    }
+
+    trackEvent("calculator_remove_item", {
+      item_id: itemId,
+      item_name: item.name,
+      offer_side: side,
+      quantity: removedOfferItem.quantity,
+    });
+
     const removeFromOffer = (offer: OfferItem[]) =>
       offer.filter((offerItem) => offerItem.itemId !== itemId);
 
@@ -293,7 +327,7 @@ export function TradeCalculator({ items }: TradeCalculatorProps) {
             aria-label={`Add ${selectedItem.name} to ${
               side === "mine" ? "your" : "their"
             } offer`}
-            onClick={() => addItem(side, selectedItem.id)}
+            onClick={() => addItem(side, selectedItem.id, "empty_state")}
           >
             <span>Add selected item</span>
             <strong>{selectedItem.name}</strong>
