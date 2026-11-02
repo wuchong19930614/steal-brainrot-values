@@ -14,11 +14,62 @@ export function SiteFooter() {
         </p>
       </div>
       <div className="footer-links">
-        <Link href="/">Values</Link>
-        <Link href="/calculator/">Calculator</Link>
-        <Link href="/trading-values/">Trading values</Link>
-        <Link href="/updates/">Updates</Link>
-        <Link href="/methodology/">Methodology</Link>
+        <Link
+          href="/"
+          data-analytics-event="related_tool_clicked"
+          data-analytics-label="values"
+          data-analytics-location="footer_nav"
+        >
+          Values
+        </Link>
+        <Link
+          href="/trading-values/"
+          data-analytics-event="related_tool_clicked"
+          data-analytics-label="trading-values"
+          data-analytics-location="footer_nav"
+        >
+          Trading values
+        </Link>
+        <Link
+          href="/calculator/"
+          data-analytics-event="related_tool_clicked"
+          data-analytics-label="calculator"
+          data-analytics-location="footer_nav"
+        >
+          Calculator
+        </Link>
+        <Link
+          href="/tier-list/"
+          data-analytics-event="related_tool_clicked"
+          data-analytics-label="tier-list"
+          data-analytics-location="footer_nav"
+        >
+          Tier list
+        </Link>
+        <Link
+          href="/rarity-list/"
+          data-analytics-event="related_tool_clicked"
+          data-analytics-label="rarity-list"
+          data-analytics-location="footer_nav"
+        >
+          Rarity list
+        </Link>
+        <Link
+          href="/updates/"
+          data-analytics-event="related_tool_clicked"
+          data-analytics-label="updates"
+          data-analytics-location="footer_nav"
+        >
+          Updates
+        </Link>
+        <Link
+          href="/methodology/"
+          data-analytics-event="related_tool_clicked"
+          data-analytics-label="methodology"
+          data-analytics-location="footer_nav"
+        >
+          Methodology
+        </Link>
         <Link href="/privacy/">Privacy</Link>
         <a
           href="https://github.com/wuchong19930614/steal-brainrot-values/issues/new"

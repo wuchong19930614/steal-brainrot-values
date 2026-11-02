@@ -24,10 +24,16 @@ export function RarityExplorer() {
               <h2>{group.rarity}</h2>
               <span>{group.items.length} tracked</span>
             </div>
-            <p>
-              Range: <strong>{formatValue(min)}</strong> to{" "}
-              <strong>{formatValue(max)}</strong>
-            </p>
+            {values.length > 0 ? (
+              <p>
+                Verified USD range: <strong>{formatValue(min)}</strong> to{" "}
+                <strong>{formatValue(max)}</strong>
+              </p>
+            ) : (
+              <p>
+                Verified USD prices: <strong>TBD</strong>
+              </p>
+            )}
             <ul>
               {group.items.map((item) => (
                 <li key={item.id}>

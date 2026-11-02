@@ -5,28 +5,18 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { trackEvent } from "@/lib/analytics";
 import {
   formatTradeValue,
-  getDemandLabel,
   isVerifiedTradeValue,
   rarityOrder,
 } from "@/lib/data";
-import type { BrainrotItem, Rarity, Trend } from "@/lib/types";
+import type { BrainrotItem, Rarity, Tier } from "@/lib/types";
 
 type ValueTableProps = {
   items: BrainrotItem[];
 };
 
-type SortKey = "value" | "name" | "demand" | "rarity" | "updated";
-
-const trends: Array<Trend | "All"> = [
-  "All",
-  "Rising",
-  "Stable",
-  "Falling",
-  "Unstable",
-  "Unknown",
-];
-
-const demandLevels: Array<BrainrotItem["demand"]> = [1, 2, 3, 4, 5];
+type SortKey = "value" | "value-asc" | "name" | "rarity" | "updated";
+type StatusFilter = "All" | "Verified" | "TBD";
+type TierFilter = "All" | Tier | "Unranked";
 
 const obtainableOptions = ["All", "Obtainable", "Unobtainable"] as const;
 type ObtainableFilter = (typeof obtainableOptions)[number];
@@ -39,14 +29,14 @@ function getComparableValue(item: BrainrotItem) {
 export function ValueTable({ items }: ValueTableProps) {
   const [query, setQuery] = useState("");
   const [rarity, setRarity] = useState<Rarity | "All">("All");
-  const [trend, setTrend] = useState<Trend | "All">("All");
-  const [demand, setDemand] = useState<BrainrotItem["demand"] | "All">("All");
+  const [status, setStatus] = useState<StatusFilter>("All");
+  const [tierFilter, setTierFilter] = useState<TierFilter>("All");
   const [obtainable, setObtainable] = useState<ObtainableFilter>("All");
   const [sort, setSort] = useState<SortKey>("value");
   const searchTrackingTimer = useRef<ReturnType<typeof setTimeout> | null>(
     null,
   );
-  const hasTrackedSearch = useRef(false);
+  const lastTrackedQuery = useRef("");
   const pendingSearch = useRef("");
 
   useEffect(() => {
@@ -55,11 +45,24 @@ export function ValueTable({ items }: ValueTableProps) {
     };
   }, []);
 
+  const availableTiers = useMemo(() => {
+    const tierSet = new Set<Tier>();
+    for (const item of items) {
+      if (isVerifiedTradeValue(item)) {
+        tierSet.add(item.tier);
+      }
+    }
+    return (["S", "A", "B", "C", "D"] as Tier[]).filter((t) =>
+      tierSet.has(t),
+    );
+  }, [items]);
+
   const filteredItems = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
 
     return items
       .filter((item) => {
+        const verified = isVerifiedTradeValue(item);
         const matchesQuery =
           normalizedQuery.length === 0 ||
           item.name.toLowerCase().includes(normalizedQuery) ||
@@ -68,8 +71,14 @@ export function ValueTable({ items }: ValueTableProps) {
           );
 
         const matchesRarity = rarity === "All" || item.rarity === rarity;
-        const matchesTrend = trend === "All" || item.trend === trend;
-        const matchesDemand = demand === "All" || item.demand === demand;
+        const matchesStatus =
+          status === "All" ||
+          (status === "Verified" ? verified : !verified);
+        const matchesTier =
+          tierFilter === "All" ||
+          (tierFilter === "Unranked"
+            ? !verified
+            : verified && item.tier === tierFilter);
         const matchesObtainable =
           obtainable === "All" ||
           (obtainable === "Obtainable" ? item.obtainable : !item.obtainable);
@@ -77,8 +86,8 @@ export function ValueTable({ items }: ValueTableProps) {
         return (
           matchesQuery &&
           matchesRarity &&
-          matchesTrend &&
-          matchesDemand &&
+          matchesStatus &&
+          matchesTier &&
           matchesObtainable
         );
       })
@@ -87,30 +96,40 @@ export function ValueTable({ items }: ValueTableProps) {
           return a.name.localeCompare(b.name);
         }
 
-        if (sort === "demand") {
-          return (
-            b.demand - a.demand ||
-            getComparableValue(b) - getComparableValue(a)
-          );
+        if (sort === "value-asc") {
+          const aVerified = isVerifiedTradeValue(a);
+          const bVerified = isVerifiedTradeValue(b);
+          if (aVerified !== bVerified) {
+            return aVerified ? -1 : 1;
+          }
+          return a.value - b.value || a.name.localeCompare(b.name);
         }
 
         if (sort === "rarity") {
           return (
             rarityOrder.indexOf(a.rarity) - rarityOrder.indexOf(b.rarity) ||
-            getComparableValue(b) - getComparableValue(a)
+            getComparableValue(b) - getComparableValue(a) ||
+            a.name.localeCompare(b.name)
           );
         }
 
         if (sort === "updated") {
-          return b.lastUpdated.localeCompare(a.lastUpdated);
+          return (
+            b.lastUpdated.localeCompare(a.lastUpdated) ||
+            getComparableValue(b) - getComparableValue(a) ||
+            a.name.localeCompare(b.name)
+          );
         }
 
-        return getComparableValue(b) - getComparableValue(a);
+        return (
+          getComparableValue(b) - getComparableValue(a) ||
+          a.name.localeCompare(b.name)
+        );
       });
-  }, [demand, items, obtainable, query, rarity, sort, trend]);
+  }, [items, obtainable, query, rarity, sort, status, tierFilter]);
 
   function handleSearchChange(value: string) {
-    const normalizedValue = value.trim();
+    const normalizedValue = value.trim().toLowerCase();
 
     setQuery(value);
 
@@ -118,11 +137,14 @@ export function ValueTable({ items }: ValueTableProps) {
     pendingSearch.current = "";
 
     if (normalizedValue.length === 0) {
-      hasTrackedSearch.current = false;
+      lastTrackedQuery.current = "";
       return;
     }
 
-    if (normalizedValue.length < 2 || hasTrackedSearch.current) {
+    if (
+      normalizedValue.length < 2 ||
+      normalizedValue === lastTrackedQuery.current
+    ) {
       return;
     }
 
@@ -143,15 +165,17 @@ export function ValueTable({ items }: ValueTableProps) {
   }
 
   function trackSearch(value: string) {
-    const normalizedValue = value.trim();
+    const normalizedValue = value.trim().toLowerCase();
 
-    if (normalizedValue.length < 2 || hasTrackedSearch.current) {
+    if (
+      normalizedValue.length < 2 ||
+      normalizedValue === lastTrackedQuery.current
+    ) {
       return;
     }
 
-    // A settled search can reach this function through debounce, blur, reset, or unmount.
-    // Record only once until the field is cleared or reset into a new search session.
-    hasTrackedSearch.current = true;
+    // Record once per distinct settled search term.
+    lastTrackedQuery.current = normalizedValue;
     pendingSearch.current = "";
     trackEvent("item_search_used", {
       items_total: items.length,
@@ -176,11 +200,11 @@ export function ValueTable({ items }: ValueTableProps) {
 
     setQuery("");
     setRarity("All");
-    setTrend("All");
-    setDemand("All");
+    setStatus("All");
+    setTierFilter("All");
     setObtainable("All");
     setSort("value");
-    hasTrackedSearch.current = false;
+    lastTrackedQuery.current = "";
     pendingSearch.current = "";
     trackFilter("all", "reset");
   }
@@ -229,40 +253,35 @@ export function ValueTable({ items }: ValueTableProps) {
           </select>
         </label>
         <label>
-          <span>Trend</span>
+          <span>Value status</span>
           <select
-            value={trend}
+            value={status}
             onChange={(event) => {
-              setTrend(event.target.value as Trend | "All");
-              trackFilter("trend", event.target.value);
+              setStatus(event.target.value as StatusFilter);
+              trackFilter("status", event.target.value);
             }}
           >
-            {trends.map((trendOption) => (
-              <option key={trendOption} value={trendOption}>
-                {trendOption === "All" ? "All trends" : trendOption}
-              </option>
-            ))}
+            <option value="All">All statuses</option>
+            <option value="Verified">Verified USD</option>
+            <option value="TBD">TBD only</option>
           </select>
         </label>
         <label>
-          <span>Demand</span>
+          <span>Price tier</span>
           <select
-            value={demand}
+            value={tierFilter}
             onChange={(event) => {
-              setDemand(
-                event.target.value === "All"
-                  ? "All"
-                  : (Number(event.target.value) as BrainrotItem["demand"]),
-              );
-              trackFilter("demand", event.target.value);
+              setTierFilter(event.target.value as TierFilter);
+              trackFilter("tier", event.target.value);
             }}
           >
-            <option value="All">All demand</option>
-            {demandLevels.map((level) => (
-              <option key={level} value={level}>
-                {getDemandLabel(level)}
+            <option value="All">All tiers</option>
+            {availableTiers.map((tierOption) => (
+              <option key={tierOption} value={tierOption}>
+                Tier {tierOption}
               </option>
             ))}
+            <option value="Unranked">Unranked (TBD)</option>
           </select>
         </label>
         <label>
@@ -291,7 +310,7 @@ export function ValueTable({ items }: ValueTableProps) {
             }}
           >
             <option value="value">Highest value</option>
-            <option value="demand">Highest demand</option>
+            <option value="value-asc">Lowest verified value</option>
             <option value="rarity">Rarity</option>
             <option value="updated">Newest update</option>
             <option value="name">Name A-Z</option>
@@ -314,42 +333,53 @@ export function ValueTable({ items }: ValueTableProps) {
               <div>
                 <h3>{item.name}</h3>
                 <p>{item.notes}</p>
-                <a
-                  className="source-link"
-                  href={item.sourceUrl}
-                  rel="noreferrer"
-                  target="_blank"
-                  data-analytics-event="official_source_clicked"
-                  data-analytics-label={item.slug}
-                  data-analytics-location="value_table"
-                >
-                  {item.sourceLabel}
-                </a>
-                {item.additionalSources?.map((source) => (
+                <div className="source-links">
                   <a
                     className="source-link"
-                    href={source.url}
-                    key={source.url}
+                    href={item.sourceUrl}
                     rel="noreferrer"
                     target="_blank"
-                    data-analytics-event="official_source_clicked"
-                    data-analytics-label={source.label}
-                    data-analytics-location="value_table_cross_check"
+                    data-analytics-event={
+                      item.sourceUrl.includes("roblox.com") ||
+                      item.sourceUrl.includes("playsab.com")
+                        ? "official_source_clicked"
+                        : "community_source_clicked"
+                    }
+                    data-analytics-label={item.slug}
+                    data-analytics-location="value_table"
                   >
-                    Cross-check: {source.label}
+                    {item.sourceLabel}
                   </a>
-                ))}
+                  {item.additionalSources?.map((source) => (
+                    <a
+                      className="source-link"
+                      href={source.url}
+                      key={source.url}
+                      rel="noreferrer"
+                      target="_blank"
+                      data-analytics-event="community_source_clicked"
+                      data-analytics-label={`${item.slug}:${source.label}`}
+                      data-analytics-location="value_table_cross_check"
+                    >
+                      Cross-check: {source.label}
+                    </a>
+                  ))}
+                </div>
               </div>
             </div>
             <div className="item-meta">
               <span className={`pill rarity rarity-${item.rarity.toLowerCase()}`}>
                 {item.rarity}
               </span>
-              <span className={`pill trend trend-${item.trend.toLowerCase()}`}>
-                {item.trend}
+              <span
+                className={`pill ${
+                  isVerifiedTradeValue(item) ? "verified-value" : "trend-unknown"
+                }`}
+              >
+                {isVerifiedTradeValue(item) ? `Tier ${item.tier}` : "Unranked"}
               </span>
               <span className="pill demand">
-                Demand {getDemandLabel(item.demand)}
+                {item.obtainable ? "Obtainable" : "Unobtainable"}
               </span>
             </div>
             <div className="item-value">

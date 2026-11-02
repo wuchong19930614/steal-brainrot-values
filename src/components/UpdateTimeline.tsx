@@ -20,7 +20,9 @@ export function UpdateTimeline() {
                     ? `${formatValue(change.previousValue)} -> `
                     : ""}
                   {typeof change.newValue === "number"
-                    ? formatValue(change.newValue)
+                    ? `${formatValue(change.newValue)}${
+                        change.note ? ` — ${change.note}` : ""
+                      }`
                     : change.note}
                 </span>
               </div>

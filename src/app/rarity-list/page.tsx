@@ -18,6 +18,7 @@ export const metadata = createPageMetadata({
 
 export default function RarityListPage() {
   const rarityGroups = getRarityGroups();
+  const orderedRarityItems = rarityGroups.flatMap((group) => group.items);
 
   return (
     <>
@@ -46,8 +47,8 @@ export default function RarityListPage() {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "Steal a Brainrot rarity list",
-          numberOfItems: brainrots.length,
-          itemListElement: brainrots.map((item, index) => ({
+          numberOfItems: orderedRarityItems.length,
+          itemListElement: orderedRarityItems.map((item, index) => ({
             "@type": "ListItem",
             position: index + 1,
             name: `${item.name} (${item.rarity})`,

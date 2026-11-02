@@ -1,7 +1,11 @@
 import Link from "next/link";
 import { JsonLd } from "@/components/JsonLd";
 import { TierBoard } from "@/components/TierBoard";
-import { lastUpdated } from "@/lib/data";
+import {
+  formatValue,
+  getVerifiedTradeValueItems,
+  lastUpdated,
+} from "@/lib/data";
 import { absoluteUrl, createPageMetadata } from "@/lib/seo";
 
 export const metadata = createPageMetadata({
@@ -12,6 +16,10 @@ export const metadata = createPageMetadata({
 });
 
 export default function TierListPage() {
+  const rankedItems = [...getVerifiedTradeValueItems()].sort(
+    (a, b) => b.value - a.value,
+  );
+
   return (
     <>
       <JsonLd
@@ -32,6 +40,21 @@ export default function TierListPage() {
               item: absoluteUrl("/tier-list/"),
             },
           ],
+        }}
+      />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "Steal a Brainrot Default market price tier list",
+          numberOfItems: rankedItems.length,
+          itemListElement: rankedItems.map((item, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            name: `${item.name} (Tier ${item.tier})`,
+            url: absoluteUrl(`/trading-values/#${item.slug}`),
+            description: `Tier ${item.tier} Default Secret Brainrot (${formatValue(item.value)}). ${item.notes}`,
+          })),
         }}
       />
 
@@ -55,6 +78,14 @@ export default function TierListPage() {
             Value list
           </Link>
           <Link
+            href="/calculator/"
+            data-analytics-event="related_tool_clicked"
+            data-analytics-label="calculator"
+            data-analytics-location="tier_intro"
+          >
+            Calculator
+          </Link>
+          <Link
             href="/trading-values/"
             data-analytics-event="related_tool_clicked"
             data-analytics-label="trading-values"
@@ -67,7 +98,7 @@ export default function TierListPage() {
 
       <TierBoard />
 
-      <section className="content-band single">
+      <section className="content-band">
         <div>
           <h2>Ranking method</h2>
           <p>
@@ -76,6 +107,43 @@ export default function TierListPage() {
             seller-count, M/s-match, and 15% source-price-spread checks enter the
             board. Demand stays Unknown and does not affect tiers yet.
           </p>
+        </div>
+        <div>
+          <h2>Related trade tools</h2>
+          <div className="link-grid">
+            <Link
+              href="/calculator/"
+              data-analytics-event="related_tool_clicked"
+              data-analytics-label="calculator"
+              data-analytics-location="tier_related_tools"
+            >
+              Trade calculator
+            </Link>
+            <Link
+              href="/rarity-list/"
+              data-analytics-event="related_tool_clicked"
+              data-analytics-label="rarity-list"
+              data-analytics-location="tier_related_tools"
+            >
+              Rarity list
+            </Link>
+            <Link
+              href="/trading-values/"
+              data-analytics-event="related_tool_clicked"
+              data-analytics-label="trading-values"
+              data-analytics-location="tier_related_tools"
+            >
+              Trading value status
+            </Link>
+            <Link
+              href="/methodology/"
+              data-analytics-event="related_tool_clicked"
+              data-analytics-label="methodology"
+              data-analytics-location="tier_related_tools"
+            >
+              Verification methodology
+            </Link>
+          </div>
         </div>
       </section>
     </>

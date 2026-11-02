@@ -66,6 +66,56 @@ export default function CalculatorPage() {
       </section>
 
       <TradeCalculator items={brainrots} />
+
+      <section className="content-band">
+        <div>
+          <h2>How calculator prices work</h2>
+          <p>
+            Each selectable item uses the rounded mean of its current StarPets
+            Default catalog price and eligible Eldorado Default listing median
+            when both sources have at least three records, three distinct
+            Eldorado sellers, an exact base M/s match, and no more than 15%
+            spread. Unverified or single-source items stay excluded.
+          </p>
+        </div>
+        <div>
+          <h2>Related trade tools</h2>
+          <div className="link-grid">
+            <Link
+              href="/tier-list/"
+              data-analytics-event="related_tool_clicked"
+              data-analytics-label="tier-list"
+              data-analytics-location="calculator_related_tools"
+            >
+              Market price tier list
+            </Link>
+            <Link
+              href="/rarity-list/"
+              data-analytics-event="related_tool_clicked"
+              data-analytics-label="rarity-list"
+              data-analytics-location="calculator_related_tools"
+            >
+              Brainrot rarity list
+            </Link>
+            <Link
+              href="/trading-values/"
+              data-analytics-event="related_tool_clicked"
+              data-analytics-label="trading-values"
+              data-analytics-location="calculator_related_tools"
+            >
+              Trading value status
+            </Link>
+            <Link
+              href="/methodology/"
+              data-analytics-event="related_tool_clicked"
+              data-analytics-label="methodology"
+              data-analytics-location="calculator_related_tools"
+            >
+              Verification methodology
+            </Link>
+          </div>
+        </div>
+      </section>
     </>
   );
 }

@@ -5,8 +5,7 @@ export type Rarity =
   | "Legendary"
   | "Mythic"
   | "Secret"
-  | "Limited"
-  | "Unknown";
+  | "Limited";
 
 export type Trend = "Rising" | "Stable" | "Falling" | "Unstable" | "Unknown";
 

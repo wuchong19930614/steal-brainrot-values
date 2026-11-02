@@ -18,6 +18,7 @@ type TradeCalculatorProps = {
 type OfferItem = {
   itemId: string;
   quantity: number;
+  rawQuantity?: string;
 };
 
 type Side = "mine" | "theirs";
@@ -48,10 +49,10 @@ function getVerdict(myTotal: number, theirTotal: number) {
     };
   }
 
-  const difference = theirTotal - myTotal;
+  const difference = Math.round((theirTotal - myTotal) * 100) / 100;
   const ratio = difference / Math.min(myTotal, theirTotal);
   const percentage = Math.abs(ratio * 100).toFixed(1);
-  const amount = formatValue(Math.abs(difference));
+  const amount = formatMarketplacePrice(Math.abs(difference));
 
   if (Math.abs(ratio) <= 0.05) {
     return {
@@ -93,10 +94,11 @@ function getVerdict(myTotal: number, theirTotal: number) {
 }
 
 function totalForOffer(offer: OfferItem[], itemsById: Map<string, BrainrotItem>) {
-  return offer.reduce((sum, offerItem) => {
+  const totalCents = offer.reduce((sum, offerItem) => {
     const item = itemsById.get(offerItem.itemId);
-    return sum + (item?.value || 0) * offerItem.quantity;
+    return sum + Math.round((item?.value || 0) * 100) * offerItem.quantity;
   }, 0);
+  return totalCents / 100;
 }
 
 export function TradeCalculator({ items }: TradeCalculatorProps) {
@@ -203,6 +205,14 @@ export function TradeCalculator({ items }: TradeCalculatorProps) {
       return;
     }
 
+    const currentOffer = side === "mine" ? mine : theirs;
+    const existingItem = currentOffer.find(
+      (offerItem) => offerItem.itemId === itemId,
+    );
+    if (existingItem && existingItem.quantity >= 99) {
+      return;
+    }
+
     trackEvent(
       source === "empty_state"
         ? "calculator_add_selected_item"
@@ -219,14 +229,20 @@ export function TradeCalculator({ items }: TradeCalculatorProps) {
       const existing = offer.find((offerItem) => offerItem.itemId === itemId);
 
       if (existing) {
-        return offer.map((offerItem) =>
-          offerItem.itemId === itemId
-            ? { ...offerItem, quantity: offerItem.quantity + 1 }
-            : offerItem,
-        );
+        return offer.map((offerItem) => {
+          if (offerItem.itemId !== itemId) {
+            return offerItem;
+          }
+          const nextQty = Math.min(99, offerItem.quantity + 1);
+          return {
+            ...offerItem,
+            quantity: nextQty,
+            rawQuantity: String(nextQty),
+          };
+        });
       }
 
-      return [...offer, { itemId, quantity: 1 }];
+      return [...offer, { itemId, quantity: 1, rawQuantity: "1" }];
     };
 
     if (side === "mine") {
@@ -236,12 +252,35 @@ export function TradeCalculator({ items }: TradeCalculatorProps) {
     }
   }
 
-  function updateQuantity(side: Side, itemId: string, quantity: number) {
-    const nextQuantity = Math.max(1, Math.min(99, quantity));
+  function updateQuantityInput(side: Side, itemId: string, rawValue: string) {
+    const trimmed = rawValue.trim();
+    const parsed = Number.parseInt(trimmed, 10);
+    const nextQuantity =
+      trimmed === "" || !Number.isFinite(parsed)
+        ? 1
+        : Math.max(1, Math.min(99, parsed));
+    const nextRaw =
+      trimmed === "" ? "" : Number.isFinite(parsed) ? String(nextQuantity) : "1";
+
     const updateOffer = (offer: OfferItem[]) =>
       offer.map((offerItem) =>
         offerItem.itemId === itemId
-          ? { ...offerItem, quantity: nextQuantity }
+          ? { ...offerItem, quantity: nextQuantity, rawQuantity: nextRaw }
+          : offerItem,
+      );
+
+    if (side === "mine") {
+      setMine(updateOffer);
+    } else {
+      setTheirs(updateOffer);
+    }
+  }
+
+  function normalizeQuantityOnBlur(side: Side, itemId: string) {
+    const updateOffer = (offer: OfferItem[]) =>
+      offer.map((offerItem) =>
+        offerItem.itemId === itemId
+          ? { ...offerItem, rawQuantity: String(offerItem.quantity) }
           : offerItem,
       );
 
@@ -304,10 +343,11 @@ export function TradeCalculator({ items }: TradeCalculatorProps) {
                 type="number"
                 min="1"
                 max="99"
-                value={offerItem.quantity}
+                value={offerItem.rawQuantity ?? String(offerItem.quantity)}
                 onChange={(event) =>
-                  updateQuantity(side, item.id, Number(event.target.value))
+                  updateQuantityInput(side, item.id, event.target.value)
                 }
+                onBlur={() => normalizeQuantityOnBlur(side, item.id)}
               />
               <button
                 type="button"

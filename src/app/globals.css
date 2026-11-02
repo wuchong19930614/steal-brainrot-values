@@ -375,11 +375,18 @@ a:focus-visible {
   font-size: 0.88rem;
 }
 
+.source-links {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 16px;
+  row-gap: 4px;
+  margin-top: 6px;
+}
+
 .source-link {
   display: inline-flex;
   align-items: center;
   min-height: 40px;
-  margin-top: 8px;
   color: var(--blue);
   font-size: 0.82rem;
   font-weight: 900;
@@ -885,6 +892,10 @@ details p {
   background: #ffffff;
 }
 
+.tier-item:hover {
+  border-color: var(--ink);
+}
+
 .rarity-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -994,6 +1005,12 @@ details p {
 .not-found {
   min-height: 420px;
   align-content: center;
+}
+
+@media (max-width: 1100px) {
+  .toolbar {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 900px) {

@@ -171,6 +171,11 @@ export default function TradingValuesPage() {
                   ? item.valueSourceCheckedAt || item.lastUpdated
                   : item.lastUpdated;
 
+                const isOfficialSource =
+                  sourceUrl.includes("roblox.com") ||
+                  sourceUrl.includes("playsab.com");
+                const evidence = item.marketplaceEvidence;
+
                 return (
                   <tr id={item.slug} key={item.id}>
                     <th scope="row">{item.name}</th>
@@ -191,18 +196,51 @@ export default function TradingValuesPage() {
                       </span>
                     </td>
                     <td>
-                      <a
-                        className="source-link"
-                        href={sourceUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        data-analytics-event="official_source_clicked"
-                        data-analytics-label={item.slug}
-                        data-analytics-location="trading_values_status"
-                      >
-                        {sourceLabel}
-                      </a>
+                      <div className="source-links">
+                        <a
+                          className="source-link"
+                          href={sourceUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          data-analytics-event={
+                            isOfficialSource
+                              ? "official_source_clicked"
+                              : "community_source_clicked"
+                          }
+                          data-analytics-label={item.slug}
+                          data-analytics-location="trading_values_status"
+                        >
+                          {sourceLabel}
+                        </a>
+                        {item.additionalSources?.map((source) => (
+                          <a
+                            className="source-link"
+                            href={source.url}
+                            key={source.url}
+                            target="_blank"
+                            rel="noreferrer"
+                            data-analytics-event="community_source_clicked"
+                            data-analytics-label={`${item.slug}:${source.label}`}
+                            data-analytics-location="trading_values_cross_check"
+                          >
+                            Cross-check: {source.label}
+                          </a>
+                        ))}
+                      </div>
                       <p>{item.notes}</p>
+                      {hasVerifiedValue && evidence ? (
+                        <p>
+                          <strong>Two-source evidence:</strong>{" "}
+                          {evidence.sources
+                            .map((s) =>
+                              s.distinctSellers
+                                ? `${s.label} ${formatValue(s.askingPriceUsd)} (${s.listingCount} listings, ${s.distinctSellers} sellers)`
+                                : `${s.label} ${formatValue(s.askingPriceUsd)} (${s.listingCount} records)`,
+                            )
+                            .join(" vs. ")}{" "}
+                          — {evidence.sourcePriceSpreadPercent}% spread.
+                        </p>
+                      ) : null}
                     </td>
                     <td>{checkedAt}</td>
                   </tr>

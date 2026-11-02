@@ -17,10 +17,6 @@ export const metadata: Metadata = {
     siteName,
     type: "website",
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
 };
 
 export default function RootLayout({

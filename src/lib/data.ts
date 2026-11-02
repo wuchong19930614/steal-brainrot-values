@@ -32,17 +32,10 @@ const starPetsMarketplaceUrl = "https://starpets.gg/steal-brainrot";
 
 function eldoradoOfferSearchUrl(itemName: string) {
   const query = new URLSearchParams({
-    gameId: "259",
-    category: "CustomItem",
-    pageIndex: "1",
-    pageSize: "20",
     searchQuery: itemName,
-    useOfferAttributeSearch: "true",
-    offerSortingCriterion: "Price",
-    isAscending: "true",
   });
 
-  return `https://www.eldorado.gg/api/v1/item-management/offers?${query.toString()}`;
+  return `https://www.eldorado.gg/steal-a-brainrot-brainrots/i/259?${query.toString()}`;
 }
 
 function tierForMarketplacePrice(value: number): Tier {
@@ -469,7 +462,7 @@ const catalogCrossCheckItems: BrainrotItem[] = catalogCrossCheckRows.map(
       trend: "Unknown",
       tier: "D",
       obtainable: true,
-      aliases: [row.name.toLowerCase(), ...row.aliases],
+      aliases: Array.from(new Set([row.name.toLowerCase(), ...row.aliases])),
       notes: row.notes,
       confidence: "Medium",
       sourceLabel: "StarPets Steal a Brainrot marketplace",
@@ -1085,7 +1078,6 @@ export const rarityOrder: Rarity[] = [
   "Epic",
   "Rare",
   "Common",
-  "Unknown",
 ];
 
 export const tierOrder: Tier[] = ["S", "A", "B", "C", "D"];
@@ -1150,18 +1142,6 @@ export function formatCount(value: number) {
   return new Intl.NumberFormat("en-US").format(value);
 }
 
-export function getDemandLabel(demand: BrainrotItem["demand"]) {
-  const labels = {
-    1: "Unknown",
-    2: "Fair",
-    3: "Good",
-    4: "High",
-    5: "Hot",
-  } as const;
-
-  return labels[demand];
-}
-
 export function getRarityGroups() {
   return rarityOrder
     .map((rarity) => ({
@@ -1171,15 +1151,22 @@ export function getRarityGroups() {
     .filter((group) => group.items.length > 0);
 }
 
-export function getTierGroups(sourceItems: BrainrotItem[] = brainrots) {
+export function getTierGroups(
+  sourceItems: BrainrotItem[] = getVerifiedTradeValueItems(),
+) {
+  const verifiedOnly = sourceItems.filter(isVerifiedTradeValue);
   return tierOrder.map((tier) => ({
     tier,
-    items: sourceItems
+    items: verifiedOnly
       .filter((item) => item.tier === tier)
       .sort((a, b) => b.value - a.value),
   }));
 }
 
 export function getTotalTrackedValue() {
-  return getVerifiedTradeValueItems().reduce((sum, item) => sum + item.value, 0);
+  const totalCents = getVerifiedTradeValueItems().reduce(
+    (sum, item) => sum + Math.round(item.value * 100),
+    0,
+  );
+  return totalCents / 100;
 }

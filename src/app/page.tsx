@@ -1,5 +1,4 @@
 import Link from "next/link";
-import type { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
 import { ValueTable } from "@/components/ValueTable";
 import {
@@ -11,7 +10,12 @@ import {
   officialSources,
   lastUpdated,
 } from "@/lib/data";
-import { absoluteUrl, siteDescription, siteName } from "@/lib/seo";
+import {
+  absoluteUrl,
+  createPageMetadata,
+  siteDescription,
+  siteName,
+} from "@/lib/seo";
 
 const faqs = [
   {
@@ -31,26 +35,23 @@ const faqs = [
   },
 ];
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: "Steal a Brainrot Values - USD Market Prices & Calculator",
   description:
     "Check ten source-verified Default Steal a Brainrot marketplace asking prices in USD, compare offers, and review value evidence.",
-  alternates: {
-    canonical: absoluteUrl("/"),
-  },
-  openGraph: {
-    title: "Steal a Brainrot Values - USD Market Prices & Calculator",
-    description:
-      "Check ten source-verified Default Steal a Brainrot marketplace asking prices in USD, compare offers, and review value evidence.",
-    url: absoluteUrl("/"),
-  },
-};
+  path: "/",
+});
 
 export default function HomePage() {
   const verifiedItems = getVerifiedTradeValueItems();
   const topItems = [...verifiedItems]
     .sort((a, b) => b.value - a.value)
     .slice(0, 3);
+  const defaultOrderedItems = [...brainrots].sort((a, b) => {
+    const aVal = isVerifiedTradeValue(a) ? a.value : 0;
+    const bVal = isVerifiedTradeValue(b) ? b.value : 0;
+    return bVal - aVal || a.name.localeCompare(b.name);
+  });
 
   return (
     <>
@@ -68,7 +69,8 @@ export default function HomePage() {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "Steal a Brainrot values",
-          itemListElement: brainrots.slice(0, 12).map((item, index) => ({
+          numberOfItems: defaultOrderedItems.length,
+          itemListElement: defaultOrderedItems.map((item, index) => ({
             "@type": "ListItem",
             position: index + 1,
             name: item.name,
@@ -77,8 +79,8 @@ export default function HomePage() {
               isVerifiedTradeValue(item)
                 ? `${item.rarity} item with a verified Default marketplace asking price of ${formatValue(
                     item.value,
-                  )}.`
-                : `${item.rarity} item. Official trade value not yet published.`,
+                  )}. ${item.notes}`
+                : `${item.rarity} item. ${item.notes}`,
           })),
         }}
       />

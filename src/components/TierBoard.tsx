@@ -1,21 +1,22 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
+import { trackEvent } from "@/lib/analytics";
 import {
   brainrots,
   formatValue,
-  getDemandLabel,
   getTierGroups,
   getVerifiedTradeValueItems,
-  rarityOrder,
 } from "@/lib/data";
 
-type SortKey = "value" | "demand" | "rarity";
+type SortKey = "value" | "value-asc" | "income" | "name";
 
 const sortOptions: Array<{ key: SortKey; label: string }> = [
-  { key: "value", label: "Highest value" },
-  { key: "demand", label: "Highest demand" },
-  { key: "rarity", label: "Rarity" },
+  { key: "value", label: "Highest price" },
+  { key: "value-asc", label: "Lowest price" },
+  { key: "income", label: "Highest base income (M/s)" },
+  { key: "name", label: "Name A-Z" },
 ];
 
 export function TierBoard() {
@@ -32,18 +33,22 @@ export function TierBoard() {
         .map((group) => ({
           tier: group.tier,
           items: [...group.items].sort((a, b) => {
-            if (sort === "demand") {
-              return b.demand - a.demand || b.value - a.value;
+            if (sort === "value-asc") {
+              return a.value - b.value || a.name.localeCompare(b.name);
             }
 
-            if (sort === "rarity") {
-              return (
-                rarityOrder.indexOf(a.rarity) - rarityOrder.indexOf(b.rarity) ||
-                b.value - a.value
-              );
+            if (sort === "income") {
+              const incomeDiff =
+                (b.marketplaceEvidence?.baseIncomeMps ?? 0) -
+                (a.marketplaceEvidence?.baseIncomeMps ?? 0);
+              return incomeDiff || b.value - a.value;
             }
 
-            return b.value - a.value;
+            if (sort === "name") {
+              return a.name.localeCompare(b.name);
+            }
+
+            return b.value - a.value || a.name.localeCompare(b.name);
           }),
         }))
         .filter((group) => group.items.length > 0),
@@ -66,13 +71,20 @@ export function TierBoard() {
       <div className="tier-board-toolbar">
         <p>
           Relative tiers use the current Default marketplace asking price in
-          USD. Demand remains unscored until separate demand evidence exists.
+          USD. Click any item to inspect its two-source verification record.
         </p>
         <label>
           <span>Sort within tier</span>
           <select
             value={sort}
-            onChange={(event) => setSort(event.target.value as SortKey)}
+            onChange={(event) => {
+              const nextSort = event.target.value as SortKey;
+              setSort(nextSort);
+              trackEvent("filter_used", {
+                filter_name: "tier_sort",
+                filter_value: nextSort,
+              });
+            }}
           >
             {sortOptions.map((option) => (
               <option key={option.key} value={option.key}>
@@ -89,11 +101,22 @@ export function TierBoard() {
           </div>
           <div className="tier-items">
             {group.items.map((item) => (
-              <article className="tier-item" key={item.id}>
+              <Link
+                href={`/trading-values/#${item.slug}`}
+                className="tier-item"
+                key={item.id}
+                data-analytics-event="related_tool_clicked"
+                data-analytics-label={item.slug}
+                data-analytics-location="tier_board_item"
+              >
                 <strong>{item.name}</strong>
                 <span>{formatValue(item.value)}</span>
-                <small>Demand {getDemandLabel(item.demand)}</small>
-              </article>
+                <small>
+                  {item.marketplaceEvidence?.baseIncomeMps
+                    ? `${item.marketplaceEvidence.baseIncomeMps}M/s Default`
+                    : `${item.rarity} Default`}
+                </small>
+              </Link>
             ))}
           </div>
         </div>
