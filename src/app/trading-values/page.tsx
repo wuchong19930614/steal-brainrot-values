@@ -81,8 +81,8 @@ export default function TradingValuesPage() {
             url: absoluteUrl(`/trading-values/#${item.slug}`),
             description:
               isVerifiedTradeValue(item)
-                ? `Verified Default marketplace asking price: ${formatValue(item.value)}.`
-                : "Item source is listed. Trade value is not publicly published.",
+                ? `Verified Default marketplace asking price: ${formatValue(item.value)}. ${item.notes}`
+                : item.notes,
           })),
         }}
       />
@@ -202,11 +202,7 @@ export default function TradingValuesPage() {
                       >
                         {sourceLabel}
                       </a>
-                      <p>
-                        {hasVerifiedValue
-                          ? "Cross-checked Default marketplace asking price."
-                          : "Item confirmed; public trade value not published."}
-                      </p>
+                      <p>{item.notes}</p>
                     </td>
                     <td>{checkedAt}</td>
                   </tr>

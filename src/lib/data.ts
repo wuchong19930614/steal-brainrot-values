@@ -6,7 +6,7 @@ import type {
   ValueUpdate,
 } from "./types";
 
-export const lastUpdated = "2026-08-02";
+export const lastUpdated = "2026-11-02";
 const catalogLastUpdated = "2026-07-19";
 
 export const officialSources = [
@@ -55,114 +55,114 @@ function tierForMarketplacePrice(value: number): Tier {
 
 const marketplaceSnapshotRows = [
   {
-    name: "Los Candies",
-    baseIncomeMps: 23,
-    starPetsCount: 5,
-    starPetsPriceUsd: 1,
-    eldoradoCount: 10,
-    eldoradoSellers: 10,
-    eldoradoMedianUsd: 0.995,
-    spreadPercent: 0.5,
-    consensusUsd: 1,
+    name: "La Sahur Combinasion",
+    baseIncomeMps: 2,
+    starPetsCount: 7,
+    starPetsPriceUsd: 1.48,
+    eldoradoCount: 11,
+    eldoradoSellers: 9,
+    eldoradoMedianUsd: 1.5,
+    spreadPercent: 1.4,
+    consensusUsd: 1.49,
   },
   {
-    name: "Los Cupids",
-    baseIncomeMps: 30,
-    starPetsCount: 5,
-    starPetsPriceUsd: 1,
-    eldoradoCount: 8,
-    eldoradoSellers: 8,
-    eldoradoMedianUsd: 0.98,
-    spreadPercent: 2,
-    consensusUsd: 0.99,
-  },
-  {
-    name: "Bearito Cabinito",
-    baseIncomeMps: 72.5,
+    name: "Rosey and Teddy",
+    baseIncomeMps: 165,
     starPetsCount: 38,
-    starPetsPriceUsd: 7.73,
-    eldoradoCount: 8,
-    eldoradoSellers: 8,
-    eldoradoMedianUsd: 7.99,
-    spreadPercent: 3.4,
-    consensusUsd: 7.86,
+    starPetsPriceUsd: 7.74,
+    eldoradoCount: 14,
+    eldoradoSellers: 12,
+    eldoradoMedianUsd: 7.52,
+    spreadPercent: 2.9,
+    consensusUsd: 7.63,
   },
   {
-    name: "Fortunu and Cashuru",
-    baseIncomeMps: 130,
-    starPetsCount: 72,
-    starPetsPriceUsd: 14.4,
+    name: "Ketupat Bros",
+    baseIncomeMps: 145,
+    starPetsCount: 53,
+    starPetsPriceUsd: 10.67,
     eldoradoCount: 11,
     eldoradoSellers: 11,
-    eldoradoMedianUsd: 14.99,
-    spreadPercent: 4.1,
-    consensusUsd: 14.7,
-  },
-  {
-    name: "La Ginger Sekolah",
-    baseIncomeMps: 75,
-    starPetsCount: 6,
-    starPetsPriceUsd: 1.33,
-    eldoradoCount: 8,
-    eldoradoSellers: 8,
-    eldoradoMedianUsd: 1.27,
-    spreadPercent: 4.7,
-    consensusUsd: 1.3,
-  },
-  {
-    name: "Orcaledon",
-    baseIncomeMps: 40,
-    starPetsCount: 6,
-    starPetsPriceUsd: 1.32,
-    eldoradoCount: 12,
-    eldoradoSellers: 12,
-    eldoradoMedianUsd: 1.25,
-    spreadPercent: 5.6,
-    consensusUsd: 1.29,
-  },
-  {
-    name: "Hydra Dragon Cannelloni",
-    baseIncomeMps: 300,
-    starPetsCount: 133,
-    starPetsPriceUsd: 26.6,
-    eldoradoCount: 12,
-    eldoradoSellers: 12,
-    eldoradoMedianUsd: 25.15,
-    spreadPercent: 5.8,
-    consensusUsd: 25.88,
+    eldoradoMedianUsd: 10.99,
+    spreadPercent: 3,
+    consensusUsd: 10.83,
   },
   {
     name: "Globa Steppa",
     baseIncomeMps: 27.5,
-    starPetsCount: 27,
-    starPetsPriceUsd: 5.59,
+    starPetsCount: 9,
+    starPetsPriceUsd: 1.87,
     eldoradoCount: 16,
-    eldoradoSellers: 15,
-    eldoradoMedianUsd: 5.995,
-    spreadPercent: 7.2,
-    consensusUsd: 5.79,
+    eldoradoSellers: 16,
+    eldoradoMedianUsd: 1.99,
+    spreadPercent: 6.4,
+    consensusUsd: 1.93,
   },
   {
-    name: "Foxini Lanternini",
-    baseIncomeMps: 115,
+    name: "Brunito Marsito",
+    baseIncomeMps: 3.5,
+    starPetsCount: 5,
+    starPetsPriceUsd: 1.07,
+    eldoradoCount: 9,
+    eldoradoSellers: 9,
+    eldoradoMedianUsd: 1,
+    spreadPercent: 7,
+    consensusUsd: 1.04,
+  },
+  {
+    name: "Duggy Bros",
+    baseIncomeMps: 90,
     starPetsCount: 46,
-    starPetsPriceUsd: 9.32,
+    starPetsPriceUsd: 9.34,
+    eldoradoCount: 4,
+    eldoradoSellers: 4,
+    eldoradoMedianUsd: 10.25,
+    spreadPercent: 9.7,
+    consensusUsd: 9.79,
+  },
+  {
+    name: "La Spooky Grande",
+    baseIncomeMps: 24.5,
+    starPetsCount: 5,
+    starPetsPriceUsd: 1.07,
     eldoradoCount: 6,
     eldoradoSellers: 6,
-    eldoradoMedianUsd: 8.6,
-    spreadPercent: 8.4,
-    consensusUsd: 8.96,
+    eldoradoMedianUsd: 1.195,
+    spreadPercent: 11.7,
+    consensusUsd: 1.13,
   },
   {
-    name: "Ginger Gerat",
-    baseIncomeMps: 75,
-    starPetsCount: 249,
-    starPetsPriceUsd: 49.91,
-    eldoradoCount: 10,
-    eldoradoSellers: 10,
-    eldoradoMedianUsd: 46,
-    spreadPercent: 8.5,
-    consensusUsd: 47.96,
+    name: "Cloverat Clapat",
+    baseIncomeMps: 60,
+    starPetsCount: 13,
+    starPetsPriceUsd: 2.67,
+    eldoradoCount: 9,
+    eldoradoSellers: 9,
+    eldoradoMedianUsd: 2.99,
+    spreadPercent: 12,
+    consensusUsd: 2.83,
+  },
+  {
+    name: "Eviledon",
+    baseIncomeMps: 31.5,
+    starPetsCount: 4,
+    starPetsPriceUsd: 0.94,
+    eldoradoCount: 15,
+    eldoradoSellers: 15,
+    eldoradoMedianUsd: 0.82,
+    spreadPercent: 14.6,
+    consensusUsd: 0.88,
+  },
+  {
+    name: "Spooky and Pumpky",
+    baseIncomeMps: 80,
+    starPetsCount: 17,
+    starPetsPriceUsd: 3.5,
+    eldoradoCount: 12,
+    eldoradoSellers: 12,
+    eldoradoMedianUsd: 3.05,
+    spreadPercent: 14.8,
+    consensusUsd: 3.27,
   },
 ] as const;
 
@@ -237,8 +237,258 @@ export function formatMarketplacePrice(value: number) {
   }).format(value);
 }
 
+const catalogCrossCheckRows: Array<{
+  name: string;
+  rarity: Rarity;
+  aliases: string[];
+  notes: string;
+}> = [
+  {
+    name: "Popcuru and Fizzuru",
+    rarity: "Secret",
+    aliases: ["popcuru and fizuru", "popcuru", "fizzuru", "fizuru"],
+    notes:
+      "StarPets and Eldorado confirm Popcuru and Fizzuru as an obtainable Secret Brainrot with 170M/s Default base income. StarPets currently has no Default inventory while Eldorado lists 347 offers starting at $1.29, so the trade value remains TBD.",
+  },
+  {
+    name: "Bumbatron",
+    rarity: "Secret",
+    aliases: ["bumbatron sab"],
+    notes:
+      "Eldorado confirms Bumbatron as a Secret Brainrot with 172.5M/s Default base income across 86 active offers (starting at $5.98, Default median around $6.80). StarPets has not yet indexed Default listings for a two-source comparison, so the trade value remains TBD.",
+  },
+  {
+    name: "Las Sis",
+    rarity: "Secret",
+    aliases: ["las sis"],
+    notes:
+      "StarPets and Eldorado confirm Las Sis as a Secret Brainrot with 17.5M/s Default base income. Current StarPets Default catalog price ($0.95) and eligible Eldorado Default listing median ($0.50) differ by 90%, exceeding the 15% verification rule, so the value remains TBD.",
+  },
+  {
+    name: "Quackini Snackini",
+    rarity: "Secret",
+    aliases: ["quackini"],
+    notes:
+      "StarPets and Eldorado confirm Quackini Snackini as a Secret Brainrot with 65M/s Default base income. Current StarPets Default catalog price ($4.28) and eligible Eldorado Default listing median ($3.65) differ by 17.4%, just above the 15% threshold, so the value remains TBD.",
+  },
+  {
+    name: "Reinito Sleighito",
+    rarity: "Secret",
+    aliases: ["reinito"],
+    notes:
+      "StarPets and Eldorado confirm Reinito Sleighito as a Secret Brainrot with 140M/s Default base income. Current StarPets Default catalog price ($4.26) and eligible Eldorado Default listing median ($3.50) differ by 21.7%, exceeding the 15% spread cap, so the value remains TBD.",
+  },
+  {
+    name: "Gobblino Uniciclino",
+    rarity: "Secret",
+    aliases: ["gobblino"],
+    notes:
+      "StarPets and Eldorado confirm Gobblino Uniciclino as a Secret Brainrot with 27.5M/s Default base income. Current StarPets Default catalog price ($0.75) and eligible Eldorado Default listing median ($1.00) differ by 33.3%, so the value remains TBD.",
+  },
+  {
+    name: "Nacho Spyder",
+    rarity: "Secret",
+    aliases: ["nacho"],
+    notes:
+      "StarPets and Eldorado confirm Nacho Spyder as a Secret Brainrot with 50M/s Default base income. StarPets lists Default at $0.80, while the price-sorted Eldorado Default 50M/s sample has fewer than three distinct sellers, so the value remains TBD.",
+  },
+  {
+    name: "Garama and Madundung",
+    rarity: "Secret",
+    aliases: ["garama", "madundung", "candy garama"],
+    notes:
+      "StarPets and Eldorado confirm Garama and Madundung as a Secret Brainrot with 50M/s Default base income (and 200M/s for the Candy mutation). Current Default source prices ($1.20 on StarPets vs. $1.55 Eldorado Default median) exceed the 15% spread cap, so the value remains TBD.",
+  },
+  {
+    name: "Celularcini Viciosini",
+    rarity: "Secret",
+    aliases: ["celularcini"],
+    notes:
+      "StarPets and Eldorado confirm Celularcini Viciosini as a Secret Brainrot with 22.5M/s Default base income. StarPets currently has no Default inventory while Eldorado lists 73 offers starting at $1.90, so the value remains TBD.",
+  },
+  {
+    name: "Los Fruits",
+    rarity: "Secret",
+    aliases: ["los fruits"],
+    notes:
+      "StarPets and Eldorado confirm Los Fruits as a Secret Brainrot with 23M/s Default base income. Current StarPets Default catalog price ($2.14) and eligible Eldorado Default listing median ($0.45) diverge beyond the 15% spread rule, so the value remains TBD.",
+  },
+  {
+    name: "Capitano Gullini",
+    rarity: "Secret",
+    aliases: ["gullini"],
+    notes:
+      "StarPets and Eldorado confirm Capitano Gullini as a Secret Brainrot with 22M/s Default base income. StarPets currently has no Default inventory while Eldorado lists 105 offers starting at $0.20, so the value remains TBD.",
+  },
+  {
+    name: "Los Mobilis",
+    rarity: "Secret",
+    aliases: ["mobilis"],
+    notes:
+      "StarPets and Eldorado confirm Los Mobilis as a Secret Brainrot with 22M/s Default base income. Current StarPets Default catalog price ($2.71) and eligible Eldorado Default listing median ($0.50) diverge beyond the 15% spread rule, so the value remains TBD.",
+  },
+  {
+    name: "Spinny Hammy",
+    rarity: "Secret",
+    aliases: ["hammy"],
+    notes:
+      "StarPets and Eldorado confirm Spinny Hammy as a Secret Brainrot with 17M/s Default base income. StarPets currently has no Default inventory while Eldorado lists 68 offers starting at $0.50, so the value remains TBD.",
+  },
+  {
+    name: "Jolly Jolly Sahur",
+    rarity: "Secret",
+    aliases: ["jolly sahur"],
+    notes:
+      "StarPets and Eldorado confirm Jolly Jolly Sahur as a Secret Brainrot with 45M/s Default base income. Current StarPets Default catalog price ($2.31) and eligible Eldorado Default listing median ($1.40) differ by 65%, so the value remains TBD.",
+  },
+  {
+    name: "Money Money Bros",
+    rarity: "Secret",
+    aliases: ["money bros"],
+    notes:
+      "StarPets and Eldorado confirm Money Money Bros as a Secret Brainrot with 47M/s Default base income. Current StarPets Default catalog price ($2.63) and eligible Eldorado Default listing median ($1.70) differ by 54.7%, so the value remains TBD.",
+  },
+  {
+    name: "Los Candies",
+    rarity: "Secret",
+    aliases: ["candies"],
+    notes:
+      "StarPets and Eldorado confirm Los Candies as a Secret Brainrot with 23M/s Default base income. Returned to TBD on 2026-11-02 because StarPets currently has no Default inventory in stock.",
+  },
+  {
+    name: "Los Cupids",
+    rarity: "Secret",
+    aliases: ["cupids"],
+    notes:
+      "StarPets and Eldorado confirm Los Cupids as a Secret Brainrot with 30M/s Default base income. Returned to TBD on 2026-11-02 because StarPets currently has no Default inventory in stock.",
+  },
+  {
+    name: "Bearito Cabinito",
+    rarity: "Secret",
+    aliases: ["bearito"],
+    notes:
+      "StarPets and Eldorado confirm Bearito Cabinito as a Secret Brainrot with 72.5M/s Default base income. Returned to TBD on 2026-11-02 after StarPets ($3.87) and Eldorado Default median ($3.21) widened to a 20.6% spread.",
+  },
+  {
+    name: "Fortunu and Cashuru",
+    rarity: "Secret",
+    aliases: ["fortunu", "cashuru"],
+    notes:
+      "StarPets and Eldorado confirm Fortunu and Cashuru as a Secret Brainrot with 130M/s Default base income. Returned to TBD on 2026-11-02 after StarPets ($6.66) and Eldorado Default median ($4.19) widened to a 58.9% spread.",
+  },
+  {
+    name: "La Ginger Sekolah",
+    rarity: "Secret",
+    aliases: ["ginger sekolah"],
+    notes:
+      "StarPets and Eldorado confirm La Ginger Sekolah as a Secret Brainrot with 75M/s Default base income. Returned to TBD on 2026-11-02 after StarPets ($1.18) and Eldorado Default median ($0.99) widened to a 19.2% spread.",
+  },
+  {
+    name: "Orcaledon",
+    rarity: "Secret",
+    aliases: ["orcaledon"],
+    notes:
+      "StarPets and Eldorado confirm Orcaledon as a Secret Brainrot with 40M/s Default base income. Returned to TBD on 2026-11-02 after StarPets ($0.87) and price-sorted Eldorado Default median ($0.745) widened to a 16.8% spread.",
+  },
+  {
+    name: "Hydra Dragon Cannelloni",
+    rarity: "Secret",
+    aliases: ["hydra dragon", "cannelloni"],
+    notes:
+      "StarPets and Eldorado confirm Hydra Dragon Cannelloni as a Secret Brainrot with 300M/s Default base income. Returned to TBD on 2026-11-02 after StarPets ($35.97) and Eldorado Default median ($18.80) diverged beyond 15%.",
+  },
+  {
+    name: "Foxini Lanternini",
+    rarity: "Secret",
+    aliases: ["foxini"],
+    notes:
+      "StarPets and Eldorado confirm Foxini Lanternini as a Secret Brainrot with 115M/s Default base income. Returned to TBD on 2026-11-02 after StarPets ($7.72) and Eldorado Default median ($5.63) widened to a 37.1% spread.",
+  },
+  {
+    name: "Ginger Gerat",
+    rarity: "Secret",
+    aliases: ["gerat"],
+    notes:
+      "StarPets and Eldorado confirm Ginger Gerat as a Secret Brainrot with 75M/s Default base income. Returned to TBD on 2026-11-02 after StarPets ($29.34) and price-sorted Eldorado Default median ($24.50) widened to a 19.8% spread.",
+  },
+  {
+    name: "Bombardiro Crocodilo",
+    rarity: "Mythic",
+    aliases: ["bombardiro", "crocodilo"],
+    notes:
+      "StarPets and Eldorado confirm Bombardiro Crocodilo as an obtainable Mythic Brainrot with $2.5K/s Default base income. Low-denomination listings ($0.05–$0.11) reflect minimum marketplace fees rather than a two-source consensus price, so trade value remains TBD.",
+  },
+  {
+    name: "Bombombini Gusini",
+    rarity: "Mythic",
+    aliases: ["bombombini", "gusini"],
+    notes:
+      "StarPets and Eldorado confirm Bombombini Gusini as an obtainable Mythic Brainrot with $5K/s Default base income. Trade value remains TBD because sub-$0.10 listings do not meet the three-record depth and spread rules.",
+  },
+  {
+    name: "Te Te Te Sahur",
+    rarity: "Mythic",
+    aliases: ["te te te"],
+    notes:
+      "StarPets and Eldorado confirm Te Te Te Sahur as an obtainable Mythic Brainrot with $9.5K/s Default base income. Trade value remains TBD because Default listings fail the three-record depth and 15% spread rules.",
+  },
+  {
+    name: "Glorbo Fruttodrillo",
+    rarity: "Legendary",
+    aliases: ["glorbo", "fruttodrillo"],
+    notes:
+      "StarPets and Eldorado confirm Glorbo Fruttodrillo as an obtainable Legendary Brainrot with $750/s Default base income. Trade value remains TBD because Default marketplace listings do not meet the three-record depth and 15% spread thresholds.",
+  },
+  {
+    name: "Quackula",
+    rarity: "Legendary",
+    aliases: ["quackula"],
+    notes:
+      "StarPets and Eldorado confirm Quackula as a Legendary Brainrot with $1.2K/s Default base income. Current StarPets Default catalog price ($2.67) and Eldorado listings starting at $0.20 diverge beyond 15%, so trade value remains TBD.",
+  },
+  {
+    name: "Wombo Rollo",
+    rarity: "Epic",
+    aliases: ["wombo"],
+    notes:
+      "StarPets and Eldorado confirm Wombo Rollo as an Epic Brainrot with $275/s Default base income. Current StarPets Default catalog price ($2.60) and Eldorado listings starting at $0.50 diverge beyond 15%, so trade value remains TBD.",
+  },
+];
+
+const catalogCrossCheckItems: BrainrotItem[] = catalogCrossCheckRows.map(
+  (row) => {
+    const slug = row.name.toLowerCase().replaceAll(" ", "-");
+    return {
+      id: slug,
+      name: row.name,
+      slug,
+      rarity: row.rarity,
+      value: 0,
+      valueSourceType: "unknown",
+      demand: 1,
+      trend: "Unknown",
+      tier: "D",
+      obtainable: true,
+      aliases: [row.name.toLowerCase(), ...row.aliases],
+      notes: row.notes,
+      confidence: "Medium",
+      sourceLabel: "StarPets Steal a Brainrot marketplace",
+      sourceUrl: starPetsMarketplaceUrl,
+      additionalSources: [
+        {
+          label: "Eldorado exact-item offer search",
+          url: eldoradoOfferSearchUrl(row.name),
+          checkedAt: lastUpdated,
+        },
+      ],
+      lastUpdated,
+    };
+  },
+);
+
 export const brainrots: BrainrotItem[] = [
   ...marketplaceValueItems,
+  ...catalogCrossCheckItems,
   {
     id: "festive-67",
     name: "Festive 67",
@@ -606,6 +856,37 @@ export const communityEstimateCandidates: CommunityEstimateCandidate[] = [
 ];
 
 export const updates: ValueUpdate[] = [
+  {
+    id: "verified-marketplace-snapshot-2026-11-02",
+    date: "2026-11-02",
+    title: "Default marketplace prices refreshed and catalog expanded",
+    summary:
+      "Rechecked the calculator set against current StarPets catalog inventory and eligible Eldorado listings, and expanded the tracked Brainrot catalog across Secret, Mythic, Legendary, and Epic tiers.",
+    changes: [
+      {
+        item: "Globa Steppa",
+        type: "Decreased",
+        previousValue: 5.79,
+        newValue: 1.93,
+        note: "Current StarPets catalog price ($1.87) and the eligible Eldorado listing median ($1.99) remain within 6.4%.",
+      },
+      {
+        item: "Calculator set",
+        type: "Note",
+        note: "Added La Sahur Combinasion, Rosey and Teddy, Ketupat Bros, Brunito Marsito, Duggy Bros, La Spooky Grande, Cloverat Clapat, Eviledon, and Spooky and Pumpky. Returned Los Candies, Los Cupids, Bearito Cabinito, Fortunu and Cashuru, La Ginger Sekolah, Orcaledon, Hydra Dragon Cannelloni, Foxini Lanternini, and Ginger Gerat to TBD after current inventory or 15% spread checks failed.",
+      },
+      {
+        item: "Tracked Brainrot catalog",
+        type: "Added",
+        note: "Added 30 source-checked Secret, Mythic, Legendary, and Epic Brainrots—including Popcuru and Fizzuru, Bumbatron, Las Sis, Quackini Snackini, Reinito Sleighito, Gobblino Uniciclino, Nacho Spyder, Garama and Madundung, and Glorbo Fruttodrillo—with Default base income and verification status notes.",
+      },
+      {
+        item: "Evidence method",
+        type: "Note",
+        note: "All ten calculator-enabled rows have at least three StarPets records, three eligible Eldorado listings, three distinct Eldorado sellers, an exact Default/M/s match, and no more than 15% source spread.",
+      },
+    ],
+  },
   {
     id: "verified-marketplace-snapshot-2026-08-02",
     date: "2026-08-02",
