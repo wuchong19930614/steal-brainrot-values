@@ -9,9 +9,9 @@ import {
 import { absoluteUrl, createPageMetadata } from "@/lib/seo";
 
 export const metadata = createPageMetadata({
-  title: "Steal a Brainrot Tier List - Default Market Price Tiers",
+  title: "Steal a Brainrot Tier List - Best Brainrots Ranked by Price & M/s",
   description:
-    "Compare ten Default Steal a Brainrot items by independently verified USD marketplace asking-price tiers.",
+    "See the best Default Steal a Brainrot items ranked from S to D tier by verified USD marketplace asking price, Default M/s base income, and value per dollar.",
   path: "/tier-list/",
 });
 
@@ -52,7 +52,7 @@ export default function TierListPage() {
             "@type": "ListItem",
             position: index + 1,
             name: `${item.name} (Tier ${item.tier})`,
-            url: absoluteUrl(`/trading-values/#${item.slug}`),
+            url: absoluteUrl(`/brainrots/${item.slug}/`),
             description: `Tier ${item.tier} Default Secret Brainrot (${formatValue(item.value)}). ${item.notes}`,
           })),
         }}

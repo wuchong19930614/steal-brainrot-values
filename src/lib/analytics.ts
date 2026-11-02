@@ -2,6 +2,8 @@ export type AnalyticsEventName =
   | "calculator_add_item"
   | "calculator_remove_item"
   | "calculator_add_selected_item"
+  | "calculator_share_clicked"
+  | "calculator_prefill_loaded"
   | "filter_used"
   | "item_search_used"
   | "community_source_clicked"

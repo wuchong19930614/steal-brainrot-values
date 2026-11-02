@@ -5,9 +5,9 @@ import { brainrots, lastUpdated } from "@/lib/data";
 import { absoluteUrl, createPageMetadata } from "@/lib/seo";
 
 export const metadata = createPageMetadata({
-  title: "Steal a Brainrot Calculator - Compare USD Market Prices",
+  title: "Steal a Brainrot Trade Calculator (SAB) - Compare Values & M/s",
   description:
-    "Compare source-verified Default Steal a Brainrot marketplace asking prices in USD across two offers.",
+    "Compare two Steal a Brainrot (SAB) offers by verified Default USD marketplace price and total M/s base income, then share a direct trade link.",
   path: "/calculator/",
 });
 

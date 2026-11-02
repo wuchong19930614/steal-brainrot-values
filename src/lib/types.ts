@@ -61,6 +61,8 @@ export type BrainrotItem = {
   obtainable: boolean;
   aliases: string[];
   notes: string;
+  baseIncomeText?: string;
+  baseIncomeMps?: number;
   confidence: Confidence;
   sourceLabel: string;
   sourceUrl: string;

@@ -10,9 +10,9 @@ import {
 import { absoluteUrl, createPageMetadata } from "@/lib/seo";
 
 export const metadata = createPageMetadata({
-  title: "Steal a Brainrot Rarity List - Tracked Brainrots",
+  title: "Steal a Brainrot Rarity List - All Brainrots from Common to Limited",
   description:
-    "Browse source-labeled Steal a Brainrot items across Limited, Secret, Mythic, Legendary, Epic, Rare, and Common tiers with verified USD market prices.",
+    "Browse all 52 tracked Steal a Brainrot items across Limited, Secret, Mythic, Legendary, Epic, Rare, and Common rarities with M/s income and USD price status.",
   path: "/rarity-list/",
 });
 
@@ -52,7 +52,7 @@ export default function RarityListPage() {
             "@type": "ListItem",
             position: index + 1,
             name: `${item.name} (${item.rarity})`,
-            url: absoluteUrl(`/trading-values/#${item.slug}`),
+            url: absoluteUrl(`/brainrots/${item.slug}/`),
             description: `${item.rarity} Brainrot (${formatTradeValue(item)}). ${item.notes}`,
           })),
         }}

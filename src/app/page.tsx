@@ -12,6 +12,7 @@ import {
 } from "@/lib/data";
 import {
   absoluteUrl,
+  createFaqJsonLd,
   createPageMetadata,
   siteDescription,
   siteName,
@@ -36,9 +37,9 @@ const faqs = [
 ];
 
 export const metadata = createPageMetadata({
-  title: "Steal a Brainrot Values - USD Market Prices & Calculator",
+  title: "Steal a Brainrot Values (SAB) - Value List & Trade Calculator",
   description:
-    "Check ten source-verified Default Steal a Brainrot marketplace asking prices in USD, compare offers, and review value evidence.",
+    "Check Steal a Brainrot (SAB) values, ten source-verified Default USD marketplace asking prices, M/s base income stats, and TBD trade value status.",
   path: "/",
 });
 
@@ -74,7 +75,7 @@ export default function HomePage() {
             "@type": "ListItem",
             position: index + 1,
             name: item.name,
-            url: absoluteUrl(`/#${item.slug}`),
+            url: absoluteUrl(`/brainrots/${item.slug}/`),
             description:
               isVerifiedTradeValue(item)
                 ? `${item.rarity} item with a verified Default marketplace asking price of ${formatValue(
@@ -84,6 +85,7 @@ export default function HomePage() {
           })),
         }}
       />
+      <JsonLd data={createFaqJsonLd(faqs)} />
       <section className="page-intro compact-intro">
         <div>
           <p className="eyebrow">Updated {lastUpdated}</p>

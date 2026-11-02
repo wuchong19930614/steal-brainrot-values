@@ -38,14 +38,18 @@ export function RarityExplorer() {
               {group.items.map((item) => (
                 <li key={item.id}>
                   <Link
-                    href={`/trading-values/#${item.slug}`}
+                    href={`/brainrots/${item.slug}/`}
                     data-analytics-event="related_tool_clicked"
                     data-analytics-label={item.slug}
                     data-analytics-location="rarity_item"
                   >
                     {item.name}
                   </Link>
-                  <strong>{formatTradeValue(item)}</strong>
+                  <strong>
+                    {item.baseIncomeText
+                      ? `${item.baseIncomeText} · ${formatTradeValue(item)}`
+                      : formatTradeValue(item)}
+                  </strong>
                 </li>
               ))}
             </ul>

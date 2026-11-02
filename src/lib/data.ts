@@ -181,6 +181,8 @@ const marketplaceValueItems: BrainrotItem[] = marketplaceSnapshotRows.map(
       obtainable: true,
       aliases: [row.name.toLowerCase()],
       notes: `Default variant with ${row.baseIncomeMps}M/s base income. The ${formatMarketplacePrice(row.consensusUsd)} figure is a source-balanced active marketplace asking price, not an official or player-to-player trade value.`,
+      baseIncomeText: `${row.baseIncomeMps}M/s`,
+      baseIncomeMps: row.baseIncomeMps,
       confidence: "Medium",
       sourceLabel: "StarPets Steal a Brainrot marketplace",
       sourceUrl: starPetsMarketplaceUrl,
@@ -448,6 +450,29 @@ const catalogCrossCheckRows: Array<{
   },
 ];
 
+function extractBaseIncomeFields(notes: string): {
+  baseIncomeText?: string;
+  baseIncomeMps?: number;
+} {
+  const anchoredMatch = notes.match(
+    /\$?(\d+(?:\.\d+)?[KM]?\/s)\s+Default base income/i,
+  );
+  const fallbackMatch = anchoredMatch ?? notes.match(/\$?(\d+(?:\.\d+)?[KM]?\/s)/);
+  if (!fallbackMatch) {
+    return {};
+  }
+
+  const baseIncomeText = fallbackMatch[1];
+  if (baseIncomeText.endsWith("M/s")) {
+    const parsedMps = Number.parseFloat(baseIncomeText);
+    if (Number.isFinite(parsedMps)) {
+      return { baseIncomeText, baseIncomeMps: parsedMps };
+    }
+  }
+
+  return { baseIncomeText };
+}
+
 const catalogCrossCheckItems: BrainrotItem[] = catalogCrossCheckRows.map(
   (row) => {
     const slug = row.name.toLowerCase().replaceAll(" ", "-");
@@ -464,6 +489,7 @@ const catalogCrossCheckItems: BrainrotItem[] = catalogCrossCheckRows.map(
       obtainable: true,
       aliases: Array.from(new Set([row.name.toLowerCase(), ...row.aliases])),
       notes: row.notes,
+      ...extractBaseIncomeFields(row.notes),
       confidence: "Medium",
       sourceLabel: "StarPets Steal a Brainrot marketplace",
       sourceUrl: starPetsMarketplaceUrl,
@@ -534,6 +560,7 @@ export const brainrots: BrainrotItem[] = [
     aliases: ["noobini"],
     notes:
       "Community catalog lists this as an obtainable Common Brainrot from the Red Carpet. Its listed in-game cost is $25 and base income is $1/s; this is not a trade value.",
+    baseIncomeText: "1/s",
     confidence: "Medium",
     sourceLabel: "Steal a Brainrot Wiki (community-maintained catalog)",
     sourceUrl: "https://stealabrainrot.fandom.com/wiki/Noobini_Pizzanini",
@@ -554,6 +581,7 @@ export const brainrots: BrainrotItem[] = [
     aliases: ["lirili larila", "lirilì larilà"],
     notes:
       "Community catalog lists this as an obtainable Common Brainrot from the Red Carpet. Its listed in-game cost is $250 and base income is $3/s; this is not a trade value.",
+    baseIncomeText: "3/s",
     confidence: "Medium",
     sourceLabel: "Steal a Brainrot Wiki (community-maintained catalog)",
     sourceUrl: "https://stealabrainrot.fandom.com/wiki/Liril%C3%AC_Laril%C3%A0",
@@ -574,6 +602,7 @@ export const brainrots: BrainrotItem[] = [
     aliases: ["tim"],
     notes:
       "Community catalog lists this as an obtainable Common Brainrot from the Red Carpet. Its listed in-game cost is $500 and base income is $5/s; this is not a trade value.",
+    baseIncomeText: "5/s",
     confidence: "Medium",
     sourceLabel: "Steal a Brainrot Wiki (community-maintained catalog)",
     sourceUrl: "https://stealabrainrot.fandom.com/wiki/Tim_Cheese",
@@ -594,6 +623,7 @@ export const brainrots: BrainrotItem[] = [
     aliases: ["talpa"],
     notes:
       "Community catalog lists this as an obtainable Common Brainrot from the Red Carpet. Its listed in-game cost is $1K and base income is $9/s; this is not a trade value.",
+    baseIncomeText: "9/s",
     confidence: "Medium",
     sourceLabel: "Steal a Brainrot Wiki (community-maintained catalog)",
     sourceUrl: "https://stealabrainrot.fandom.com/wiki/Talpa_Di_Fero",
@@ -614,6 +644,7 @@ export const brainrots: BrainrotItem[] = [
     aliases: ["svinina"],
     notes:
       "Community sources agree this is an obtainable Common Brainrot from the Red Carpet, but the listed in-game cost differs: $1.25K in the primary catalog and $1.2K in the newer cross-check. This row uses the newer $1.2K figure and a $10/s base income; this is not a trade value.",
+    baseIncomeText: "10/s",
     confidence: "Medium",
     sourceLabel: "Steal a Brainrot Wiki (community-maintained catalog)",
     sourceUrl: "https://stealabrainrot.fandom.com/wiki/Svinina_Bombardino",
@@ -634,6 +665,7 @@ export const brainrots: BrainrotItem[] = [
     aliases: ["pipi"],
     notes:
       "Community catalog lists this as an obtainable Common Brainrot from the Red Carpet. Its listed in-game cost is $1.5K and base income is $13/s; this is not a trade value.",
+    baseIncomeText: "13/s",
     confidence: "Medium",
     sourceLabel: "Steal a Brainrot Wiki (community-maintained catalog)",
     sourceUrl: "https://stealabrainrot.fandom.com/wiki/Pipi_Kiwi",
@@ -654,6 +686,7 @@ export const brainrots: BrainrotItem[] = [
     aliases: ["trippi"],
     notes:
       "Community catalog lists this as an obtainable Rare Brainrot from the Red Carpet. Its listed in-game cost is $2K and base income is $15/s; this is not a trade value.",
+    baseIncomeText: "15/s",
     confidence: "Medium",
     sourceLabel: "Steal a Brainrot Wiki (community-maintained catalog)",
     sourceUrl: "https://stealabrainrot.fandom.com/wiki/Trippi_Troppi",
@@ -674,6 +707,7 @@ export const brainrots: BrainrotItem[] = [
     aliases: ["gangster"],
     notes:
       "Community catalog lists this as an obtainable Rare Brainrot from the Red Carpet. Its listed in-game cost is $4K and base income is $30/s; this is not a trade value.",
+    baseIncomeText: "30/s",
     confidence: "Medium",
     sourceLabel: "Steal a Brainrot Wiki (community-maintained catalog)",
     sourceUrl: "https://stealabrainrot.fandom.com/wiki/Gangster_Footera",
@@ -694,6 +728,7 @@ export const brainrots: BrainrotItem[] = [
     aliases: ["boneca"],
     notes:
       "Community catalog lists this as an obtainable Rare Brainrot from the Red Carpet. Its listed in-game cost is $5K and base income is $40/s; this is not a trade value.",
+    baseIncomeText: "40/s",
     confidence: "Medium",
     sourceLabel: "Steal a Brainrot Wiki (community-maintained catalog)",
     sourceUrl: "https://stealabrainrot.fandom.com/wiki/Boneca_Ambalabu",
@@ -714,6 +749,7 @@ export const brainrots: BrainrotItem[] = [
     aliases: ["cacto"],
     notes:
       "Community catalog lists this as an obtainable Rare Brainrot from the Red Carpet. Its listed in-game cost is $6.5K and base income is $50/s; this is not a trade value.",
+    baseIncomeText: "50/s",
     confidence: "Medium",
     sourceLabel: "Steal a Brainrot Wiki (community-maintained catalog)",
     sourceUrl: "https://stealabrainrot.fandom.com/wiki/Cacto_Hipopotamo",
@@ -1169,4 +1205,48 @@ export function getTotalTrackedValue() {
     0,
   );
   return totalCents / 100;
+}
+
+export function formatMpsPerDollar(baseIncomeMps: number, valueUsd: number) {
+  if (valueUsd <= 0 || baseIncomeMps <= 0) {
+    return "TBD";
+  }
+  const ratio = baseIncomeMps / valueUsd;
+  return `${ratio.toFixed(1)}M/s per $1`;
+}
+
+export function getBrainrotBySlug(slug: string) {
+  return brainrots.find((item) => item.slug === slug);
+}
+
+export function getRelatedBrainrots(item: BrainrotItem, limit = 6) {
+  const sameRarity = brainrots.filter(
+    (candidate) =>
+      candidate.slug !== item.slug && candidate.rarity === item.rarity,
+  );
+  const sortedSameRarity = [...sameRarity].sort((a, b) => {
+    const aVal = isVerifiedTradeValue(a) ? a.value : 0;
+    const bVal = isVerifiedTradeValue(b) ? b.value : 0;
+    return bVal - aVal || a.name.localeCompare(b.name);
+  });
+
+  if (sortedSameRarity.length >= limit) {
+    return sortedSameRarity.slice(0, limit);
+  }
+
+  const fallbackVerified = getVerifiedTradeValueItems()
+    .filter(
+      (candidate) =>
+        candidate.slug !== item.slug &&
+        !sortedSameRarity.some((existing) => existing.slug === candidate.slug),
+    )
+    .sort((a, b) => b.value - a.value);
+
+  return [...sortedSameRarity, ...fallbackVerified].slice(0, limit);
+}
+
+export function getCommunityCandidateForItem(itemId: string) {
+  return communityEstimateCandidates.find(
+    (candidate) => candidate.itemId === itemId,
+  );
 }

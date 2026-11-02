@@ -331,9 +331,29 @@ export function ValueTable({ items }: ValueTableProps) {
                 {item.name.slice(0, 2).toUpperCase()}
               </div>
               <div>
-                <h3>{item.name}</h3>
+                <h3>
+                  <Link
+                    href={`/brainrots/${item.slug}/`}
+                    data-analytics-event="related_tool_clicked"
+                    data-analytics-label={item.slug}
+                    data-analytics-location="value_table_item"
+                  >
+                    {item.name}
+                  </Link>
+                </h3>
                 <p>{item.notes}</p>
                 <div className="source-links">
+                  {isVerifiedTradeValue(item) ? (
+                    <Link
+                      className="source-link"
+                      href={`/calculator/?add=${item.slug}`}
+                      data-analytics-event="related_tool_clicked"
+                      data-analytics-label={item.slug}
+                      data-analytics-location="value_table_compare"
+                    >
+                      Compare in calculator
+                    </Link>
+                  ) : null}
                   <a
                     className="source-link"
                     href={item.sourceUrl}
@@ -371,6 +391,9 @@ export function ValueTable({ items }: ValueTableProps) {
               <span className={`pill rarity rarity-${item.rarity.toLowerCase()}`}>
                 {item.rarity}
               </span>
+              {item.baseIncomeText ? (
+                <span className="pill demand">{item.baseIncomeText}</span>
+              ) : null}
               <span
                 className={`pill ${
                   isVerifiedTradeValue(item) ? "verified-value" : "trend-unknown"

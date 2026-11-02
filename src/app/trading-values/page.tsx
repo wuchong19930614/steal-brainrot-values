@@ -11,7 +11,11 @@ import {
   minimumVerifiedTradeValues,
   officialSources,
 } from "@/lib/data";
-import { absoluteUrl, createPageMetadata } from "@/lib/seo";
+import {
+  absoluteUrl,
+  createFaqJsonLd,
+  createPageMetadata,
+} from "@/lib/seo";
 
 const faqs = [
   {
@@ -37,9 +41,9 @@ const faqs = [
 ];
 
 export const metadata = createPageMetadata({
-  title: "Steal a Brainrot Trading Values & USD Market Prices",
+  title: "Steal a Brainrot Trading Values (SAB) - Verified Market Prices",
   description:
-    "Review Steal a Brainrot trading-value status and ten independently cross-checked Default marketplace asking prices in USD.",
+    "Review Steal a Brainrot (SAB) trading values, ten two-source verified Default USD marketplace prices, StarPets vs. Eldorado spread data, and TBD status.",
   path: "/trading-values/",
 });
 
@@ -78,7 +82,7 @@ export default function TradingValuesPage() {
             "@type": "ListItem",
             position: index + 1,
             name: item.name,
-            url: absoluteUrl(`/trading-values/#${item.slug}`),
+            url: absoluteUrl(`/brainrots/${item.slug}/`),
             description:
               isVerifiedTradeValue(item)
                 ? `Verified Default marketplace asking price: ${formatValue(item.value)}. ${item.notes}`
@@ -86,6 +90,7 @@ export default function TradingValuesPage() {
           })),
         }}
       />
+      <JsonLd data={createFaqJsonLd(faqs)} />
       <section className="page-intro">
         <div>
           <p className="eyebrow">Last checked {lastUpdated}</p>
@@ -178,7 +183,16 @@ export default function TradingValuesPage() {
 
                 return (
                   <tr id={item.slug} key={item.id}>
-                    <th scope="row">{item.name}</th>
+                    <th scope="row">
+                      <Link
+                        href={`/brainrots/${item.slug}/`}
+                        data-analytics-event="related_tool_clicked"
+                        data-analytics-label={item.slug}
+                        data-analytics-location="trading_values_item"
+                      >
+                        {item.name}
+                      </Link>
+                    </th>
                     <td>
                       <span
                         className={`pill rarity rarity-${item.rarity.toLowerCase()}`}
@@ -197,6 +211,17 @@ export default function TradingValuesPage() {
                     </td>
                     <td>
                       <div className="source-links">
+                        {hasVerifiedValue ? (
+                          <Link
+                            className="source-link"
+                            href={`/calculator/?add=${item.slug}`}
+                            data-analytics-event="related_tool_clicked"
+                            data-analytics-label={item.slug}
+                            data-analytics-location="trading_values_compare"
+                          >
+                            Compare in calculator
+                          </Link>
+                        ) : null}
                         <a
                           className="source-link"
                           href={sourceUrl}

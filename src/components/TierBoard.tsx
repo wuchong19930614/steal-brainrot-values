@@ -5,17 +5,19 @@ import { useMemo, useState } from "react";
 import { trackEvent } from "@/lib/analytics";
 import {
   brainrots,
+  formatMpsPerDollar,
   formatValue,
   getTierGroups,
   getVerifiedTradeValueItems,
 } from "@/lib/data";
 
-type SortKey = "value" | "value-asc" | "income" | "name";
+type SortKey = "value" | "value-asc" | "income" | "value-efficiency" | "name";
 
 const sortOptions: Array<{ key: SortKey; label: string }> = [
   { key: "value", label: "Highest price" },
   { key: "value-asc", label: "Lowest price" },
   { key: "income", label: "Highest base income (M/s)" },
+  { key: "value-efficiency", label: "Best M/s per $1" },
   { key: "name", label: "Name A-Z" },
 ];
 
@@ -39,9 +41,14 @@ export function TierBoard() {
 
             if (sort === "income") {
               const incomeDiff =
-                (b.marketplaceEvidence?.baseIncomeMps ?? 0) -
-                (a.marketplaceEvidence?.baseIncomeMps ?? 0);
+                (b.baseIncomeMps ?? 0) - (a.baseIncomeMps ?? 0);
               return incomeDiff || b.value - a.value;
+            }
+
+            if (sort === "value-efficiency") {
+              const aRatio = a.value > 0 ? (a.baseIncomeMps ?? 0) / a.value : 0;
+              const bRatio = b.value > 0 ? (b.baseIncomeMps ?? 0) / b.value : 0;
+              return bRatio - aRatio || b.value - a.value;
             }
 
             if (sort === "name") {
@@ -100,24 +107,27 @@ export function TierBoard() {
             {group.tier}
           </div>
           <div className="tier-items">
-            {group.items.map((item) => (
-              <Link
-                href={`/trading-values/#${item.slug}`}
-                className="tier-item"
-                key={item.id}
-                data-analytics-event="related_tool_clicked"
-                data-analytics-label={item.slug}
-                data-analytics-location="tier_board_item"
-              >
-                <strong>{item.name}</strong>
-                <span>{formatValue(item.value)}</span>
-                <small>
-                  {item.marketplaceEvidence?.baseIncomeMps
-                    ? `${item.marketplaceEvidence.baseIncomeMps}M/s Default`
-                    : `${item.rarity} Default`}
-                </small>
-              </Link>
-            ))}
+            {group.items.map((item) => {
+              const mps = item.baseIncomeMps ?? 0;
+              return (
+                <Link
+                  href={`/brainrots/${item.slug}/`}
+                  className="tier-item"
+                  key={item.id}
+                  data-analytics-event="related_tool_clicked"
+                  data-analytics-label={item.slug}
+                  data-analytics-location="tier_board_item"
+                >
+                  <strong>{item.name}</strong>
+                  <span>{formatValue(item.value)}</span>
+                  <small>
+                    {mps > 0
+                      ? `${mps}M/s · ${formatMpsPerDollar(mps, item.value)}`
+                      : `${item.rarity} Default`}
+                  </small>
+                </Link>
+              );
+            })}
           </div>
         </div>
       ))}
