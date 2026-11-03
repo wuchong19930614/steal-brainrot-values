@@ -1,4 +1,9 @@
-import { formatValue, updates } from "@/lib/data";
+import Link from "next/link";
+import { brainrots, formatValue, updates } from "@/lib/data";
+
+const brainrotByName = new Map(
+  brainrots.map((item) => [item.name.toLowerCase(), item]),
+);
 
 export function UpdateTimeline() {
   return (
@@ -11,22 +16,41 @@ export function UpdateTimeline() {
             <p>{update.summary}</p>
           </div>
           <div className="change-list">
-            {update.changes.map((change, index) => (
-              <div className="change-row" key={`${update.id}-${index}`}>
-                <span className="pill demand">{change.type}</span>
-                <strong>{change.item}</strong>
-                <span>
-                  {typeof change.previousValue === "number"
-                    ? `${formatValue(change.previousValue)} -> `
-                    : ""}
-                  {typeof change.newValue === "number"
-                    ? `${formatValue(change.newValue)}${
-                        change.note ? ` — ${change.note}` : ""
-                      }`
-                    : change.note}
-                </span>
-              </div>
-            ))}
+            {update.changes.map((change, index) => {
+              const matchedItem = brainrotByName.get(
+                change.item.trim().toLowerCase(),
+              );
+
+              return (
+                <div className="change-row" key={`${update.id}-${index}`}>
+                  <span className="pill demand">{change.type}</span>
+                  <strong>
+                    {matchedItem ? (
+                      <Link
+                        href={`/brainrots/${matchedItem.slug}/`}
+                        data-analytics-event="related_tool_clicked"
+                        data-analytics-label={matchedItem.slug}
+                        data-analytics-location="update_timeline_item"
+                      >
+                        {change.item}
+                      </Link>
+                    ) : (
+                      change.item
+                    )}
+                  </strong>
+                  <span>
+                    {typeof change.previousValue === "number"
+                      ? `${formatValue(change.previousValue)} -> `
+                      : ""}
+                    {typeof change.newValue === "number"
+                      ? `${formatValue(change.newValue)}${
+                          change.note ? ` — ${change.note}` : ""
+                        }`
+                      : change.note}
+                  </span>
+                </div>
+              );
+            })}
           </div>
         </article>
       ))}

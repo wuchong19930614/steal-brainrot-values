@@ -1215,24 +1215,46 @@ export function formatMpsPerDollar(baseIncomeMps: number, valueUsd: number) {
   return `${ratio.toFixed(1)}M/s per $1`;
 }
 
+export function getBrainrotInitials(name: string) {
+  const words = name.trim().split(/\s+/).filter(Boolean);
+  if (words.length >= 2) {
+    return `${words[0][0]}${words[1][0]}`.toUpperCase();
+  }
+  return (words[0] ?? name).slice(0, 2).toUpperCase();
+}
+
 export function getBrainrotBySlug(slug: string) {
   return brainrots.find((item) => item.slug === slug);
 }
 
 export function getRelatedBrainrots(item: BrainrotItem, limit = 6) {
-  const sameRarity = brainrots.filter(
-    (candidate) =>
-      candidate.slug !== item.slug && candidate.rarity === item.rarity,
-  );
-  const sortedSameRarity = [...sameRarity].sort((a, b) => {
-    const aVal = isVerifiedTradeValue(a) ? a.value : 0;
-    const bVal = isVerifiedTradeValue(b) ? b.value : 0;
-    return bVal - aVal || a.name.localeCompare(b.name);
-  });
+  const sortedSameRarityWithSelf = brainrots
+    .filter((candidate) => candidate.rarity === item.rarity)
+    .sort((a, b) => {
+      const aVal = isVerifiedTradeValue(a) ? a.value : 0;
+      const bVal = isVerifiedTradeValue(b) ? b.value : 0;
+      return (
+        bVal - aVal ||
+        (b.baseIncomeMps ?? 0) - (a.baseIncomeMps ?? 0) ||
+        a.name.localeCompare(b.name)
+      );
+    });
 
-  if (sortedSameRarity.length >= limit) {
-    return sortedSameRarity.slice(0, limit);
+  if (sortedSameRarityWithSelf.length > limit) {
+    const selfIndex = sortedSameRarityWithSelf.findIndex(
+      (candidate) => candidate.slug === item.slug,
+    );
+    const total = sortedSameRarityWithSelf.length;
+    const neighborOffsets = [-3, -2, -1, 1, 2, 3].slice(0, limit);
+    return neighborOffsets.map(
+      (offset) =>
+        sortedSameRarityWithSelf[(selfIndex + offset + total) % total],
+    );
   }
+
+  const sortedSameRarity = sortedSameRarityWithSelf.filter(
+    (candidate) => candidate.slug !== item.slug,
+  );
 
   const fallbackVerified = getVerifiedTradeValueItems()
     .filter(
@@ -1240,7 +1262,16 @@ export function getRelatedBrainrots(item: BrainrotItem, limit = 6) {
         candidate.slug !== item.slug &&
         !sortedSameRarity.some((existing) => existing.slug === candidate.slug),
     )
-    .sort((a, b) => b.value - a.value);
+    .sort((a, b) => {
+      if (typeof item.baseIncomeMps === "number") {
+        const aDiff = Math.abs((a.baseIncomeMps ?? 0) - item.baseIncomeMps);
+        const bDiff = Math.abs((b.baseIncomeMps ?? 0) - item.baseIncomeMps);
+        if (aDiff !== bDiff) {
+          return aDiff - bDiff;
+        }
+      }
+      return b.value - a.value;
+    });
 
   return [...sortedSameRarity, ...fallbackVerified].slice(0, limit);
 }

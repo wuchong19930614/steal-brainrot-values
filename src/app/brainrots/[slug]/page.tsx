@@ -8,6 +8,7 @@ import {
   formatTradeValue,
   formatValue,
   getBrainrotBySlug,
+  getBrainrotInitials,
   getCommunityCandidateForItem,
   getRelatedBrainrots,
   isVerifiedTradeValue,
@@ -409,12 +410,7 @@ export default async function BrainrotDetailPage({
               <article className="value-row" key={rel.id}>
                 <div className="item-main">
                   <div className="token-mark" aria-hidden="true">
-                    {rel.name
-                      .split(" ")
-                      .slice(0, 2)
-                      .map((word) => word[0])
-                      .join("")
-                      .toUpperCase()}
+                    {getBrainrotInitials(rel.name)}
                   </div>
                   <div>
                     <h3>

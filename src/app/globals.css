@@ -376,13 +376,15 @@ a:focus-visible {
 }
 
 .value-row h3 a,
-.offer-row strong a {
+.offer-row strong a,
+.change-row strong a {
   color: var(--ink);
   text-decoration: none;
 }
 
 .value-row h3 a:hover,
-.offer-row strong a:hover {
+.offer-row strong a:hover,
+.change-row strong a:hover {
   color: var(--blue);
   text-decoration: underline;
 }

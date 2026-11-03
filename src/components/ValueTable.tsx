@@ -4,7 +4,9 @@ import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { trackEvent } from "@/lib/analytics";
 import {
+  formatMpsPerDollar,
   formatTradeValue,
+  getBrainrotInitials,
   isVerifiedTradeValue,
   rarityOrder,
 } from "@/lib/data";
@@ -14,7 +16,14 @@ type ValueTableProps = {
   items: BrainrotItem[];
 };
 
-type SortKey = "value" | "value-asc" | "name" | "rarity" | "updated";
+type SortKey =
+  | "value"
+  | "value-asc"
+  | "income"
+  | "value-efficiency"
+  | "name"
+  | "rarity"
+  | "updated";
 type StatusFilter = "All" | "Verified" | "TBD";
 type TierFilter = "All" | Tier | "Unranked";
 
@@ -24,6 +33,26 @@ const searchSettleDelayMs = 1000;
 
 function getComparableValue(item: BrainrotItem) {
   return isVerifiedTradeValue(item) ? item.value : 0;
+}
+
+function getComparableIncomePerSec(item: BrainrotItem) {
+  if (typeof item.baseIncomeMps === "number") {
+    return item.baseIncomeMps * 1_000_000;
+  }
+  if (!item.baseIncomeText) {
+    return -1;
+  }
+  const parsed = Number.parseFloat(item.baseIncomeText);
+  if (!Number.isFinite(parsed)) {
+    return -1;
+  }
+  if (item.baseIncomeText.endsWith("M/s")) {
+    return parsed * 1_000_000;
+  }
+  if (item.baseIncomeText.endsWith("K/s")) {
+    return parsed * 1_000;
+  }
+  return parsed;
 }
 
 export function ValueTable({ items }: ValueTableProps) {
@@ -103,6 +132,29 @@ export function ValueTable({ items }: ValueTableProps) {
             return aVerified ? -1 : 1;
           }
           return a.value - b.value || a.name.localeCompare(b.name);
+        }
+
+        if (sort === "income") {
+          return (
+            getComparableIncomePerSec(b) - getComparableIncomePerSec(a) ||
+            getComparableValue(b) - getComparableValue(a) ||
+            a.name.localeCompare(b.name)
+          );
+        }
+
+        if (sort === "value-efficiency") {
+          const aVerified = isVerifiedTradeValue(a);
+          const bVerified = isVerifiedTradeValue(b);
+          if (aVerified !== bVerified) {
+            return aVerified ? -1 : 1;
+          }
+          const aRatio = aVerified && a.value > 0 ? (a.baseIncomeMps ?? 0) / a.value : 0;
+          const bRatio = bVerified && b.value > 0 ? (b.baseIncomeMps ?? 0) / b.value : 0;
+          return (
+            bRatio - aRatio ||
+            getComparableIncomePerSec(b) - getComparableIncomePerSec(a) ||
+            a.name.localeCompare(b.name)
+          );
         }
 
         if (sort === "rarity") {
@@ -311,6 +363,8 @@ export function ValueTable({ items }: ValueTableProps) {
           >
             <option value="value">Highest value</option>
             <option value="value-asc">Lowest verified value</option>
+            <option value="income">Highest base income (M/s)</option>
+            <option value="value-efficiency">Best M/s per $1</option>
             <option value="rarity">Rarity</option>
             <option value="updated">Newest update</option>
             <option value="name">Name A-Z</option>
@@ -328,7 +382,7 @@ export function ValueTable({ items }: ValueTableProps) {
           >
             <div className="item-main">
               <div className="token-mark" aria-hidden="true">
-                {item.name.slice(0, 2).toUpperCase()}
+                {getBrainrotInitials(item.name)}
               </div>
               <div>
                 <h3>
@@ -393,6 +447,11 @@ export function ValueTable({ items }: ValueTableProps) {
               </span>
               {item.baseIncomeText ? (
                 <span className="pill demand">{item.baseIncomeText}</span>
+              ) : null}
+              {isVerifiedTradeValue(item) && item.baseIncomeMps ? (
+                <span className="pill demand">
+                  {formatMpsPerDollar(item.baseIncomeMps, item.value)}
+                </span>
               ) : null}
               <span
                 className={`pill ${

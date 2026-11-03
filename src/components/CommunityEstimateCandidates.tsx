@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { CommunityEstimateCandidate } from "@/lib/types";
 
 type CommunityEstimateCandidatesProps = {
@@ -41,7 +42,14 @@ export function CommunityEstimateCandidates({
             {candidates.map((candidate) => (
               <tr key={candidate.itemId}>
                 <th scope="row">
-                  <a href={`#${candidate.itemId}`}>{candidate.itemName}</a>
+                  <Link
+                    href={`/brainrots/${candidate.itemId}/`}
+                    data-analytics-event="related_tool_clicked"
+                    data-analytics-label={candidate.itemId}
+                    data-analytics-location="community_estimate_candidate_item"
+                  >
+                    {candidate.itemName}
+                  </Link>
                 </th>
                 <td>{candidate.referenceValue}</td>
                 <td>{candidate.unitLabel}</td>

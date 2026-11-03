@@ -608,7 +608,14 @@ export function TradeCalculator({ items }: TradeCalculatorProps) {
             <div className="offer-row" key={offerItem.itemId}>
               <div>
                 <strong>
-                  <Link href={`/brainrots/${item.slug}/`}>{item.name}</Link>
+                  <Link
+                    href={`/brainrots/${item.slug}/`}
+                    data-analytics-event="related_tool_clicked"
+                    data-analytics-label={item.slug}
+                    data-analytics-location="calculator_offer_item"
+                  >
+                    {item.name}
+                  </Link>
                 </strong>
                 <span>
                   {formatValue(item.value)} each
